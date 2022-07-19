@@ -1,0 +1,60 @@
+<div class="px-3 pt-3" *ngIf="sectionItem && languages">
+  <label class="form-label">{{'TRANSLATION.SECTION_ITEM.TRANSLATIONS' | translate}}
+    <span class="text-info"></span></label>
+    <p-table [columns]="columns" [value]="sectionItem.translations" [rows]="rowSizes.SMALL" [paginator]="true" #dataTableGroupForms
+             selectionMode="single" dataKey="name">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+            <div>
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              <span class="ms-2">{{col.header | translate}}</span>
+            </div>
+          </th>
+          <th>
+            <div class="pull-right">
+              <p-button type="button" class="add-button" icon="icon icon-add-eland"
+                        (click)="addItem()"></p-button>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-row let-item>
+        <tr *ngIf="item !== selectedTranslation && item !== tmpNewTranslation">
+          <td *ngFor="let col of columns">
+            {{getItem(item, col.field)}}
+          </td>
+          <td>
+            <div class="pull-right">
+              <p-button type="button" icon="fa fa-edit"
+                        class="edit-button" (click)="editItem(item)"></p-button>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="item === selectedTranslation || item === tmpNewTranslation">
+          <td>
+            <p-dropdown name="canStartRole" id="canStartRole" styleClass="w-100 col-form-label"
+                        [(ngModel)]="item.language" [options]="getLanguagesOptions(item)"></p-dropdown>
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="item.translation" required
+                   #name="ngModel">
+          </td>
+          <td>
+            <div class="pull-right">
+              <p-button type="button" icon="fa fa-check"
+                        class="save-button me-2" (click)="saveItem(item)"></p-button>
+              <p-button type="button" icon="fa fa-undo"
+                        class="cancel-button" (click)="cancelItem(item)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+      </ng-template>
+    </p-table>
+</div>

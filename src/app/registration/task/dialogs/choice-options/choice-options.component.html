@@ -1,0 +1,20 @@
+<div class="container-fluid px-0">
+  <div class="col-12">
+    <p>{{'TASK.MULTIPLE_CHOICES.' + dialogOptions.identifier + '.MESSAGE' | translate}}</p>
+  </div>
+  <div *ngIf="dialogOptions.options && radioButtonMode" class="row no-gutters px-2 pb-3">
+    <div class="ui-g-12" *ngFor="let opt of dialogOptions.options">
+      <p-radioButton [(ngModel)]="dialogOptions.value" name="multipleChoices" value="{{opt}}"
+        label="{{'TASK.MULTIPLE_CHOICES.' + dialogOptions.identifier + '.' + opt | translate}}"
+        inputId="multipleChoices{{opt}}"></p-radioButton>
+    </div>
+  </div>
+  <div *ngIf="dialogOptionsDropdown && dropDownMode" class="row no-gutters px-2 pb-4">
+    <div class="ui-g-12 pt-0 pb-4">
+      <p-dropdown [(ngModel)]="dialogOptions.value" scrollHeight="100px"
+        placeholder="{{'TASK.MULTIPLE_CHOICES.' + dialogOptions.identifier + '.SELECT_DELAY' | translate}}"
+        name="multipleChoices" [options]="dialogOptionsDropdown">
+      </p-dropdown>
+    </div>
+  </div>
+</div>

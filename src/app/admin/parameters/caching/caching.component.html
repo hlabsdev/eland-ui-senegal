@@ -1,0 +1,17 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters mb-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'CACHING.TITLE' | translate}}</h1>
+    </div>
+  </div>
+
+  <p-button type="button" (click)="invalidateUsers()" icon="fa fa-undo"
+            class="cancel-button me-2" label="{{'COMMON.ACTIONS.INVALIDATE-USERS' | translate}}"></p-button>
+
+  <p-button type="button" (click)="updateUsers()" icon="fa fa-undo"
+            class="cancel-button me-2" label="{{'COMMON.ACTIONS.UPDATE-USERS' | translate}}"></p-button>
+
+  <p-button type="button" (click)="invalidateCache()" icon="fa fa-undo"
+            class="cancel-button me-2" label="{{'COMMON.ACTIONS.INVALIDATE-CACHES' | translate}}"></p-button>
+</div>

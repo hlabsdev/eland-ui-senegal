@@ -1,0 +1,42 @@
+<core-alert *ngIf="errors" [local]="true" [autoClear]="true" [message]="errors"></core-alert>
+
+<eland-dialog *ngIf="dialogConfig" [config]="dialogConfig" (save)="save()" (cancel)="cancel()">
+  <ng-template #content>
+    <ng-template #tab let-tab let-index="index">
+      <ng-container *ngIf="index === 0">
+        <div class="px-2 pt-2">
+          <label class="form-label">{{'PARAMETERS.TERRITORY.COMMON.CODE' | translate}}
+            <span class="text-info"></span></label>
+            <input type="text" [disabled]="disabled" class="form-control" [(ngModel)]="item.code" required #name="ngModel">
+        </div>
+        <div class="px-2 pt-2">
+          <label class="form-label">{{'PARAMETERS.TERRITORY.COMMON.NAME' | translate}}
+            <span class="text-info"></span></label>
+            <input type="text" [disabled]="disabled" class="form-control" [(ngModel)]="item.name" required #name="ngModel">
+        </div>
+
+  <!--      <div class="row no-gutters px-2 pt-2">-->
+  <!--        <label class="col-4 col-form-label">{{'PARAMETERS.RESPONSIBLE_OFFICE.CORRESPONDING_ROLE' | translate}}-->
+  <!--          <span class="text-info"></span></label>-->
+  <!--        <div class="col-8">-->
+  <!--          <p-dropdown [options]="roles" [(ngModel)]="item.correspondingRole" [filter]="true" autoWidth="false" [style]="{'width':'100%'}" *ngIf="roles"></p-dropdown>-->
+  <!--        </div>-->
+  <!--      </div>-->
+
+        <div class="px-2 pt-2">
+          <label class="form-label">{{'PARAMETERS.RESPONSIBLE_OFFICE.TAX_CENTER_ID' | translate}}
+            <span class="text-info"></span></label>
+            <p-dropdown [disabled]="disabled" appendTo="body" [options]="taxCenters" [(ngModel)]="item.taxCenterId" [filter]="true" autoWidth="false" [style]="{'width':'100%'}" *ngIf="taxCenters"></p-dropdown>
+            <input type="text" [disabled]="disabled" class="form-control" [(ngModel)]="item.taxCenterId" required #name="ngModel" *ngIf="!taxCenters">
+        </div>
+
+        <div class="px-2 pt-2" *ngIf="selectTxt && subItemLabel && subItemModel && selectableCol && col">
+          <label class="form-label">{{subItemLabel | translate}}
+            <span class="text-info"></span></label>
+            <p-multiSelect [disabled]="disabled" [options]="selectableCol" [(ngModel)]="item[subItemModel]" [filter]="true" autoWidth="false"
+              [style]="{'width':'100%'}" *ngIf="itemMultiple"></p-multiSelect>
+        </div>
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</eland-dialog>

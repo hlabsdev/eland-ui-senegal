@@ -1,0 +1,92 @@
+<!doctype html>
+
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <title id="title">Erreur du Serveur </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="assets/layout/css/layout-eland-cold-blue.css" rel="stylesheet"> 
+  <style>
+    * {
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    html {
+      color: #888;
+      display: table;
+      font-family: 'Muli', sans-serif;
+      height: 100%;
+      text-align: center;
+      width: 100%;
+    }
+
+    body {
+      display: table-cell;
+      vertical-align: middle;
+      margin: 2em auto;
+    }
+
+    h1 {
+      color: #555;
+      font-size: 2em;
+      font-weight: bolder;
+      margint-top:20px;
+    }
+
+    p {
+      margin: 0 auto;
+      width: 350px;
+      font-size: 18px;
+      padding-top: 15px;
+      padding-bottom: 30px;
+    }
+
+    .button {
+      background-color: #005bcc;
+      color:white;
+      padding:10px;
+      border:0;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    @media only screen and (max-width: 280px) {
+      body,
+      p {
+        width: 95%;
+      }
+      h1 {
+        font-size: 1.5em;
+        margin: 0 0 0.3em;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <img src="assets/layout/images/50x.png" width="200" alt="404">
+  <h1 id="page">Erreur du Serveur</h1>
+  <p id="info">Désolé, mais il semble que le serveur est en panne</p>
+
+  <button class="button" type="button" onclick="redirect()" id="return">Rafraîchir la page</button>
+
+  <script>
+    const userLang = navigator.language || navigator.userLanguage;
+    if(userLang === 'en'){
+      document.getElementById("title").innerHTML = 'Server Error';
+      document.getElementById("page").innerHTML = 'Server Error';
+      document.getElementById("info").innerHTML = 'Sorry, but it looks like the server is down';
+      document.getElementById("return").innerHTML = 'Refresh the page';
+    }
+
+    function redirect() {
+      window.location.href = window.location.href.replace('50x.html', '');
+    }
+  </script>
+</body>
+
+</html>

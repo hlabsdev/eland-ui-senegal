@@ -1,0 +1,68 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto" data-testid="process">{{ 'HEADER.TRANSACTION_INSTANCES' | translate }}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <button type="button" class="btn btn-link" [ngClass]="{'active': !completed}" routerLink="/transaction-instances"
+        [queryParams]="{completed: false}"
+        (click)="loadTransactionInstances({completed:false})">{{'TRANSACTION_INSTANCES.ACTIVE' | translate}}
+      </button>
+      <button type="button" class="btn btn-link" [ngClass]="{'active': completed}" routerLink="/transaction-instances"
+        [queryParams]="{completed: true}"
+        (click)="loadTransactionInstances({completed:true})">{{'TRANSACTION_INSTANCES.COMPLETED' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- searchbar component -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <p-dropdown (onChange)="loadTransactionInstances({count:true, selectTransaction:true})" [options]="transactions"
+        [(ngModel)]="selectTransaction" filter="true"> </p-dropdown>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="processInstances" [rows]="rowSizes.MEDIUM"
+        (onPage)="loadTransactionInstances( $event)" #dataTableTransactionInstances [lazy]="true" [paginator]="true"
+        [totalRecords]="totalRecords">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="text-truncate">
+              {{ col.header | translate }}
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns" title="{{ rowData[col.field] }}">
+              <ng-container *ngIf="col.field === 'startTime'; else state">
+                <span> {{  rowData[col.field] | specificTimezone | localeDate:'medium' }} </span>
+              </ng-container>
+              <ng-template #state>
+                <ng-container *ngIf="rowData[col.field] && col.field === 'state'; else default">
+                  {{'TRANSACTION_INSTANCES.'  + rowData[col.field] | translate}}
+                </ng-container>
+              </ng-template>
+              <ng-template #default>
+                <ng-container>
+                  <span> {{rowData[col.field]}}</span>
+                </ng-container>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage" let-cols>
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

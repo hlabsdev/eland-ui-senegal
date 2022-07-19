@@ -1,0 +1,17 @@
+
+<sog-scroll>
+  <div class="sidemenu-container">
+      <div class="mx-0">
+        <div  class="w-99 add-section">
+          <ng-template #lazySideMenuItem></ng-template>
+        </div>
+        <div *ngIf="sections && sections.length > 0">
+          <app-sidemenu-item class="w-99" [section]="section" *ngFor="let section of sections" [level]="0">
+          </app-sidemenu-item>
+        </div>
+      </div>
+      <app-translation-section-modal [visible]="showAddSection" [section]="currentEditSection"
+        *ngIf="showAddSection && currentEditSection">
+      </app-translation-section-modal>
+  </div>
+</sog-scroll>

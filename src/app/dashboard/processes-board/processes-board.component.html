@@ -1,0 +1,95 @@
+<div class="card">
+  <div class="card">
+    <h5 class="card-title">{{'PROCESS_LIST.SEARCH' | translate}}</h5>
+    <form #form="ngForm" (ngSubmit)="search(form)" [ngClass]="{'was-validated': form.submitted}" novalidate>
+      <div class="row">
+        <div class="col-10">
+          <input type="text" class="form-control" name="value" id="value" [(ngModel)]="query"
+            placeholder="{{'PROCESS_LIST.ADD_CRITERIA' | translate}}"
+            [pattern]="validationService.searchByVariableRegEx.source" required>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-primary">
+            {{'COMMON.ACTIONS.SEARCH'| translate}}</button>
+        </div>
+      </div>
+    </form>
+    <div class="row p-3 mt-24">
+      <p-table [value]="searchResult" *ngIf="searchResult.length > 0" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{'PROCESS_LIST.PROCESS_INSTANCE_ID' | translate}}</th>
+            <th>{{'PROCESS_LIST.START_TIME' | translate}}</th>
+            <th>{{'PROCESS_LIST.END_TIME' | translate}}</th>
+            <th>{{'PROCESS_LIST.ASSIGNEE' | translate}}</th>
+            <th>{{'PROCESS_LIST.PROCESS_ID' | translate}}</th>
+            <th>{{'PROCESS_LIST.BUSINESS_KEY' | translate}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-searchResult>
+          <tr>
+            <td>{{searchResult.id}}</td>
+            <td>{{searchResult.startTime | date:'longDate'}}</td>
+            <td>{{searchResult.ended}}</td>
+            <td>{{searchResult.assignee}}</td>
+            <td><a
+                [routerLink]="['/dashboard/processes', searchResult.processDefinitionId]">{{searchResult.processDefinitionId}}</a>
+            </td>
+            <td>{{searchResult.businessKey}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="card">
+    <h5 class="card-title">{{processCount}} {{'PROCESS_LIST.PROCESSES_DEPLOYED' | translate}}</h5>
+    <div class="row">
+      <div class="col">
+        <p-table *ngIf="processStats" [value]="processStats">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="incidents">{{'PROCESS_LIST.STATE' | translate}}
+                <p-sortIcon field="incidents" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </th>
+              <th pSortableColumn="incidents">{{'PROCESS_LIST.INCIDENTS' | translate}}
+                <p-sortIcon field="incidents" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </th>
+              <th pSortableColumn="instances">{{'PROCESS_LIST.INSTANCES_RUNNING' | translate}}
+                <p-sortIcon field="instances" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </th>
+              <th pSortableColumn="name">{{'PROCESS_LIST.NAME' | translate}}
+                <p-sortIcon field="name" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-processStats>
+            <tr>
+              <td *ngIf="processStats.incidents > 0"><i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
+              </td>
+              <td *ngIf="processStats.incidents === 0"><i class="fa fa-check-circle text-success"
+                  aria-hidden="true"></i>
+              </td>
+              <td>{{processStats.incidents}}</td>
+              <td>{{processStats.instances}}</td>
+              <td><a [routerLink]="['/dashboard/processes', processStats.id]">{{processStats.name}}</a></td>
+              <td></td>
+          </ng-template>
+          <ng-template pTemplate=" emptymessage">
+            <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

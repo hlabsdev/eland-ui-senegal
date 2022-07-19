@@ -1,0 +1,38 @@
+<div class="group-name">
+  <h2 [className]="aGroupNameHovered ? 'quicklink-intro' : 'quicklink-no-intro'">
+    {{ groupNameToDisplay }}
+  </h2>
+</div>
+<div class="group-quicklinks">
+  <div class="group-quicklinks-scroll">
+    <ul *ngFor="let group of quicklinksGroups$ | async;">
+      <!-- Quicklink ID   -->
+      <li *ngFor="let link of group.quicklinks; index as i;" class="quicklink" (mouseover)="showHGN(group)"
+        (mouseleave)="hideHGN()">
+        <!-- Quicklink Name and URL  -->
+        <div class="url">
+          <a *ngIf="link.url?.substring(0, 4) === 'http'" rel="noopener" target="{{link.target}}" href="{{link.url}}">
+            <h3>{{ link.name }}</h3>
+          </a>
+          <a *ngIf="link.url?.substring(0, 4) !== 'http'" rel="noopener" target="{{link.target}}"
+            (click)="handleQuicklinkRouting(link)">
+            <h3>{{ link.name }}</h3>
+          </a>
+        </div>
+        <!-- Quicklink Actions Button  -->
+        <div class="actions">
+          <button #btn title="{{'QUICKLINKS.TOOLTIPS.SET_DELETE_DUPLICATE' | translate}}"
+            (click)="toggleQLActions($event, link.id)">
+            ...
+          </button>
+          <!-- Quicklink Actions dialog  -->
+          <div class="actions-dialog" [@qlActionsState]="qlActionsStateName">
+            <app-actions-quicklink-dialog (setClick)="setQl($event)" (duplicateClick)="duplicateQl(link)"
+              (deleteClick)="deleteQl(link.id)">
+            </app-actions-quicklink-dialog>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

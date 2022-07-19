@@ -1,0 +1,45 @@
+<p-dialog appendTo="body" [style]="{ width: '600px' }" [header]="title" [(visible)]="item" [modal]="true"
+  [responsive]="true" [maximizable]="true" (onHide)="cancel()">
+  <div>
+    <div class="container-fluid px-0">
+
+      <core-alert *ngIf="errors" [local]="true" [autoClear]="true" [message]="errors"></core-alert>
+
+      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'PARAMETERS.TERRITORY.COMMON.NAME' | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <input type="text" class="form-control" [(ngModel)]="item.name" required #name="ngModel">
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'PARAMETERS.TRANSLATION.LOCALE' | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <p-dropdown [options]="locales" [(ngModel)]="item.locale" [filter]="true" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'PARAMETERS.TRANSLATION.ISRTL' | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <p-checkbox value="val1" [(ngModel)]="item.isRTL"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 pt-3">
+        <div class="col-12">
+          <div class="pull-right">
+            <p-button type="button" icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+              class="cancel-button me-3" (click)="cancel()"></p-button>
+            <p-button icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}" class="save-button"
+              (click)="save()"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>

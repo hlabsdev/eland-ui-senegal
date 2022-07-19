@@ -1,0 +1,44 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters mb-0">
+    <div class="col-12 d-flex">
+      <h1 class="my-auto">{{'HEADER.PARAMETERS' | translate}}</h1>
+    </div>
+  </div>
+
+  <div class="row no-gutters mb-0 px-0 pt-0 pb-0">
+    <div class="col-12">
+      <p-tabView [activeIndex]="selectedParamIndex" (onChange)="handleChange($event)">
+        <p-tabPanel [header]="'PARAMETERS.TERRITORY.TITLE' | translate">
+          <ng-template #lazyTerritory></ng-template>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.REGISTRY.TITLE' | translate">
+          <ng-template #lazyRegistry></ng-template>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.RESPONSIBLE_OFFICE.TITLE' | translate">
+          <ng-template #lazyResponsibleOffice></ng-template>
+        </p-tabPanel>
+        <p-tabPanel header="Forms">
+          <ng-template #lazyForms></ng-template>
+        </p-tabPanel>
+        <p-tabPanel header="Form Groups">
+          <ng-template #lazyFormsGroup></ng-template>
+        </p-tabPanel>
+        <p-tabPanel [header]="'CACHING.TITLE' | translate">
+          <ng-template #lazyCaching></ng-template>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.LOCALE.TITLE' | translate">
+          <ng-template #lazyLocale></ng-template>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.LANGUAGE.TITLE' | translate">
+          <ng-template #lazyLanguage></ng-template>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.TRANSLATION.TITLE' | translate">
+          <ng-template #lazyTranslation></ng-template>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+</div>

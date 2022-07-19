@@ -1,0 +1,42 @@
+<div class="container-fluid px-0">
+  <!-- header -->
+  <div class="row me-0 mb-3 pl-0 py-3 bg-white mx-3">
+    <!-- title -->
+    <div class="col-6 d-flex pl-0">
+      <h1 class="my-auto">{{'RRR.CONFIG.TITLE_LIST' | translate}}</h1>
+    </div>
+
+    <!-- buttons -->
+    <div class="col-6 pr-0">
+      <div class="pull-right">
+        <button type="button" pButton icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+          class="ui-button-warning pull-right" (click)="goToRRR()">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- tabs -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 px-3">
+        <p-tabView>
+          <p-tabPanel header="{{'RRR.CONFIG.RIGHT_TITLE' | translate}}">
+            <app-right-types #childComponent (onAdd)="handleAdd($event)"></app-right-types>
+          </p-tabPanel>
+
+          <p-tabPanel header="{{'RRR.CONFIG.RESP_TITLE' | translate}}">
+            <app-responsibility-types #childComponent (onAdd)="handleAdd($event)"></app-responsibility-types>
+          </p-tabPanel>
+
+          <p-tabPanel header="{{'RRR.CONFIG.REST_TITLE' | translate}}">
+            <app-restriction-types #childComponent (onAdd)="handleAdd($event)"></app-restriction-types>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+
+  <app-codelist appendTo="body" *ngIf="receivedCodeList?.codeListID || receivedCodeList?.type"
+    [codeList]="receivedCodeList" [sourceRRRconfig]="true" (onClose)="closeDialog()"></app-codelist>
+</div>

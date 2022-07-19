@@ -1,0 +1,10 @@
+<ngx-ui-loader></ngx-ui-loader>
+
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      [datas]="deployments"
+      (reloadTable)="reload()"
+      [cols]="cols">
+    </eland-table>
+</div>

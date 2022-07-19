@@ -1,0 +1,55 @@
+<ngx-ui-loader *ngIf="rrrsUrl"></ngx-ui-loader>
+
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="rrrs" 
+      (addCallBack)="showRRRDialogue()"
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item>
+        <td *ngIf="col.field === 'rightTypeDescription'">{{ item.rightTypeDescription }}</td>
+        <td *ngIf="col.field === 'spatialUnitNumber'">{{ item.spatialUnitNumber }}</td>
+        <td *ngIf="col.field === 'idParties'">
+          <ul class="list-unstyled">
+            <li *ngFor="let partyId of rrrs.idParties">{{partyId}}</li>
+          </ul>
+        </td>
+        <td *ngIf="col.field === 'nameParties'">
+          <ul class="list-unstyled">
+            <li *ngFor="let partyName of rrrs.nameParties">{{partyName}}</li>
+          </ul>
+        </td>
+        <td *ngIf="col.field === 'rolParties'">
+          <ul class="list-unstyled">
+            <li *ngFor="let rolParty of rrrs.rolParties">{{rolParty}}</li>
+          </ul>
+        </td>
+        <td *ngIf="col.field === 'radiationDate'">{{rrrs.radiationDate}}</td>
+        <td *ngIf="col.field === 'radiationSlip'" class="text-right">{{rrrs.radiationSlip}}</td>
+        <td *ngIf="col.field === 'inscriptionDate'">{{rrrs.inscriptionDate}}</td>
+        <td *ngIf="col.field === 'inscriptionSlip'" class="text-right">{{rrrs.inscriptionSlip}}</td>
+        <td *ngIf="col.field === 'modDate'">{{rrrs.modDate}}</td>
+      </ng-template>
+      <ng-template #actions let-item="item" let-custom="custom">
+        <p-button type="button" *ngIf="(custom.formVariables.isReadOnly || custom.rrrsUrl)" icon="fa fa-search"
+        class="view-button me-2" pTooltip="{{'COMMON.ACTIONS.VIEW' | translate}}" tooltipPosition="top"
+        life="4000" (click)="showRRRDialogue(item)">
+      </p-button>
+
+      <p-button type="button" *ngIf="!(custom.formVariables.isReadOnly || custom.rrrsUrl)" icon="icon icon-edit-eland"
+        class="edit-button me-2" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}" tooltipPosition="top"
+        life="4000" (click)="showRRRDialogue(item)">
+      </p-button>
+
+      <p-button [hidden]="custom.hideDeleteButton || custom.rrrs.registrationDate" type="button" *ngIf="custom.baUnit"
+        (click)="removeRRR(item)" class="delete-button" icon="fa fa-times"
+        pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000"></p-button>
+      </ng-template>
+  </eland-table>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="rrr" modal="modal" #rrrDialog>
+  <ng-template #lazyRrr *ngIf="rrr"></ng-template>
+</app-dialog>

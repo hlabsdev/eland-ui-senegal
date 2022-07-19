@@ -1,0 +1,52 @@
+
+<!-- dialog -->
+<div class="container-fluid px-0 row" *ngIf="!readOnly">
+  <app-rrr-validation-party-role-element
+  [rrrValidationPartyRole]="rrrValidationPartyRole" (saved)="saveRRRValidationPartyRole($event)"
+  (canceled)="canceled()"></app-rrr-validation-party-role-element>
+</div>  
+
+<br>
+ <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="rrrValidation.partyRoles" [rows]="rowSizes.SMALL" [paginator]="true"
+        #dataTablePartyRoles>
+        <ng-template pTemplate="header" let-column>
+          <tr>
+            <th *ngFor="let col of cols" [ngStyle]="{'width': col.width}">
+              <div>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ms-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th *ngIf="!readOnly" class="text-dark font-weight-bold">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-row let-rrrValidationPartyRole>
+          <tr>
+            <td>{{'CODELIST.VALUES.' + rrrValidationPartyRole.role.value | translate}}</td>
+            <td>
+              <p-triStateCheckbox *ngIf="rrrValidationPartyRole.required" class="me-3"  [readonly]="readOnly"
+                [ngClass]="{'blue-checkbox': true}"></p-triStateCheckbox>
+            </td>
+            <td *ngIf="!readOnly">
+              <div class="pull-right">
+                <p-button class="add-button px-1" type="button" icon="icon icon-edit-eland"
+                  (click)="showRRRValidationPartyRoleElementDialogue(rrrValidationPartyRole)"></p-button>
+                <p-button class="delete-button px-1" type="button" icon="fa fa-trash"
+                  (click)="removeRRRValidationPartyRole(rrrValidationPartyRole)"></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+

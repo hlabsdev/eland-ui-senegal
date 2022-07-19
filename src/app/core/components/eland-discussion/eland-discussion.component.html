@@ -1,0 +1,40 @@
+<core-alert class="m-0" *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"
+[compact]="true"></core-alert>
+
+<p-dialog class="eland-dialog" [(visible)]="displayModal" [style]="{width: '70vw'}" [modal]="true" appendTo="body"
+  [maximizable]="true" (onHide)="hideModal()">
+  <ng-template pTemplate="header">
+    {{'COMMON.ACTIONS.CHAT' | translate}}
+  </ng-template>
+
+  <p-accordion id="eland-discussion-accordion">
+    <p-accordionTab header="{{'TASK.COMMENT.NEW_COMMENT' | translate}}">
+      <form [formGroup]="discussionForm" (ngSubmit)="onSubmit()">
+        <div class="px-3 py-3">
+          <div>{{'TASK.COMMENT.SUBJECT' | translate}} <span class="text-info">*</span></div>
+          <input type="text" class="form-control" name="subject" id="subject" formControlName="subject" required>
+        </div>
+  
+        <div class="px-3 pb-3">
+          <div>{{'TASK.COMMENT.MESSAGE' | translate}} <span class="text-info">*</span></div>
+          <textarea name="message" id="message" formControlName="message" [rows]="rowSizes.XSMALL" pInputTextarea
+            autoResize="autoResize" style="width:100%;" type="text" class="h-100 form-control" required></textarea>
+        </div>
+        <div class="text-end px-3 mb-3">
+          <button pButton [loading]="isLoading" class="btn btn-primary" type="submit" [disabled]="!discussionForm.valid">Ajouter</button>
+        </div>
+      </form>
+    </p-accordionTab>
+  </p-accordion>
+
+  <div class="card border-0">
+    <eland-table 
+      [tableConfig]="tableConfig" 
+      [datas]="taskComments" 
+      [cols]="cols">
+      <ng-template #rowexpansion let-item>
+        {{ item.message }}
+      </ng-template>
+    </eland-table>
+  </div>
+</p-dialog>

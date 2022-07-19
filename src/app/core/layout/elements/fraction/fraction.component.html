@@ -1,0 +1,10 @@
+<div class="form-group row no-gutters px-3" *ngIf="!field.disabled" [formGroup]="fractionForm">
+  <label for="share" class="col-12 col-form-label">{{'FRACTION.SHARE' | translate}}
+    <span class="text-info" *ngIf="field.isRequired()">*</span>
+  </label>
+  <div class="col-12 fraction d-flex justify-content-between">
+    <input pInputText class="form-control" [pKeyFilter]="intRegEx" name="numerator" id="numerator" placeholder="{{'FRACTION.NUMERATOR' | translate}}" formControlName="numerator" required>
+    <span class="divider my-auto">/</span>
+    <input pInputText class="form-control" [pKeyFilter]="intRegEx" name="denominator" id="denominator" placeholder="{{'FRACTION.DENOMINATOR' | translate}}" formControlName="denominator" required>
+  </div>
+</div>

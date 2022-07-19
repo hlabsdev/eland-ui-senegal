@@ -1,0 +1,38 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="rrrValidations" 
+      (addCallBack)="showRRRValidationDialogue()"
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item  let-custom="custom">
+        <td *ngIf="col.field === 'select' && !custom.rrrValidationsUrl">
+          <p-checkbox [(ngModel)]="item.checked" name="checked" binary="true"
+            (onChange)="selectRRRValidation(item)"></p-checkbox>
+        </td>
+        <td *ngIf="col.field === 'require' &&  !custom.rrrValidationsUrl">
+          <p-checkbox [disabled]="!item.checked" [(ngModel)]="item.requiredRRR" name="requiredRRR"
+            binary="true" (onChange)="selectRRRValidation(item)">
+          </p-checkbox>
+        </td>
+        <td *ngIf="col.field === 'label'">{{ item.label }}</td>
+        <td *ngIf="col.field === 'rrrType'">{{'RRR.TYPES.' + item.rrrType | translate}}</td>
+        <td *ngIf="col.field === 'subType'">{{ item.subType }}</td>
+        <td *ngIf="col.field === 'type'">{{'CODELIST.VALUES.' + item.type.value | translate}}</td>
+      </ng-template>
+      <ng-template #actions let-item="item" let-custom="custom">
+        <div *ngIf="custom.rrrValidationsUrl">
+          <p-button  type="button" class="edit-button ms-2" (click)="showRRRValidationDialogue(item)" icon="icon icon-edit-eland"></p-button>
+          <p-button *ngIf="!item.haveAssociatedTransactions" type="button" class="delete-button ms-2" (click)="removeRRRValidation(item)" icon="fa fa-times"></p-button>
+        </div>
+        <div *ngIf="!custom.rrrValidationsUrl">
+          <p-button type="button" class="view-button  me-2" (click)="showRRRValidationDialogue(item)" icon="fa fa-search"></p-button>
+        </div>
+      </ng-template>
+    </eland-table>
+    <ng-template #lazyRrrValidation></ng-template>
+</div>
+
+

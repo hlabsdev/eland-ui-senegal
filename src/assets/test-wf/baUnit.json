@@ -1,0 +1,238 @@
+{
+  "beginLifespanVersion": null,
+  "endLifespanVersion": null,
+  "registered": false,
+  "type": {
+    "codeListID": "ced1fc3a-c840-4575-94be-e1ebb009b981",
+    "value": "BA_UNIT_BASIC_PROPERTY_UNIT",
+    "type": "BA_UNIT_TYPE",
+    "description": "Unité de base de la propriété",
+    "id": "ced1fc3a-c840-4575-94be-e1ebb009b981"
+  },
+  "rrrs": [
+    {
+      "beginLifespanVersion": null,
+      "endLifespanVersion": null,
+      "registered": false,
+      "description": "HE HAS DROIT - Coutumier",
+      "timeSpec": "2019-02-13T05:00:00.000Z",
+      "share": {
+        "numerator": "1",
+        "denominator": "1"
+      },
+      "shareCheck": null,
+      "rrrType": "RIGHT",
+      "type": {
+        "codeListID": "6abccde1-aed6-4e97-a7c5-e6b2d96ccde2",
+        "value": "RIGHT_CUSTOMARY_TYPE",
+        "type": "RIGHT_TYPE",
+        "description": "Type coutumier",
+        "id": "6abccde1-aed6-4e97-a7c5-e6b2d96ccde2"
+      },
+      "documents": [],
+      "rightType": "FREEHOLD"
+    },
+    {
+      "beginLifespanVersion": null,
+      "endLifespanVersion": null,
+      "registered": false,
+      "description": "RESTRICTION - No buildinsg allowed",
+      "timeSpec": "2019-01-17T23:21:48.000Z",
+      "share": {
+        "numerator": "1",
+        "denominator": "1"
+      },
+      "shareCheck": null,
+      "rrrType": "RESTRICTION",
+      "type": {
+        "codeListID": "902aa7ba-60fc-40df-95ce-5e495aba6941",
+        "description": "Pas de bâtiment",
+        "id": "902aa7ba-60fc-40df-95ce-5e495aba6941",
+        "type": "RESTRICTION_TYPE",
+        "value": "RESTRICTION_NO_BUILDING"
+      },
+      "documents": [],
+      "partyRequired": null
+    },
+    {
+      "beginLifespanVersion": null,
+      "endLifespanVersion": null,
+      "registered": false,
+      "description": "maintenance of river",
+      "timeSpec": "2019-01-17T23:32:24.000Z",
+      "share": {
+        "numerator": "1",
+        "denominator": "1"
+      },
+      "shareCheck": null,
+      "rrrType": "RESPONSIBILITY",
+      "type": {
+        "codeListID": "1e85bac5-d065-48b1-9c8a-06d18cd3756c",
+        "description": "Maintenance du monument",
+        "id": "1e85bac5-d065-48b1-9c8a-06d18cd3756c",
+        "type": "RESPONSIBILITY_TYPE",
+        "value": "RESPONSIBILITY_MONUMENT_MAINTENANCE"
+      },
+      "documents": []
+    }
+  ],
+  "parties": [
+    {
+      "beginLifespanVersion": null,
+      "endLifespanVersion": null,
+      "registered": false,
+      "name": "Peter Meter",
+      "electronicAddress": "peter.meter@email.com",
+      "partyType": {
+        "codeListID": "92d31749-083f-4c6d-b10a-9a8d4469d7c3",
+        "value": "PARTY_NATURAL_PERSON",
+        "type": "PARTY_TYPE",
+        "description": "Personne naturelle",
+        "id": "92d31749-083f-4c6d-b10a-9a8d4469d7c3"
+      },
+      "partyRoleType": {
+        "codeListID": "f30c0fa9-cfd7-4ca4-8964-978fcdda1089",
+        "value": "PARTY_ROLE_GRANTEE",
+        "type": "PARTY_ROLE",
+        "description": "Bénéficiaire",
+        "id": "f30c0fa9-cfd7-4ca4-8964-978fcdda1089"
+      },
+      "groupParty": null,
+      "extPID": "71938456",
+      "fullName": {
+        "givenName": "Peter",
+        "otherName": "T",
+        "surName": "Meter"
+      },
+      "dateOfBirth": "1996-02-15T05:00:00.000Z",
+      "dateOfDeath": null,
+      "gender": {
+        "codeListID": "43618931-c884-41f6-8ee9-f29a2f1ac487",
+        "value": "GENDER_MALE",
+        "type": "GENDER_TYPE",
+        "description": "Masculin",
+        "id": "43618931-c884-41f6-8ee9-f29a2f1ac487"
+      },
+      "mobileNumber": "555 555 55555",
+      "nationality": {
+        "codeListID": "63a54631-2fcc-4a6d-898b-c928e69c28a6",
+        "value": "COUNTRY_MALI",
+        "type": "COUNTRY_TYPE",
+        "description": "Mali",
+        "id": "63a54631-2fcc-4a6d-898b-c928e69c28a6"
+      },
+      "address": "Elm st",
+      "socialDenomination": "denomination social"
+    },
+    {
+      "beginLifespanVersion": null,
+      "endLifespanVersion": null,
+      "registered": false,
+      "name": "Mary Ann",
+      "electronicAddress": "mary.ann@email.com",
+      "partyType": {
+        "codeListID": "92d31749-083f-4c6d-b10a-9a8d4469d7c3",
+        "value": "PARTY_NATURAL_PERSON",
+        "type": "PARTY_TYPE",
+        "description": "Personne naturelle",
+        "id": "92d31749-083f-4c6d-b10a-9a8d4469d7c3"
+      },
+      "partyRoleType": {
+        "codeListID": "9420526d-39af-49bd-9c48-4f59529ea4be",
+        "value": "PARTY_ROLE_GRANTOR",
+        "type": "PARTY_ROLE",
+        "description": "Cédant",
+        "id": "9420526d-39af-49bd-9c48-4f59529ea4be"
+      },
+      "groupParty": null,
+      "extPID": "48751364",
+      "fullName": {
+        "givenName": "Mary",
+        "otherName": "C",
+        "surName": "Ann"
+      },
+      "dateOfBirth": "1995-02-14T05:00:00.000Z",
+      "dateOfDeath": null,
+      "gender": {
+        "codeListID": "6471bbc7-9383-4a92-ba46-a97111b40e23",
+        "value": "GENDER_FEMALE",
+        "type": "GENDER_TYPE",
+        "description": "Féminin",
+        "id": "6471bbc7-9383-4a92-ba46-a97111b40e23"
+      },
+      "mobileNumber": "666 666 66666",
+      "nationality": {
+        "codeListID": "63a54631-2fcc-4a6d-898b-c928e69c28a6",
+        "value": "COUNTRY_MALI",
+        "type": "COUNTRY_TYPE",
+        "description": "Mali",
+        "id": "63a54631-2fcc-4a6d-898b-c928e69c28a6"
+      },
+      "address": "666 Elm st.",
+      "socialDenomination": "DS"
+    }
+  ],
+  "spatialUnits": [
+    {
+      "beginLifespanVersion": null,
+      "endLifespanVersion": null,
+      "registered": false,
+      "cardinalPoints": [
+        {
+          "point": "limit sud"
+        },
+        {
+          "point": "limit nord"
+        },
+        {
+          "point": "limit est"
+        },
+        {
+          "point": "limit ouest"
+        }
+      ],
+      "spatialUnitType": "PARCEL",
+      "created": null,
+      "region": {
+        "code": "KT",
+        "region": "Koulikoro",
+        "name": "Kati",
+        "description": "District de Kati",
+        "circle": "Kati",
+        "division": "Kati"
+      },
+      "buildingOnParcel": null,
+      "buildingAsPartOfParcel": null,
+      "parcelNumber": "LM-53",
+      "surface": "5123",
+      "price": "50543",
+      "location": "City of kati",
+      "nature": {
+        "codeListID": "PARCEL_NATURE_URBANqwd33123-4c5d-4023-3214-b92b8a6f5adf",
+        "value": "",
+        "type": "PARCEL_NATURE_TYPE",
+        "description": "Concession urbaine",
+        "id": "qwd33123-4c5d-4023-3214-b92b8a6f5adf"
+      }
+    }
+  ],
+  "registry": {
+    "id": null,
+    "titleId": 4,
+    "district": {
+      "code": "KT",
+      "region": "Koulikoro",
+      "name": "Kati",
+      "description": "District de Kati",
+      "circle": "Kati",
+      "division": "Kati"
+    },
+    "volume": 1,
+    "folio": 4,
+    "hasOldRegistry": false,
+    "oldTitleId": null,
+    "oldDistrict": null,
+    "oldVolume": null,
+    "oldFolio": null
+  }
+}

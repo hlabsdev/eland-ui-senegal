@@ -1,0 +1,10 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="generalFormalityRegister" 
+      [cols]="cols">
+    </eland-table>
+</div>

@@ -1,0 +1,19 @@
+<div *ngIf="currentSection">
+  <div class="row no-gutters mb-1">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{currentSection?.name}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" icon="fa fa-edit"
+                class="edit-button" (click)="editSection()"></p-button>
+    </div>
+  </div>
+  <div class="container-fluid py-2" *ngIf="currentSection">
+    <ng-template #lazyTranslationItem></ng-template>
+  </div>
+</div>
+
+<div *ngIf="modalVisible">
+  <ng-template #lazyCurrentAdd></ng-template>
+</div>

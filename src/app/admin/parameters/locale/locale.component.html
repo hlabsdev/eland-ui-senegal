@@ -1,0 +1,12 @@
+<div class="card border-0 pt-0">
+  <eland-table 
+    [tableConfig]="tableConfig" 
+    (reloadTable)="reload()" 
+    (actions)="call($event)"
+    (addCallBack)="showDialog()" 
+    [datas]="locales" 
+    [cols]="cols">
+  </eland-table>
+</div>
+
+<ng-template #lazyCurrentLocale *ngIf="currentLocale"></ng-template>

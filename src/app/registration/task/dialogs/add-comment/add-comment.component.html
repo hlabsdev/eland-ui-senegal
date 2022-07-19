@@ -1,0 +1,15 @@
+<div class="row no-gutters px-3 py-3">
+  <div class="col-4 my-auto">{{'TASK.COMMENT.SUBJECT' | translate}} <span class="text-info">*</span></div>
+  <div class="col-8">
+    <input type="text" class="form-control" name="subject" id="subject" [(ngModel)]="dialogOptions.value.subject"
+           required>
+  </div>
+</div>
+
+<div class="row no-gutters px-3 pb-3">
+  <div class="col-4">{{'TASK.COMMENT.MESSAGE' | translate}} <span class="text-info">*</span></div>
+  <div class="col-8">
+    <textarea name="message" id="message" [(ngModel)]="dialogOptions.value.message" [rows]="rowSizes.XSMALL"
+              pInputTextarea autoResize="autoResize" style="width:100%;" type="text" class="h-100" required></textarea>
+  </div>
+</div>

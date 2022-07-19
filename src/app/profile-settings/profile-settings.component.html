@@ -1,0 +1,283 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+<section class="profile-page inside-page">
+  <form #form="ngForm" (ngSubmit)="saveAppPrefs(applicationPreferences, form)" novalidate>
+    <div class="container-fluid pl-0 pr-0">
+      <div class="row row_no_margin no-gutters mb-3">
+        <div class="col-8 d-flex">
+          <h1 class="my-auto">{{ 'HEADER.PROFILE_AND_PREFERENCES' | translate}}</h1>
+        </div>
+        <div class="col-4 d-flex justify-content-end">
+          <p-button *ngIf="!applicationPreferences.main" type="submit" class="save-settings-button" icon="fa fa-check"
+                    label="{{'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.SAVE_SETTINGS' | translate}}">
+          </p-button>
+        </div>
+      </div>
+      <div class="row row_no_padding no-gutters ">
+        <div class="col-12">
+          <p-tabView [activeIndex]="selectedSettingIndex" (onChange)="handleChange($event)">
+            <p-tabPanel header="{{ 'USER_SETTINGS.USER_PROFILE_TAB.TAB_NAME' | translate }}" class="user_profile_tab">
+              <div class="card">
+                <div>
+                  <p>{{ 'USER_SETTINGS.USER_PROFILE_TAB.USERNAME' | translate}}</p>
+                  <span>{{user.username}}</span>
+                </div>
+                <div>
+                  <p>{{ 'USER_SETTINGS.USER_PROFILE_TAB.FULL_NAME' | translate}}</p>
+                  <span>{{user.firstName}} {{user.lastName}}</span>
+                </div>
+                <div>
+                  <p>{{ 'USER_SETTINGS.USER_PROFILE_TAB.ROLES' | translate}} </p>
+                  <ul>
+                    <li *ngFor="let role of user.roles">{{ role }}</li>
+                  </ul>
+                </div>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="{{ 'USER_SETTINGS.SESSION_PREFERENCES_TAB.TAB_NAME' | translate }}"
+                        class="user_preferences_tab">
+              <div class="card">
+                <div class="row">
+                  <div class="title">
+                    <span class="field-name">{{ 'USER_SETTINGS.SESSION_PREFERENCES_TAB.LANGUAGE' | translate }}
+                    </span>
+                  </div>
+                  <div class="dropdown">
+                    <p-dropdown [options]="langs" [style]="{'width':'100%'}" scrollHeight="400px"
+                                [(ngModel)]="initialLang" name="langs" (onChange)="changeLanguage($event.value)">
+                      <ng-template let-item pTemplate="selectedItem">
+                        {{item.label}} <span class="displayedLang">{{displayedLang}}</span>
+                      </ng-template>
+                      <ng-template let-lang pTemplate="item">
+                        <div>
+                          <span>{{lang.label}}</span>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
+                </div>
+              </div>
+            </p-tabPanel>
+            <!--  preferences form -->
+            <!--if "hasSystemAdministratorAccess" -->
+            <p-tabPanel *ngIf="hasSystemAdministratorAccess"
+                        header="{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.TAB_NAME' | translate }}"
+                        class="application_preferences_tab">
+              <div class="card">
+                <div class="row main">
+                  <div class="column1">
+                    <div class="row visual_identity">
+                      <div class="col-5">
+                        <span class="field-name" >{{
+                          'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.ORGANIZATION_VISUAL_IDENTITY' | translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <img (click)="hiddenInputFileVI.click()"
+                             [src]="transform(applicationPreferences.organizationVisualIdentity)">
+                      </div>
+                      <div>
+                        <input [disabled]="applicationPreferences.main" type="file"
+                               (change)="visualCoBrandChange($event, 'visual_identity')" #hiddenInputFileVI>
+                      </div>
+                    </div>
+                    <div class="row name">
+                      <div class="col-5">
+                        <span class="field-name">{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.ORGANIZATION_NAME'
+                            | translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <input type="text" [disabled]="applicationPreferences.main"
+                               name="orgName" [(ngModel)]="applicationPreferences.organizationName">
+                      </div>
+                    </div>
+                    <div class="row website">
+                      <div class="col-5">
+                        <span class="field-name">{{
+                          'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.ORGANIZATION_WEBSITE' | translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <input type="text" [disabled]="applicationPreferences.main"
+                               name="orgWebsite" [(ngModel)]="applicationPreferences.organizationWebsite">
+                      </div>
+                    </div>
+                    <div class="row home_page_visual_1">
+                      <div class="col-5">
+                        <span class="field-name">{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.WELCOME_VISUAL' |
+                            translate:{param:'1'} }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <img (click)="hiddenInputFileSV1.click()"
+                             [src]="transform(applicationPreferences.appSliderVisual_1)">
+                      </div>
+                      <div>
+                        <input [disabled]="applicationPreferences.main" type="file"
+                               (change)="visualCoBrandChange($event, 'home_page_visual_1')"
+                               #hiddenInputFileSV1>
+                      </div>
+                    </div>
+                    <div class="row home_page_visual_2">
+                      <div class="col-5">
+                        <span class="field-name">{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.WELCOME_VISUAL' |
+                            translate:{param:'2'} }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <img (click)="hiddenInputFileSV2.click()"
+                             [src]="transform(applicationPreferences.appSliderVisual_2)">
+                      </div>
+                      <div>
+                        <input [disabled]="applicationPreferences.main"
+                               type="file" (change)="visualCoBrandChange($event, 'home_page_visual_2')"
+                               #hiddenInputFileSV2>
+                      </div>
+                    </div>
+                    <div class="row home_page_visual_3">
+                      <div class="col-5">
+                        <span class="field-name">{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.WELCOME_VISUAL' |
+                            translate:{param:'3'} }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <img (click)="hiddenInputFileSV3.click()"
+                             [src]="transform(applicationPreferences.appSliderVisual_3)">
+                      </div>
+                      <div>
+                        <input [disabled]="applicationPreferences.main"
+                               type="file" (change)="visualCoBrandChange($event, 'home_page_visual_3')"
+                               #hiddenInputFileSV3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column2">
+                    <div class="row main_color">
+                      <div class="col-5">
+                        <span class="field-name">{{
+                          'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.ORGANIZATION_MAIN_COLOR' | translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <input [disabled]="applicationPreferences.main" type="button"
+                               [style.background]="elandGenericColors[0].value"
+                               (colorPickerChange)="onChangeColorHsla($event, 'main_color')"
+                               [(colorPicker)]="elandGenericColors[0].value" [cpPresetLabel]="cpPresetLabel"
+                               [cpPresetColors]="presetColorValues" [cpOKButton]="true" [cpOKButtonText]="'Select'"
+                               [cpCancelButton]="true" [cpSaveClickOutside]="'false'" [cpDisableInput]="false" h
+                               [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpAddColorButton]="true"
+                               [cpAddColorButtonText]="cpAddColorButtonText" [cpWidth]="'325px'" [cpHeight]="'auto'"
+                               [cpPosition]="'bottom'" [cpMaxPresetColorsLength]="12" />
+                      </div>
+                    </div>
+                    <div class="row my_tasks_button_color">
+                      <div class="col-5">
+                        <span class="field-name">{{
+                          'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.MY_TASKS_BUTTON_COLOR' | translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <input [disabled]="applicationPreferences.main" type="button"
+                               [style.background]="elandGenericColors[1].value"
+                               (colorPickerChange)="onChangeColorHsla($event, 'my_tasks_button_color')"
+                               [(colorPicker)]="elandGenericColors[1].value" [cpPresetLabel]="cpPresetLabel"
+                               [cpPresetColors]="presetColorValues" [cpOKButton]="true" [cpOKButtonText]="'Select'"
+                               [cpCancelButton]="true" [cpSaveClickOutside]="'false'" [cpDisableInput]="false"
+                               [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpAddColorButton]="true"
+                               [cpAddColorButtonText]="cpAddColorButtonText" [cpWidth]="'325px'" [cpHeight]="'auto'"
+                               [cpPosition]="'bottom'" [cpMaxPresetColorsLength]="12" />
+                      </div>
+                    </div>
+                    <div class="row claim_tasks_button_color">
+                      <div class="col-5">
+                        <span class="field-name">{{
+                          'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.CLAIM_TASKS_BUTTON_COLOR' | translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <input [disabled]="applicationPreferences.main" type="button"
+                               [style.background]="elandGenericColors[2].value"
+                               (colorPickerChange)="onChangeColorHsla($event, 'claim_tasks_button_color')"
+                               [(colorPicker)]="elandGenericColors[2].value" [cpPresetLabel]="cpPresetLabel"
+                               [cpPresetColors]="presetColorValues" [cpOKButton]="true" [cpOKButtonText]="'Select'"
+                               [cpCancelButton]="true" [cpSaveClickOutside]="'false'" [cpDisableInput]="false"
+                               [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpAddColorButton]="true"
+                               [cpAddColorButtonText]="cpAddColorButtonText" [cpWidth]="'325px'" [cpHeight]="'auto'"
+                               [cpPosition]="'bottom'" [cpMaxPresetColorsLength]="12" />
+                      </div>
+                    </div>
+                    <div class="row all_tasks_button_color">
+                      <div class="col-5">
+                        <span class="field-name">{{
+                          'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.ALL_TASKS_BUTTON_COLOR' | translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <input [disabled]="applicationPreferences.main" type="button"
+                               [style.background]="elandGenericColors[3].value"
+                               (colorPickerChange)="onChangeColorHsla($event, 'all_tasks_button_color')"
+                               [(colorPicker)]="elandGenericColors[3].value" [cpPresetLabel]="cpPresetLabel"
+                               [cpPresetColors]="presetColorValues" [cpOKButton]="true" [cpOKButtonText]="'Select'"
+                               [cpCancelButton]="true" [cpSaveClickOutside]="'false'" [cpDisableInput]="false"
+                               [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpAddColorButton]="true"
+                               [cpAddColorButtonText]="cpAddColorButtonText" [cpWidth]="'325px'" [cpHeight]="'auto'"
+                               [cpPosition]="'bottom'" [cpMaxPresetColorsLength]="12" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-5" *ngIf="applicationPreferences.main">
+                        <span class="field-name">{{'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.CUSTOM_SETTINGS' |translate }}
+                        </span>
+                      </div>
+                      <div class="col-5" *ngIf="!applicationPreferences.main">
+                        <span class="field-name">{{'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.DEFAULT_SETTINGS' |translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <p-radioButton name="change_default" [value]="false"
+                                       [(ngModel)]="applicationPreferences.isActive"
+                                       label="{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.YES' | translate }}"
+                                       (onClick)="setDefaultSettingValue(false)" class="me-3">
+                        </p-radioButton>
+                        <p-radioButton name="change_default" [value]="true"
+                                       [(ngModel)]="applicationPreferences.isActive"
+                                       label="{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.NO' | translate }}"
+                                       (onClick)="setDefaultSettingValue(true)" >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                    <div class="row save_quicklinks">
+                      <div class="col-5">
+                        <span class="field-name">{{
+                          'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.ALLOW_SAVING_QUICKLINKS' |
+                              translate }}
+                        </span>
+                      </div>
+                      <div class="col-7 text-center">
+                        <p-radioButton name="save_quicklinks" [value]="true"
+                                       [(ngModel)]="applicationPreferences.saveQuicklinksValue"
+                                       label="{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.YES' | translate }}"
+                                       (onClick)="setSaveQuicklinksValue(true)" class="me-3">
+                        </p-radioButton>
+                        <p-radioButton name="save_quicklinks" [value]="false"
+                                       [(ngModel)]="applicationPreferences.saveQuicklinksValue"
+                                       label="{{ 'USER_SETTINGS.APPLICATION_PREFERENCES_TAB.NO' | translate }}"
+                                       (onClick)="setSaveQuicklinksValue(false)">
+                        </p-radioButton>
+                      </div>
+                    </div>
+                    <div class="row quicklinks">
+                      <div class="col-12 ">
+                        <ng-template #lazyQuickLinks></ng-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

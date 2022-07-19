@@ -1,0 +1,26 @@
+<eland-dialog [config]="dialogConfig" (next)="next($event)" (previous)="previous($event)" (save)="saveRRR($event)">
+  <ng-template #content>
+    <ng-template #tab let-tab let-index="index">
+      <ng-container *ngIf="index === 0">
+        <app-rrr-validation-form
+        *ngIf="rrrValidation && formConfig"
+        [readOnly]="readOnly"
+        [formVariables]="formVariables"
+        [rrrValidation]="rrrValidation"
+        [config]="formConfig"
+        [dialogConfig]= "dialogConfig"
+        (isRolePartyChecked)="rrrValidation.requiresParty=true;"
+        (cancelButtonClicked)="canceled.emit($event)"
+        (saveButtonClicked)="save($event)"
+    ></app-rrr-validation-form>
+      </ng-container>
+      <ng-container *ngIf="index === 1">
+        <app-rrr-validation-party-roles
+        *ngIf="rrrValidation.requiresParty"
+        [rrrValidation]="rrrValidation"
+        [readOnly]="readOnly"
+      ></app-rrr-validation-party-roles>
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</eland-dialog>

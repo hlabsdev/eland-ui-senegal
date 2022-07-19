@@ -1,0 +1,66 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'DIVISION_REGISTRY.TITLE_FORM' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='this.divisionRegistriesUrl' type="button" class="add-button" (click)="addDivisionRegistry()" icon="icon icon-add-eland"
+        label="{{'COMMON.ACTIONS.ADD' | translate}}"></p-button>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12" class="divisionRegistry">
+      <p-table [columns]="cols" [value]="divisionRegistries" [paginator]="true" [rows]="rowSizes.SMALL" [totalRecords]="totalRecords"
+        lazy="true" (onLazyLoad)="loadDivisionRegistries($event)" [paginator]="true" #dataTableDivisionRegistries>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th rowspan="2">{{'DIVISION_REGISTRY.ENTRY_NUMBER' | translate}}</th>
+            <th rowspan="2">{{'DIVISION_REGISTRY.DEPOSIT_DATE' | translate}}</th>
+            <th rowspan="2">{{'DIVISION_REGISTRY.ACT' | translate}}</th>
+            <th rowspan="2">{{'DIVISION_REGISTRY.AREA' | translate}}</th>
+            <th rowspan="2">{{'DIVISION_REGISTRY.APPLICANT' | translate}}</th>
+            <th rowspan="2">{{'DIVISION_REGISTRY.PRICE' | translate}}</th>
+            <th rowspan="2">{{'DIVISION_REGISTRY.OPPOSITION_REGISTRY' | translate}}</th>
+            <th rowspan="2">{{'DIVISION_REGISTRY.REQUISITION_TRANSMIT_DATE' | translate}}</th>
+            <th>{{'DIVISION_REGISTRY.TITLE_NUMBER' | translate}}
+                <div class="input-group">
+                  <input type="text" name="search" class="form-control" pInputText [(ngModel)]="searchText" size="25"
+                    placeholder="{{'COMMON.LABELS.SEARCH' | translate}}" (keyup.enter)="loadDivisionRegistries()">
+                  <button pButton type="button" icon="fa fa-search" class="ui-button-warn view-button search-bar-button"
+                    (click)="loadDivisionRegistries()"></button>
+                </div>
+              </th>
+        </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="body" let-DivisionRegistry>
+          <tr>
+            <td>{{DivisionRegistry.entryNumber}}</td>
+            <td>{{DivisionRegistry.depositDate | date:'shortDate'}}</td>
+            <td>{{DivisionRegistry.act?.actType.description}}</td>
+            <td>{{DivisionRegistry.area}}</td>
+            <td>{{DivisionRegistry.applicant.displayName}}</td>
+            <td>{{DivisionRegistry.price}}</td>
+            <td>{{DivisionRegistry.oppositionRegistry?.entryNumber }}</td>
+            <td>{{DivisionRegistry.requisitionTransmitDate| date:'shortDate'}}</td>
+            <td>{{DivisionRegistry.baUnitTitleNumber}}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+
+      </p-table>
+
+    </div>
+  </div>
+</div>

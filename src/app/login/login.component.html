@@ -1,0 +1,80 @@
+<section class="login-page">
+  <section class="elandslider-panel">
+    <swiper class="elandslider" fxFlex="auto" [config]="sliderConfig">
+      <div *ngFor="let slide of slides; let index = index" class="eland-slide">
+        <div class="bg-elanslider" [ngStyle]="{'background-image':'url(' + slide.visualMain + ')', 'background-size': 'cover'}"></div>
+      </div>
+    </swiper>
+  </section>
+
+  <!-- Login  -->
+  <section class="main">
+    <div class="login-form">
+      <a class="logo" routerLink="/">
+        <img title="{{'HEADER.APP_TITLE' | translate}}"
+          [attr.src]="'./assets/layout/images/eland-logo-type-mark-w.svg'">
+      </a>
+      <div class="copy-block">
+        <div class="title-header">
+          <a href="https://sogematech.com/en/lamp" target="_blank" rel="noopener">
+            <i class="icon icon-go-eland"></i>
+          </a>
+          <p>{{'LOGIN.SLIDER_TITLE_HEADER' | translate}}</p>
+        </div>
+        <div class="subtitle-header-one">
+          {{'LOGIN.ORGANIZATION_COUNTRY' | translate}}
+        </div>
+        <div class="subtitle-header-two">
+          {{'LOGIN.ORGANIZATION_CLIENT' | translate}}
+        </div>
+        <div class="message" *ngIf="errorMessage">
+          <p>{{'LOGIN.ERROR' | translate}}</p>
+        </div>
+      </div>
+
+      <form>
+        <div class="row username pt-4 pb-4">
+          <div class="col-12">
+            <input type="text" name="username" placeholder="{{'LOGIN.USERNAME' | translate}}" [(ngModel)]="username" [disabled]="loading" />
+          </div>
+        </div>
+        <div class="row password pb-4">
+          <div class="col-12">
+            <input type="{{showPassword ? '' : 'password'}}" name="password" placeholder="{{'LOGIN.PASSWORD' | translate}}" [(ngModel)]="password" [disabled]="loading" autocomplete="on" />
+            <i class="fa fa-eye" (click)="showPassword = true" *ngIf="!showPassword"></i>
+            <i class="fa fa-eye-slash" (click)="showPassword = false" *ngIf="showPassword"></i>
+          </div>
+        </div>
+        <div class="row forgot-password pb-3">
+          <div class="col-12">
+            <a routerLink="/forgot-password">
+              <p>{{'LOGIN.FORGOT_PASSWORD' | translate}}</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="row button-login pb-4">
+          <div class="col-12">
+            <div class="button" (click)="submit()" *ngIf="!loading">
+              <p>{{'LOGIN.LOGIN' | translate}}</p>
+              <i class="icon icon-sign-in-eland"></i>
+            </div>
+            <div *ngIf="loading" class="button text-center">
+              <i class="pi pi-spin pi-spinner" style="position: initial;"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="row to-register">
+          <div class="col-12">
+            <a routerLink="/register">
+              <p>{{'LOGIN.TO_REGISTER' | translate}}</p>
+            </a>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </section>
+  <section class="footer"></section>
+</section>

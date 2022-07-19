@@ -1,0 +1,9 @@
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="responsibilityTypes" 
+      (addCallBack)="addResponsibilityType()"
+      [cols]="cols">
+  </eland-table>
+</div>

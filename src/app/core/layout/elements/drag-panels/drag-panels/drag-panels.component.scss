@@ -1,0 +1,56 @@
+@import "../../../../../style-branding/variables/branding_variables.scss";
+
+.header {
+  background-color: set_brand_color_hsla(eland-grey-ultralight, 96, 100);
+}
+.drop-list-container {
+  position: relative;
+  min-height: 100px;
+  background-color: set_brand_color_hsla(eland-grey-ultralight, 96, 55);
+}
+.cdk-list {
+  min-height: 66px;
+}
+.empty-placeholder {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 66px;
+  color: set_brand_color_hsla(eland-black, 22, 100);
+  border: 1px dotted rgba(32, 32, 32, 0.5);
+}
+
+.cdk-drag {
+  color: set_brand_color_hsla(eland-black, 22, 100);
+  position: relative;
+  cursor: grab;
+  background: set_brand_color_hsla(eland-neutral-grey, 78, 100);
+}
+.cdk-drag:active {
+  cursor: grabbing;
+}
+
+.cdk-drag-preview {
+  cursor: grabbing;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.25;
+}
+
+.cdk-drag-disabled {
+  box-shadow: none;
+  cursor: no-drop;
+  background: set_brand_color_hsla(eland-neutral-grey, 88, 100);
+}
+
+.cdk-drag-animating {
+  transition: transform 400ms cubic-bezier(0, 0, 0.2, 1);
+  cursor: grabbing;
+}
+
+.expanded {
+  transition: flex 0.3s ease-out;
+}

@@ -1,0 +1,52 @@
+<div cdkDropListGroup class="row m-2">
+  <sog-drag-panels [dragPanelItem]="source" class="col-lg p-0" [bodyTemplate]="bodyTemplate" (drop)="sourceDrop.emit($event)"
+                   [headerTemplate]="headerTemplate" [headerTitle]="titles.source" [disabledSorting]="true" [readonly]="readOnly"></sog-drag-panels>
+  <div class="col-lg p-0">
+    <div *ngFor="let destination of destinations">
+      <sog-drag-panels [dragPanelItem]="destination" [bodyTemplate]="bodyTemplate" [headerTemplate]="headerTemplate"
+                       (drop)="destinationDrop.emit($event)" [headerTitle]="titles.destination" [predicateOptions]="{maxElements: 1}" [readonly]="readOnly"></sog-drag-panels>
+    </div>
+  </div>
+</div>
+
+<ng-template #baseTemplate let-base>
+  <div class="row m-1 px-1 pt-1 pb-0">
+    <div class="col-8 p-1 align-middle">
+        <ng-container *ngTemplateOutlet="base.title, context: {$implicit: base.item}"></ng-container>
+    </div>
+    <div class="col-4">
+      <div class="pull-right">
+        <ng-container *ngTemplateOutlet="base.buttons, context: {$implicit: base}"></ng-container>
+      </div>
+    </div>
+    <div class="row m-0 px-3 py-3 expanded" *ngIf="base.item.showMoreInfos">
+      <ng-container *ngTemplateOutlet="base.infos, context: {$implicit: base.item}"></ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #headerTemplate let-h>
+  <ng-container
+    *ngTemplateOutlet="baseTemplate, context: { $implicit: {
+      title: headerTemplateTitle || headerTitle, infos: headerTemplateInfos || headerInfos,
+      buttons: headerButtons, item: h}}">
+  </ng-container>
+</ng-template>
+
+<ng-template #bodyTemplate let-b>
+  <ng-container
+    *ngTemplateOutlet="baseTemplate, context: { $implicit: {
+      title: bodyTemplateTitle || bodyTitle, infos: bodyTemplateInfos || bodyInfos, buttons: bodyButtons, item: b.item, collection: b.collection}}">
+  </ng-container>
+</ng-template>
+
+<ng-template #headerButtons let-h>
+  <sog-drag-panels-button iconClass="fa-expand" (buttonClick)="expand.emit(h.item)"></sog-drag-panels-button>
+  <sog-drag-panels-button iconClass="fa-angle-right" [switch]="true" (buttonClick)="h.item.showMoreInfos = $event"></sog-drag-panels-button>
+</ng-template>
+
+<ng-template #bodyButtons let-b>
+  <sog-drag-panels-button iconClass="fa-expand" (buttonClick)="expand.emit(b.item)"></sog-drag-panels-button>
+  <sog-drag-panels-button iconClass="fa-angle-right" [switch]="true" (buttonClick)="b.item.showMoreInfos = $event" [initalValue]="b.item.showMoreInfos"></sog-drag-panels-button>
+  <sog-drag-panels-button iconClass="fa-close" (buttonClick)="remove.emit(b)" *ngIf="b.item.isRemovable"></sog-drag-panels-button>
+</ng-template>

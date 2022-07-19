@@ -1,0 +1,14 @@
+<div class="container-fluid px-0">
+  <div class="col-12">
+    <p>{{'TASK.MULTIPLE_CHOICES.' + dialogOptions.identifier + '.MESSAGE' | translate}}</p>
+  </div>
+  <div class="row no-gutters px-2 pb-3">
+    <div class="p-calendar-container">
+      <p-calendar appendTo="body" [(ngModel)]="dialogOptions.value" inputStyleClass="form-control" [required]="true"
+        [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+        [yearNavigator]="true" [minDate]="disablePastDates" [yearRange]="disableFutureYears" styleClass="w-100"
+        [showTime]="false">
+      </p-calendar>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="admin-layout-wrapper">
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="task-list-sidebar shadow-sm" [ngClass]="toggle ? 'active' : ''">
+      <div class="sidebar-header">
+          <h3>{{'TASK.SEARCH' | translate}}</h3>
+          <button pButton class="text-right" type="button" [icon]="toggle ? 'pi pi-angle-right' : 'pi pi-angle-left'" (click)="toggleMenu()"   iconPos="left"></button>
+      </div>
+      <div class="task-menu m-3">
+        <div class="ui-inputgroup">
+          <div class="tasklist-categorize" *ngFor="let item of taskCategories; let index = index">
+            <div class="btn btn-sm" [ngClass]="{'task-list-active': activeCategorizeButton === index}">
+              <p-radioButton name="groupname" [value]="index" (onClick)="filterTasks(item.fn, index)"
+                [class.active]="isActive(index)" [ngModel]="activeCategorizeButton"
+                [label]="item.name">
+              </p-radioButton>
+            </div>
+          </div>
+
+          <div class="tasklist-filter">
+            <div class="mt-3">
+              <h5>{{'TASK.TYPE_PROCESS' | translate}}</h5>
+              <p-dropdown appendTo="body" [style]="{ width: '100%', overflow: 'visible' }" (onChange)="loadTasks({getCount:true})"
+                [options]="transactions" [showClear]="true" [(ngModel)]="selectedTransaction" filter="true">
+              </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="ui-inputgroup">
+          <div class="tasklist-sort">
+            <div class="mt-3">
+              <label for="searchTaskName" class="form-label">{{'TASK.NAME' | translate}}</label>
+              <input  class="form-control" name="searchTaskName" autocomplete="off"
+                type="text" size="25" [(ngModel)]="searchTaskName" (input)="loadTasks({getCount:true})" pInputText />
+            </div>
+          </div>
+        </div>
+        <div class="ui-inputgroup">
+          <div class="tasklist-sort">
+            <div class="mt-3">
+              <label for="search" class="form-label">{{'TASK.NUMBER' | translate}}</label>
+              <input  class="form-control" name="search" autocomplete="off" type="search"
+                size="25" pInputText [(ngModel)]="search" (input)="loadTasks({getCount:true})" autofocus>
+            </div>
+          </div>
+        </div>
+        <div class="ui-inputgroup">
+          <div class="tasklist-sort">
+            <div class="mt-3">
+              <label for="searchTitleNumber" class="form-label">{{'TASK.TITLE' | translate}}</label>
+              <input class="form-control" type="search" name="searchTitleNumber"
+                autocomplete="off" size="25" pInputText [(ngModel)]="searchTitleNumber"
+                (input)="loadTasks({getCount:true})" autofocus>
+            </div>
+          </div>
+        </div>
+      </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div id="content" [style.margin-left]="toggle ? '0px': '250px'">
+      <div class="container" *ngIf="!showRoute">
+          <div class="row justify-content-center">
+              <div class="col-md-10 text-center">
+                  <div class="vh-align">
+                      <h1>{{'PARAMETERS.SELECT_MENU' | translate}}</h1>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="card border-0 pt-0">
+        <eland-table 
+          [tableConfig]="tableConfig" 
+          (reloadTable)="loadTasks({getCount:true})"
+          [datas]="tasks" 
+          [cols]="cols">
+          <ng-template #body let-col="col" let-item>
+            <td *ngIf="col.field === 'name'">{{ item.name }}</td>
+            <td *ngIf="col.field === 'created'">{{ item.created | specificTimezone | localeDate:'longDate' }}</td>
+            <td *ngIf="col.field === 'processDefinitionId'">{{ item.processDefinitionId.split(':')[0] }}</td>
+          </ng-template>
+          <ng-template #actions let-item="item" let-custom="custom">
+            <p-button type="button" pTooltip="{{'COMMON.ACTIONS.SELECT_TASK' | translate}}" tooltipPosition="left" life="4000"
+              class="start-button me-2" (click)="startFn(item)" icon="icon icon-start-eland"></p-button>
+            <p-button [hidden]="item.assignee !== custom.user.username" type="button" pTooltip="{{'COMMON.ACTIONS.UNCLAIM' | translate}}" tooltipPosition="left" life="4000"
+              class="unclaim-button" (click)="unClaimFn(item, custom.user)" icon="pi pi-check"></p-button>
+          </ng-template>
+        </eland-table>
+      </div>
+  </div>
+
+</div>       

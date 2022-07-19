@@ -1,0 +1,22 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+<core-alert></core-alert>
+
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="transactions" 
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item let-custom="custom">
+        <td *ngIf="col.field === 'id'">{{ item.id }}</td>
+        <td *ngIf="col.field === 'name'">{{ item.name }}</td>
+        <td *ngIf="custom.hasSystemAdministratorAccess && col.field === 'role'">{{'TRANSACTION.' + item.role | translate}}</td>
+      </ng-template>
+      <ng-template #actions let-item="item" let-custom="custom">
+          <p-button *ngIf="custom.hasSystemAdministratorAccess || custom.hasManuallyStartTransactionAccess" label="{{'COMMON.ACTIONS.START' | translate}}" type="button" class="start-button ms-2" (click)="start(item)" icon="icon icon-start-eland"></p-button>
+          <p-button *ngIf="custom.hasSystemAdministratorAccess" type="button" class="edit-button ms-2" label="{{'COMMON.ACTIONS.EDIT' | translate}}" (click)="edit(item)" icon="icon icon-edit-eland"></p-button>
+      </ng-template>
+    </eland-table>
+</div>
+
+<app-dialogTransaction [transactionID]="transactionID" [(displayCreateTransaction)]="displayCreateTransaction"></app-dialogTransaction>

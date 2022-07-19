@@ -1,0 +1,11 @@
+<div class="col-{{field.width??12}} form-group no-gutters px-3" *ngIf="!field.disabled" [formGroup]="group">
+  <label [for]="field.name" class="col-12 col-form-label">
+    {{field.label | translate}}
+    <span class="text-info" *ngIf="field.isRequired()">*</span>
+  </label>
+
+  <div class="col-12">
+    <input class="form-control" autocomplete="off" name="{{field.name}}" id="{{field.name}}" type="text" [formControlName]="field.name"
+      [formGroupName]="field.name" [placeholder]="field.label | translate" [type]="field.inputType" [required]="field.isRequired()" [readonly]="field.readOnly">
+  </div>
+</div>

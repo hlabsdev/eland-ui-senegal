@@ -1,0 +1,59 @@
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="spatialUnits" 
+      (addCallBack)="addBtn()"
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item let-custom="custom">
+        <td *ngIf="col.field === 'id'">{{item.id}}</td>
+        <td *ngIf="col.field === 'type'">{{item.type}}</td>
+        <td *ngIf="col.field === 'parcelType' && !custom.showBuildingPicker">{{item.parcelType}}</td>
+        <td *ngIf="col.field === 'parentParcel' && !custom.showBuildingPicker">{{item.parentParcel}}</td>
+        <td *ngIf="col.field === 'radiationDate' && !custom.showBuildingPicker">{{item.radiationDate | date:'shortDate'}}</td>
+        <td *ngIf="col.field === 'destinationTitle' && !custom.showBuildingPicker">{{item.destinationTitle}}</td>
+        <td *ngIf="col.field === 'inscriptionDate' && !custom.showBuildingPicker">{{item.inscriptionDate | date:'shortDate'}}</td>
+        <td *ngIf="col.field === 'sourceTitle' && !custom.showBuildingPicker">{{item.sourceTitle}}</td>
+        <td *ngIf="col.field === 'modDate'">{{item.modDate | date:'shortDate'}}</td>
+      </ng-template>
+      <ng-template #actions let-item="item" let-custom="custom">
+        <p-button type="button"
+          *ngIf="!custom.picker && !custom.showBuildingPicker && (custom.formVariables.isReadOnly || custom.spatialUnitUrl)"
+          class="edit-button me-2" icon="fa fa-search" pTooltip="{{'COMMON.ACTIONS.VIEW'| translate}}"
+          tooltipPosition="top" life="4000"
+          (click)="showSpatialUnitDialog(item, (custom.formVariables.isReadOnly || custom.spatialUnitUrl))">
+        </p-button>
+
+        <p-button type="button"
+          *ngIf="!custom.picker && !custom.showBuildingPicker && !(custom.formVariables.isReadOnly || custom.spatialUnitUrl)"
+          class="view-button me-2" icon="icon icon-edit-eland" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}"
+          tooltipPosition="top" life="4000"
+          (click)="showSpatialUnitDialog(item, (custom.formVariables.isReadOnly || custom.spatialUnitUrl))">
+        </p-button>
+
+        <p-button [hidden]="custom.deleteButtonHidden || item.registrationDate" type="button"
+          *ngIf="displayDeleteButton" class="delete-button" (click)="deleteSpatialUnit(item)"
+          icon="fa fa-times" pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000">
+        </p-button>
+
+        <p-button [hidden]="custom.formVariables.isReadOnly || custom.spatialUnitUrl" type="button"
+          *ngIf="custom.picker || custom.showBuildingPicker" class="delete-button"
+          (click)="spatialUnitPickerDeleteSpatialUnit(item)" icon="fa fa-times"
+          pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000"></p-button>
+
+      </ng-template>
+    </eland-table>
+</div>
+
+<app-dialog appendTo="body" [(display)]="!!spatialUnit" modal="modal" #dd [autoHeight]="false">
+  <ng-template #lazySpatialUnit *ngIf="spatialUnit && !picker && !showSpatialUnitPicker && !showBuildingPicker"></ng-template>
+  <app-spatial-unit-picker *ngIf="picker" [formVariables]="formVariables"
+    (saved)="spatialUnitPickerAddSpatialUnit($event)">
+  </app-spatial-unit-picker>
+  <app-spatial-unit-picker *ngIf="showSpatialUnitPicker" [header]="parentSelectionPickerHeader"
+    [formVariables]="formVariables" [onlyTerrains]="true" (saved)="handleParentSelection($event)">
+  </app-spatial-unit-picker>
+  <app-spatial-unit-picker *ngIf="showBuildingPicker" [header]="buildingSelectionPickerHeader"
+    [formVariables]="formVariables" [onlyBuildings]="true" (saved)="spatialUnitPickerAddSpatialUnit($event)">
+  </app-spatial-unit-picker>
+</app-dialog>

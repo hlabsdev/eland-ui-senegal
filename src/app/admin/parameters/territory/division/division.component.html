@@ -1,0 +1,18 @@
+<div class="container-fluid px-0 bordered-left inner" >
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="loadDivision()" 
+      (addCallBack)="showDivisionElementDialogue()"
+      (actions)="call($event)" 
+      [datas]="divisions" 
+      [cols]="cols">
+    </eland-table>
+
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<ng-template #lazyCurrentDivision *ngIf="currentDivision"></ng-template>

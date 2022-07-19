@@ -1,0 +1,42 @@
+<div>
+  <div class="container-fluid px-0">
+
+    <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+    <div class="row no-gutters p-3 mb-2">
+      <!-- title -->
+      <div class="col-6">
+        <h1> {{'COMMON.ACTIONS.' + (blockerRRR.id ? 'EDIT' : 'ADD') | translate}}</h1>
+      </div>
+      <!-- buttons -->
+      <div class="col-6">
+        <div class="pull-right">
+          <p-button type="button" icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+            class="cancel-button me-2" (click)="cancel()"></p-button>
+          <p-button icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}" class="save-button"
+            (click)="save(blockerRRR)"></p-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-group no-gutters px-3">
+      <label for="blockerRRRValidationId"
+        class="col-4 col-form-label">{{'RRR_VALIDATION.BLOCKER_RRR.BLOCK_BY_RRR' | translate}}
+        <span class="text-info">*</span></label>
+      <div class="col-8">
+        <p-dropdown name="blockerRRRValidationId" id="blockerRRRValidationId" styleClass="form-control w-100"
+          [(ngModel)]="blockerRRR.blockerRRRValidationId" [options]="partyRoles" required></p-dropdown>
+      </div>
+    </div>
+
+    <div class="row form-group no-gutters px-3">
+      <label for="requireConfirmation"
+        class="col-4 col-form-label">{{'RRR_VALIDATION.BLOCKER_RRR.REQUIRE_CONFIRMATION' | translate}}
+        <span class="text-info">*</span></label>
+      <div class="col-8">
+        <p-checkbox name="requireConfirmation" id="requireConfirmation" required
+          [(ngModel)]="blockerRRR.requireConfirmation" binary="true"></p-checkbox>
+      </div>
+    </div>
+
+  </div>
+</div>

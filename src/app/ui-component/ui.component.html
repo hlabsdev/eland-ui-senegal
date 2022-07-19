@@ -1,0 +1,38 @@
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <p-button 
+        type="button" 
+        class="start-button ms-2" 
+        (click)="openDialog()" 
+        icon="icon icon-start-eland">
+      </p-button>
+    </div>
+    <div class="col-md-12">
+      <eland-table 
+        [tableConfig]="tableConfig" 
+        (reloadTable)="reload()" 
+        (selectRow)="onRowSelect($event)" 
+        (unselectRow)="onRowUnselect($event)" 
+        (selectedRow)="selectedRow($event)" 
+        (actions)="call($event)" 
+        [datas]="items" 
+        [cols]="cols">
+      </eland-table>
+    </div>
+  </div>
+</div>
+
+<eland-dialog *ngIf="dialogConfig" [config]="dialogConfig" (next)="next($event)" (previous)="previous($event)" (save)="save()">
+  <ng-template #content>
+    <ng-template #tab let-tab let-index="index">
+      <ng-container *ngIf="index === 0">
+        {{ tab | json }} - {{ index }}
+      </ng-container>
+      <ng-container *ngIf="index === 1">
+        {{ tab | json }} - {{ index }}
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</eland-dialog>

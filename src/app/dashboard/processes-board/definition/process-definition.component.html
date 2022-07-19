@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="row">
+    <div *ngIf="process" class="col-3">
+      <dl>
+        <dt>{{'PROCESS.VERSIONS' | translate}}</dt>
+        <dd>
+          <p-dropdown styleClass="form-control" name="codeListType" [options]="processVersions"
+            [(ngModel)]="currentProcessId" (onChange)="displaySelectedProcess()"></p-dropdown>
+        </dd>
+        <dt>{{'PROCESS.ID' | translate}}</dt>
+        <dd>{{process.id}}</dd>
+        <dt>{{'PROCESS.KEY' | translate}}</dt>
+        <dd>{{process.key}}</dd>
+        <dt>{{'PROCESS.NAME' | translate}}</dt>
+        <dd>{{process.name}}</dd>
+        <dt>{{'PROCESS.DEPLOYMENT_ID' | translate}}</dt>
+        <dd>{{process.deploymentId}}</dd>
+        <dt>{{'PROCESS.INSTANCES_RUNNING' | translate}}</dt>
+        <dd>
+          <ul>
+            <li>{{'PROCESS.CURRENT_VERSION' | translate}}: <strong>{{instancesRunningCurrentVersion}}</strong></li>
+            <li>{{'PROCESS.ALL_VERSIONS' | translate}}: <strong>{{instancesRunningAllVersions}}</strong></li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col">
+          <core-wf-viewer *ngIf="processXml && processStatistics" [processXml]="processXml.bpmn20Xml"
+            [processStatistics]="processStatistics"> </core-wf-viewer>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

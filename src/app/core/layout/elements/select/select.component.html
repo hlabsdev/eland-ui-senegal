@@ -1,0 +1,10 @@
+<div class="col-{{field.width??12}} no-gutters form-group px-3" *ngIf="!field.disabled" [formGroup]="group">
+  <label class="col-12 col-form-label">{{field.label | translate}} <span class="text-info"
+      *ngIf="field.isRequired()">*</span></label>
+
+  <div class="col-12">
+    <p-dropdown appendTo="body" styleClass="w-100" [options]="field.options" [name]="field.name"
+      [dataKey]="field.dataKey" (onChange)="onChange($event, field)" [formControlName]="field.name"
+      [readonly]="field.readOnly"></p-dropdown>
+  </div>
+</div>

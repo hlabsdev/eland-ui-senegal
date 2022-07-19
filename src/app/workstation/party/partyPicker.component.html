@@ -1,0 +1,52 @@
+<div class="container-fluid px-0">
+  <!-- header -->
+  <div class="row no-gutters px-3">
+    <!-- title -->
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'PARTY.TITLE_ADD' | translate}}</h1>
+    </div>
+  </div>
+  <!-- search input field -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTablePartyPicker" [enableDropdown]=true>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <p-table [value]="parties" [resizableColumns]="true" [columns]="cols" [rows]="rowSizes.SMALL" [paginator]="true"
+      #dataTablePartyPicker>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pResizableColumn [style]="{'width':col.width}" [pSortableColumn]="col.field">
+            <div class="d-flex">
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              <span class="ms-2">{{ col.header | translate }}</span>
+            </div>
+          </th>
+          <th pResizableColumn style="width:10%"><span>{{'COMMON.ACTIONS.ACTION' | translate}}</span></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-party let-columns="columns">
+        <tr>
+          <td>{{party.extPID}}</td>
+          <td>{{party.name}}</td>
+          <td>{{party.role}}</td>
+          <td>{{party.inscriptionDate | date:'shortDate'}}</td>
+          <td>{{party.modDate | date:'shortDate'}}</td>
+          <td>
+            <p-button type="button" [hidden]="formVariables.isReadOnly" class="add-button" icon="icon icon-edit-eland"
+              pTooltip="{{'COMMON.ACTIONS.ADD' | translate}}" tooltipPosition="top" life="4000" (click)="save(party)">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

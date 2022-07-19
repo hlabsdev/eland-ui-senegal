@@ -1,0 +1,1141 @@
+@import "../app/style-branding/variables/branding_variables.scss";
+@import "../app/style-branding/mixins/buttons.mixin.scss";
+
+// removes the default apperances of the buttons defined by the browser
+*[type="button"] {
+  appearance: none !important;
+}
+
+// wraps the primeng button
+p-button {
+  &.complete-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-green, 40, 100), hsl(0, 0%, 100%), none);
+  }
+  &.add-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-green, 40, 100), hsl(0, 0%, 100%), none);
+  }
+  &.download-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue, 40, 100), hsl(0, 0%, 100%), none);
+  }
+  &.view-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue, 40, 100), hsl(0, 0%, 100%), none);
+  }
+  &.sign-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue, 78, 100), hsl(0, 0%, 100%), none);
+  
+  }
+  &.cancel-button button {
+    @include buttons(set_brand_color_hsla(eland-white, 72, 100), hsl(0, 3%, 46%), none);
+  }
+  &.edit-button button {
+    @include buttons(set_brand_color_hsla(eland-button-cpm2, 53, 100), hsl(0, 0%, 100%), none);
+  }
+  &.no-styles-button button {
+    @include buttons(
+      hsl(0, 0%, 100%),
+      set_brand_color_hsla(eland-black, 22, 100),
+      1px solid set_brand_color_hsla(eland-black, 22, 25)
+    );
+    width: 110px;
+  }
+  &.save-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue,40,100), hsl(0, 0%, 100%), none);
+  }
+  &.close-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue,40,100), hsl(0, 0%, 100%), none);
+  }
+  &.save-settings-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-green, 40, 100), hsl(0, 0%, 100%), none);
+  }
+  &.start-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue, 40, 100), hsl(0, 0%, 100%), none);
+  }
+  &.refresh-button button {
+    @include buttons(set_brand_color_hsla(eland-black, 72, 100), hsl(0, 0%, 100%), none);
+  }
+  &.delete-button button {
+    @include buttons(set_brand_color_hsla(eland-hot-red, 47, 100), hsl(0, 0%, 100%), none);
+  }
+  &.active-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue, 40, 100), hsl(0, 0%, 100%), none);
+  }
+  &.unclaim-button button {
+    @include buttons(#eceef4, set_brand_color_hsla(eland-black, 22, 100), none);
+  }
+  &.search-button button {
+    @include buttons(set_brand_color_hsla(eland-cold-blue, 40, 100), hsl(0, 0%, 100%), none);
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  &:not([label]) {
+    button {
+      padding-left: 0.5em !important;
+      padding-right: 0.5em !important;
+    }
+  }
+
+  .ui-button-text-icon-left .ui-button-icon-left {
+    -webkit-text-stroke-width: 0.015rem;
+  }
+}
+
+
+button {
+
+  &.active{
+    @include buttons(set_brand_color_hsla(eland-cold-blue, 40, 100), hsl(0, 0%, 100%), none);
+    width: 100%; 
+    height: 10%;
+    padding-left: 0em !important;
+}
+}
+// wraps our custom searchbar
+app-searchbar {
+  .row {
+    background-color: hsl(0, 0%, 100%);
+    p-dropdown {
+      .ui-dropdown,
+      .ui-dropdown-trigger,
+      .ui-dropdown-label {
+        border-radius: 50em !important;
+        .ui-dropdown-trigger-icon {
+          color: set_brand_color_hsla(eland-black, 22, 100);
+        }
+      }
+    }
+    .input-group {
+      input {
+        border-top-left-radius: 50rem;
+        border-bottom-left-radius: 50rem;
+      }
+      span {
+        border-top-right-radius: 50rem;
+        border-bottom-right-radius: 50rem;
+      }
+    }
+  }
+}
+
+// To be reworked when new modular structure and templates implemented
+// wraps our custom components
+sog-spatial-unit-drag-panel-form,
+app-translation,
+app-ba-ccp,
+app-consistency-change,
+app-forms,
+app-forms-group,
+app-sources,
+app-workstation,
+app-applicants,
+app-ba-unit-picker,
+app-parties,
+app-rrrs,
+app-spatial-units,
+app-ba-units,
+app-processes,
+app-transactions,
+app-code-lists,
+app-transaction-instances,
+app-transaction-history,
+app-applicant-form dynamic-form,
+app-ba-unit-form,
+app-applications,
+app-preregistration-formalities,
+app-rdais,
+app-division-registies,
+app-general-formality-registries,
+app-oppositions-registry,
+app-publications,
+app-params,
+app-rrr-validations,
+app-rrr-validation-party-roles,
+section.profile-page,
+app-workstation,
+app-checklist,
+app-rrrs-picker {
+  .container-fluid {
+    border-radius: initial;
+    > .row {
+      padding: 1rem 0 2rem;
+      h1 {
+        font-weight: 600;
+      }
+    }
+    &.bordered-left {
+      border-right: none;
+      border-top: none;
+      border-bottom: none;
+      border-left: 1px dotted set_brand_color_hsla(eland-grey-light, 79, 100);
+    }
+    > .row.inner-row {
+      padding: 0;
+    }
+    h1 {
+      font-size: $default-font-size + 3px;
+    }
+  }
+}
+app-workstation {
+  .container-fluid {
+    dyn-panel {
+      .row {
+        padding: 1rem 0 1rem;
+        margin: 0;
+      }
+    }
+  }
+}
+app-checklist {
+  .container-fluid {
+    .row {
+      padding: 1rem 0 1rem;
+      margin: 0;
+    }
+  }
+}
+
+section.profile-page {
+  .row_no_padding {
+    padding: 0 !important;
+  }
+  .row_no_margin {
+    margin: 0 !important;
+  }
+}
+
+// wraps our custom multi input
+app-multi-input {
+  .input-group {
+    .ui-button-danger {
+      height: calc(100% - 1rem) !important;
+    }
+  }
+}
+
+// wraps our custom ba unit form
+app-ba-unit-form {
+  form {
+    // margin: 1rem !important;
+    p-tabview {
+      .p-tabview-nav {
+        border-bottom: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+        font-weight: 400 !important;
+        color: set_brand_color_hsla(eland-black, 22, 100) !important;
+      }
+      .p-tabview-panels {
+        padding-top: 1rem !important;
+      }
+      .ui-state-active {
+        span {
+          color: set_brand_color_hsla(eland-cold-blue, 78, 100) !important;
+        }
+      }
+    }
+  }
+}
+
+// wraps the primeng (text) editor
+p-editor {
+  .ui-editor-container {
+    .ui-editor-toolbar {
+      border: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+    }
+  }
+}
+
+// wraps the primeng table
+p-table {
+  .p-datatable-auto-layout > p-datatable-wrapper > table {
+    table-layout: fixed;
+  }
+  .p-datatable {
+    .p-datatable-thead {
+      border-bottom: 1px solid white !important;
+
+      tr {
+        th {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          border: 0 !important;
+          border-right: 2.5px solid white !important;
+          padding: 0.5rem !important;
+          color: set_brand_color_hsla(eland-black, 22, 100) !important;
+          background-color: set_brand_color_hsla(eland-grey-ultralight, 94, 100);
+
+          p-sorticon {
+            a {
+              position: absolute !important;
+              i {
+                color: set_brand_color_hsla(eland-black, 22, 100) !important;
+              }
+            }
+            i {
+              margin-right: 0.15rem;
+              margin-left: 0.15rem;
+              color: set_brand_color_hsla(eland-black, 22, 75);
+              font-size: $default-font-size - 2px;
+              font-weight: 500;
+            }
+          }
+          &:last-child {
+            border: 0;
+          }
+          button {
+            border: none;
+            span {
+              font-weight: 400;
+            }
+            &:hover {
+              color: white;
+              background-color: set_brand_color_hsla(eland-cold-blue, 40, 65);
+            }
+            &:enabled:focus,
+            &:enabled:active {
+              background-color: set_brand_color_hsla(eland-black, 22, 35);
+              color: white;
+            }
+          }
+          .input-group {
+            margin-top: 5px;
+          }
+        }
+        th * {
+          font-size: $default-font-size - 1px;
+          font-weight: 700;
+          line-height: 1.2 !important;
+        }
+      }
+    }
+    .p-datatable-tbody {
+      tr {
+        td {
+          border: 0 !important;
+          ul.unordered-list {
+            padding: 0px !important;
+            li {
+              padding-bottom: 0.15rem;
+            }
+          }
+        }
+      }
+      .active-task {
+        background-color: set_brand_color_hsla(eland-grey-ultralight, 91, 100) !important;
+      }
+    }
+  }
+  .ui-column-resizer-helper {
+    background-color: set_brand_color_hsla(eland-black, 22, 35);
+  }
+}
+
+// wraps the primeng listbox
+p-listbox {
+  .ui-listbox {
+    width: 100% !important;
+    border: 0 !important;
+
+    .ui-listbox-item {
+      background-color: transparent !important;
+    }
+    .ui-listbox-item:hover {
+      color: set_brand_color_hsla(eland-cold-blue, 40, 100) !important;
+    }
+    .ui-listbox-item.ui-state-highlight {
+      border: none;
+      background-color: transparent !important;
+      color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+      &:first-of-type {
+        border-top: 0 !important;
+      }
+      &:last-of-type {
+        border-bottom: 0 !important;
+      }
+    }
+  }
+}
+
+// wraps the primeng calendar
+p-calendar {
+  span.ui-calendar {
+    width: 100%;
+    input {
+      border: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+      border-radius: 2px;
+    }
+  }
+}
+
+app-date-options {
+  .p-calendar-container {
+    width: 20em;
+  }
+}
+
+// wraps the primeng file uploader
+p-fileupload {
+  .ui-fileupload-buttonbar {
+    padding: 1rem 0 !important;
+    border: none;
+    width: 2px;
+    .ui-fileupload-choose {
+      background-color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+      color: white;
+      border: none !important;
+      width: 2px;
+
+    }
+  }
+}
+
+.app-source {
+  .ui-fileupload-buttonbar {
+    border: 1px solid #bdc3c9 !important;
+    padding: 2px !important;
+  }
+
+  span.ui-fileupload-choose.ui-state-default {
+    width: 100%;
+    background: white;
+    color: #757575;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 2px;
+  }
+
+  .ui-widget,
+  body .ui-widget .ui-widget {
+    padding-top: 10px;
+  }
+
+  .ui-fileupload-choose input[type="file"] {
+    width: 100%;
+  }
+
+  .ui-fileupload-content .ui-progressbar {
+    visibility: hidden;
+  }
+}
+
+.missing-file {
+  .ui-fileupload-buttonbar {
+    border: 1px solid #dc3545 !important;
+    padding: 2px !important;
+  }
+
+  span.ui-fileupload-choose.ui-state-default {
+    width: 100%;
+    background: white;
+    color: #757575;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 2px;
+  }
+
+  .ui-widget,
+  body .ui-widget .ui-widget {
+    padding-top: 10px;
+  }
+
+  .ui-fileupload-choose input[type="file"] {
+    width: 100%;
+  }
+}
+
+// wraps the primeng paginator
+p-paginator {
+  .ui-paginator-bottom {
+    .ui-paginator-pages {
+      .ui-state-active {
+        background-color: transparent;
+        color: set_brand_color_hsla(eland-black, 72, 100);
+      }
+    }
+  }
+}
+
+// wraps the primeng dropdown
+p-dropdown {
+  .ui-dropdown {
+    border-color: set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+    padding: 0 1em;
+    &:not(.ui-state-disabled).ui-state-focus {
+      .ui-dropdown-trigger {
+        .pi-caret-down {
+          color: set_brand_color_hsla(eland-cold-blue, 40, 100) !important;
+        }
+      }
+    }
+    .ui-dropdown-trigger {
+      background-color: transparent !important;
+      margin-right: 0.5em !important;
+    }
+    .ui-state-highlight {
+      background-color: set_brand_color_hsla(eland-cold-blue, 40, 100) !important;
+    }
+    .ui-dropdown-panel .ui-dropdown-items {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// wraps the primeng tabpanel
+p-tabpanel {
+  .p-tabview-panel {
+    padding: 0 !important;
+    border: 0 !important;
+  }
+  p-dropdown {
+    .ui-dropdown {
+      label {
+        padding-left: 0 !important;
+      }
+    }
+  }
+}
+
+// wraps primeng dialog and jquery-ui dialog
+p-dialog,
+.ui-dialog {
+  border-radius: 6px !important;
+  border: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+  .ui-dialog-titlebar {
+    border-bottom: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+    margin-bottom: 1em !important;
+  }
+  .ui-dialog-content {
+    padding: 0 !important;
+    margin-top: -1em !important;
+    form:first-of-type {
+      > .container-fluid {
+        > .row:first-of-type {
+          border-bottom: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+        }
+        > .row:last-of-type {
+          border-top: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+          padding-top: 1rem !important;
+        }
+      }
+    }
+  }
+  dynamic-form {
+    form {
+      > .row:first-of-type {
+        border-bottom: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+      }
+      > .row:last-of-type {
+        border-top: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+        padding-top: 1rem !important;
+      }
+    }
+  }
+
+  .ui-dialog-titlebar-icon span {
+    font-size: 0.9rem;
+    color: set_brand_color_hsla(eland-black, 22, 100);
+    opacity: 0.45;
+    transition: opacity 0.5s ease-in;
+    -moz-transition: opacity 0.5s ease-in;
+    -webkit-transition: opacity 0.5s ease-in;
+    &:hover {
+      color: set_brand_color_hsla(eland-black, 22, 100);
+      opacity: 1;
+      transition: opacity 0.5s ease-out;
+      -moz-transition: opacity 0.5s ease-out;
+      -webkit-transition: opacity 0.5s ease-out;
+    }
+  }
+}
+
+// resets the border of the p-dialog  when it is not visible
+p-dialog[ng-reflect-visible="false"] {
+  border: none !important;
+}
+
+// wraps our custom applicant component
+app-applicant {
+  margin: 0 1rem !important;
+  .container-fluid > .row:last-of-type {
+    padding: 1rem !important;
+    border-top: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+  }
+}
+
+// wraps our custom transaction component
+app-transaction {
+  margin: 1rem !important;
+}
+
+// wraps the primeng tri state checkbox
+p-triStateCheckbox {
+  &.blue-checkbox {
+    .ui-chkbox-box {
+      background-color: set_brand_color_hsla(eland-button-cpm1, 40, 100);
+      -moz-transition: background-color 0.3s;
+      -o-transition: background-color 0.3s;
+      -webkit-transition: background-color 0.3s;
+      transition: background-color 0.3s;
+    }
+    .ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover {
+      background-color: set_brand_color_hsla(eland-button-cpm1, 40, 100);
+      -moz-transition: background-color 0.3s;
+      -o-transition: background-color 0.3s;
+      -webkit-transition: background-color 0.3s;
+      transition: background-color 0.3s;
+    }
+  }
+
+  &.yellow-checkbox {
+    .ui-chkbox-box {
+      background-color: set_brand_color_hsla(eland-button-cpm2, 53, 100);
+    }
+  }
+
+  &.red-checkbox {
+    .ui-chkbox-box {
+      background-color: set_brand_color_hsla(eland-hot-red, 47, 100) !important;
+      cursor: default !important;
+    }
+  }
+
+  .pi-check:before {
+    content: "" !important;
+  }
+
+  .pi-times:before {
+    content: "" !important;
+  }
+}
+
+// wraps our custom app task details
+app-tasks-detail {
+  p-tabview {
+    .p-tabview-nav {
+      border-bottom: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100) !important;
+      font-weight: 400 !important;
+    }
+    li {
+      &:hover {
+        background-color: set_brand_color_hsla(eland-grey-ultralight, 96, 100) !important;
+        color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+      }
+      &.ui-state-active {
+        background-color: transparent !important;
+        a {
+          color: set_brand_color_hsla(eland-cold-blue, 78, 100) !important;
+        }
+      }
+    }
+  }
+  .tache-header {
+    background-color: rgba(128, 128, 128, 0.25);
+  }
+  .tache-list {
+    background-color: rgba(128, 128, 128, 0.15);
+  }
+}
+
+// wraps our custom applicant form and resets some styles
+app-form {
+  app-applicant {
+    margin: 0 !important;
+    app-applicant-form {
+      dynamic-form {
+        margin: 0 !important;
+        form {
+          border: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+// wraps our custom file viewer component (ui need a bit of work)
+app-file-viewer {
+  .file-viewer {
+    width: 700px;
+    border: 3px solid set_brand_color_hsla(eland-black, 22, 100);
+    margin-bottom: 1rem !important;
+    margin-left: 1rem !important;
+    p-menubar {
+      margin: 10px 10px 10px 0;
+      border: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100);
+    }
+
+    span.ui-spinner {
+      border: 1px solid set_brand_color_hsla(eland-grey-light, 79, 100);
+    }
+  }
+}
+
+// wraps our custom dynamic form validations
+dynamic-form {
+  app-input {
+    .form-control.ng-touched.ng-invalid {
+      border: 1px solid set_brand_color_hsla(eland-hot-red, 47, 100) !important;
+    }
+  }
+  app-fraction {
+    .form-control.ng-touched.ng-invalid {
+      border: 1px solid set_brand_color_hsla(eland-hot-red, 47, 100) !important;
+    }
+  }
+  p-dropdown.ng-touched.ng-invalid {
+    .form-control {
+      border: 1px solid set_brand_color_hsla(eland-hot-red, 47, 100) !important;
+    }
+  }
+  p-editor.ng-touched.ng-invalid {
+    .ui-editor-container {
+      border: 1px solid red !important;
+    }
+  }
+  p-calendar.ng-touched.ng-invalid {
+    input.form-control {
+      border: 1px solid red !important;
+    }
+  }
+  p-checkbox.ng-touched.ng-invalid {
+    input {
+      border: 1px solid red !important;
+    }
+  }
+}
+
+// should be integrated into component ?
+ng-component {
+  height: 100% !important;
+}
+
+// wraps our custom alerts
+core-alert {
+  // temporary : core-alert to be moved with new application modular structure
+  position: fixed;
+  top: $header-height + 45px;
+  right: 0;
+  z-index: 100;
+  margin: 0 15px;
+
+  .alert {
+    padding: 0.385rem 0.85rem 0.5rem;
+  }
+
+  .alert-success {
+    font-size: $default-font-size - 0.5px;
+    color: white;
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    border-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    -webkit-animation: alert-glow-success 1500ms infinite;
+    -moz-animation: alert-glow-success 1500ms infinite;
+    -o-animation: alert-glow-success 1500ms infinite;
+    animation: alert-glow-success 1500ms infinite;
+  }
+  .alert-danger {
+    font-size: $default-font-size - 0.5px;
+    color: white;
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    border-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    -webkit-animation: alert-glow-danger 1500ms infinite;
+    -moz-animation: alert-glow-danger 1500ms infinite;
+    -o-animation: alert-glow-danger 1500ms infinite;
+    animation: alert-glow-danger 1500ms infinite;
+  }
+  span {
+    margin-left: 1.25rem;
+  }
+}
+
+// alert glow success
+
+@keyframes alert-glow-success {
+  0% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-cold-green, 33, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-cold-green, 33, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+}
+
+@-webkit-keyframes alert-glow-success {
+  0% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-cold-green, 33, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-cold-green, 33, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+}
+
+@-moz-keyframes alert-glow-success {
+  0% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-cold-green, 33, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-cold-green, 33, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+}
+
+@-o-keyframes alert-glow-success {
+  0% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-cold-green, 33, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-cold-green, 33, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-cold-green, 40, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-cold-green, 40, 100);
+  }
+}
+
+// alert glow danger
+@keyframes alert-glow-danger {
+  0% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-hot-red, 40, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-hot-red, 40, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+}
+
+@-webkit-keyframes alert-glow-danger {
+  0% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-hot-red, 40, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-hot-red, 40, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+}
+
+@-moz-keyframes alert-glow-danger {
+  0% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-hot-red, 40, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-hot-red, 40, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+}
+
+@-o-keyframes alert-glow-danger {
+  0% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+  50% {
+    background-color: set_brand_color_hsla(eland-hot-red, 40, 100);
+    box-shadow: 0 0 15px set_brand_color_hsla(eland-hot-red, 40, 100);
+  }
+  100% {
+    background-color: set_brand_color_hsla(eland-hot-red, 47, 100);
+    box-shadow: 0 0 2px set_brand_color_hsla(eland-hot-red, 47, 100);
+  }
+}
+
+app-sub-type,
+app-rdai-form,
+app-list-form {
+  core-alert {
+    .alert {
+      margin-top: 0rem;
+    }
+  }
+}
+
+// Tasks list forms
+app-list-form {
+  .task-form-top {
+    padding: 0.35rem 0.5rem 1.5rem 0.5rem;
+    border-bottom: 1px dotted set_brand_color_hsla(eland-black, 22, 100);
+    width: 100%;
+    .p-listbox {
+      width: 100% !important;
+      border: 0 !important;
+      margin: 5px;
+      .p-listbox-item {
+        background-color: transparent;
+        height: 60px;
+        font-size: medium;
+        padding: 0.35em 0.75em 0.4em;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .p-listbox-item.p-highlight{
+        background-color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+        color: white;
+      }
+      .ui-listbox-item:hover {
+        color: white !important;
+        background-color: set_brand_color_hsla(eland-cold-blue, 40, 100) !important;
+      }
+      .ui-listbox-item.ui-state-highlight {
+        border: none;
+        color: white;
+        background-color: set_brand_color_hsla(eland-cold-blue, 40, 100) !important;
+
+        &:first-of-type {
+          border-top: 0 !important;
+        }
+        &:last-of-type {
+          border-bottom: 0 !important;
+        }
+      }
+    }
+    .required {
+      font-size: $default-font-size - 2px;
+      margin-top: 0.75rem;
+    }
+
+    [aria-selected="true"] {
+      .circle{
+        background: whitesmoke !important;
+        color: set_brand_color_hsla(eland-neutral-grey, 40, 100) !important;
+      }
+    }
+
+    [aria-selected="false"] {
+      .circle{
+        color: whitesmoke !important;
+        background: set_brand_color_hsla(eland-neutral-grey, 40, 100) !important;
+      }
+    }
+
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 8px;
+      margin-left: 8px;
+      font-size: small;
+      line-height: 20px;
+      text-align: center;
+    }
+  }
+  .task-form-bottom {
+    margin: 0 1rem 1.95rem 1rem;
+    border-right: 1px dotted set_brand_color_hsla(eland-black, 22, 100);
+    border-left: 1px dotted set_brand_color_hsla(eland-black, 22, 100);
+    border-bottom: 1px dotted set_brand_color_hsla(eland-black, 22, 100);
+    width: 100%;
+    h1 {
+      font-size: $default-font-size + 1px;
+      color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+      font-weight: 700;
+    }
+  }
+}
+
+.not-legacy {
+  &.task-form-bottom {
+    margin: 0 1rem 1.95rem 1rem;
+    border-right: 1px dotted set_brand_color_hsla(eland-black, 22, 100);
+    border-left: 1px dotted set_brand_color_hsla(eland-black, 22, 100);
+    border-bottom: 1px dotted set_brand_color_hsla(eland-black, 22, 100);
+    width: 100%;
+
+    h1 {
+      font-size: $default-font-size + 1px;
+      color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+      font-weight: 700;
+    }
+  }
+}
+
+app-links {
+  .ui-button {
+    background-color: transparent !important;
+    border: 1px solid set_brand_color_hsla(eland-black, 22, 25);
+    font-size: $default-font-size -1px;
+    border-radius: 3px;
+    span {
+      color: set_brand_color_hsla(eland-black, 22, 100);
+      text-transform: uppercase;
+      font-size: $default-font-size - 4px;
+      &.icon {
+        font-size: $default-font-size - 2px;
+        transform: rotate(-90deg);
+        margin-left: 0.17rem;
+      }
+    }
+    &:hover {
+      background-color: transparent !important;
+      border: 1px solid set_brand_color_hsla(eland-cold-blue, 40, 25);
+      span {
+        color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+      }
+      span.fa {
+        color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+        -webkit-animation-name: hvr-pop;
+        animation-name: hvr-pop;
+        -webkit-animation-duration: 0.3s;
+        animation-duration: 0.3s;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+      }
+    }
+  }
+}
+body .ui-widget-overlay {
+  opacity: unset;
+  background-color: set_brand_color_hsla(eland-black, 22, 50);
+}
+
+.p-ai-center {
+  align-items: center;
+}
+.p-jc-between {
+  justify-content: space-between;
+}
+.p-d-flex {
+  display: flex !important;
+}
+.p-d-ct {
+  display: contents !important;
+}
+.p-ml-auto {
+  margin-left: auto !important;
+}
+.p-input-icon-left, .p-input-icon-right {
+  position: relative;
+  display: inline-block;
+}
+
+.p-component {
+  font-family: Muli,Regular !important;
+  font-size: 14px;
+}
+
+.p-datatable .p-datatable-header {
+  background: none;
+  border: none;
+  padding-bottom: 16px;
+}
+
+.p-datatable .p-datatable-footer, .p-datatable .p-datatable-thead > tr > th {
+  border: none;
+  padding: .5rem;
+  font-weight: bold;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%) !important;
+    border-color: hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%) !important;
+    color: white;
+}
+
+.p-datatable .p-sortable-column.p-highlight {
+  color: hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%) !important;
+}
+
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+  color: hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%) !important;
+}
+
+.p-button.p-button-outlined {
+  border-radius: 10px;
+  color: hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%) !important;
+}
+
+.p-button {
+  background: hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%);
+  border: 1px solid hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%);
+  border-radius: 10px;
+}
+
+.p-dropdown {
+  border-radius: 10px;
+}
+
+.p-button.p-button-text {
+  //color: hsla(var(--eland-cold-blue_h),var(--eland-cold-blue_s),40%,100%) !important;
+  color: #000000;
+  border-radius: 10px;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: .5rem;
+}
+
+.p-datatable .p-paginator-bottom, .p-datatable .p-paginator-top {
+  border-width: 0;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.divided {
+  display: inline-grid;
+  padding-block: 3px;
+}
+
+.border-8 {
+  border-radius: 8px;
+}
+
+.border-10 {
+  border-radius: 10px;
+}
+.border-10-top {
+  border-radius: 10px 10px 0 0;
+}
+.border-10-right {
+  border-radius: 0 10px 10px 0;
+}
+.border-10-left {
+  border-radius: 10px 0 0 10px;
+}
+.border-10-bot {
+  border-radius: 0 0 10px 10px;
+}
+
+.border-15 {
+  border-radius: 15px;
+}
+.border-20 {
+  border-radius: 20px;
+}

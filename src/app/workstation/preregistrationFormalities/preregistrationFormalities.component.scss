@@ -1,0 +1,21 @@
+.fix-position {
+    top: -2px;
+    position: relative;
+}
+
+.table-title {
+    font-weight: bold !important;
+    padding-right: 10px;
+}
+
+.add-btn {
+    border-left: 1px dotted black;
+    padding-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .search-bar {
+        display: block;
+        margin-top: 10px;
+    }
+}

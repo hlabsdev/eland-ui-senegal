@@ -1,0 +1,24 @@
+<div class="container-fluid px-0 ">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto font-weight-bold">{{ label| translate}}</h1>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" label="{{'COMMON.ACTIONS.CANCEL' | translate}}" (click)="cancel()" icon="fa fa-undo"
+        class="cancel-button me-2"></p-button>
+      <p-button type="submit" (click)="save()" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o"
+        class="save-button"></p-button>
+    </div>
+  </div>
+
+  <div *ngIf="checklistItems.length">
+    <p-listbox [options]="checklistItems" [(ngModel)]="selectedChecklistItems" filter="filter" checkbox="checkbox"
+      filter="filter" multiple="multiple">
+      <ng-template let-checklist pTemplate="item">
+        {{ checklist.label }}
+        <span *ngIf="checklist.value && checklist.value.required">*</span>
+      </ng-template>
+    </p-listbox>
+  </div>
+</div>

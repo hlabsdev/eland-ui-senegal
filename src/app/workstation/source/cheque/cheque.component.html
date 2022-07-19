@@ -1,0 +1,36 @@
+<div class="row no-gutters px-1 pt-2">
+  <div class="col-6">
+  <label for="text">{{'UPLOAD_DOCUMENT.CHEQUE_NUMBER' | translate}} <span
+      class="text-info">*</span></label>
+  <div>
+    <input type="text" class="form-control" name="chequeNumber" id="chequeNumber" [(ngModel)]="cheque.chequeNumber"
+      required>
+  </div>
+</div>
+<div class="col-6">
+  <label for="text">{{'UPLOAD_DOCUMENT.AMOUNT' | translate}} <span
+      class="text-info">*</span></label>
+  <div>
+    <input type="number" class="form-control" name="amount" id="amount" [(ngModel)]="cheque.amount" required>
+  </div>
+</div>
+</div>
+
+<div class="row no-gutters px-1 pt-2">
+  <div class="col-6">
+  <label for="text">{{'UPLOAD_DOCUMENT.INSTITUTION' | translate}} <span
+      class="text-info">*</span></label>
+  <div>
+    <input type="text" class="form-control" name="institution" id="institution" [(ngModel)]="cheque.institution"
+      required>
+  </div>
+  </div>
+  <div class="col-6">
+    <label for="text">{{'UPLOAD_DOCUMENT.CARDHOLDER' | translate}} <span
+        class="text-info">*</span></label>
+    <div>
+      <input type="text" class="form-control" name="cardholder" id="cardholder" [(ngModel)]="cheque.cardholder" required>
+    </div>
+  </div>
+</div>
+

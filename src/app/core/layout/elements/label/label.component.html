@@ -1,0 +1,10 @@
+<div class="col-{{field.width??12}} form-group no-gutters px-3" *ngIf="!field.disabled" [formGroup]="group">
+  <label [for]="field.name" class="col-12 col-form-label">
+    {{field.label | translate}}
+  </label>
+
+  <div class="col-12">
+    <input class="form-control input-like-label" name="{{field.name}}" id="{{field.name}}" [formControlName]="field.name" [formGroupName]="field.name" [placeholder]=""
+    readonly="readOnly">
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" novalidate class="container px-10"
+  [ngClass]="formSubmitted ? 'was-validated' : 'no-validate'">
+  <!-- header -->
+  <div class="row no-gutters p-3 mb-2">
+    <!-- title -->
+    <div [hidden]="hideTitle"  class="col-6">
+      <h1 class="my-auto" *ngIf="title">{{title | translate}} :</h1>
+    </div>
+
+    <div [hidden]="hideActions" class="col-6">
+      <div class="pull-right">
+        <button pButton type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+          class="cancel-button me-2" (click)="cancel()"
+          style="background: rgba(128,128,128,0.3); border: transparent;">
+        </button>
+        <button pButton type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o" class="save-button"
+          [hidden]="readOnly || hideSaveButton"></button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- error message -->
+  <div class="row no-gutters">
+    <div class="col-12">
+      <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+    </div>
+  </div>
+
+  <!-- form core -->
+  <div class="container">
+    <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form" [readOnly]="readOnly">
+    </ng-container>
+  </div>
+
+  <!--ACTIONS START-->
+  <div class="row no-gutters p-3 mt-5">
+    <hr>
+    <div [hidden]="hideActions" class="col-12">
+      <div class="pull-right">
+        <button pButton type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+                class="cancel-button me-2" (click)="cancel()"
+                style="background: rgba(128,128,128,0.3); border: transparent;">
+        </button>
+        <button pButton type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o" class="save-button"
+                [hidden]="readOnly || hideSaveButton"></button>
+      </div>
+    </div>
+  </div>
+  <!--ACTIONS END-->
+
+  <div class="row no-gutters">
+    <div class="col-12">
+      <ng-content select="app-group">
+      </ng-content>
+    </div>
+  </div>
+
+</form>

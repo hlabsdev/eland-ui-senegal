@@ -1,0 +1,97 @@
+import { throwError as observableThrowError, Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { environment as config } from '../../../../../../environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import * as _ from 'lodash';
+import { Registry } from  '../../../../../core/models/registry.model';
+// import { RegionExt } from '../../../../../core/models/regionExt.model';
+
+
+// @Injectable()
+export class RegistryService {
+  private endpointUrl = `${config.api}`;
+  private countrySpecificUrl = '/v1/registry';
+  private requestUrl = this.endpointUrl + this.countrySpecificUrl;
+  private regionExt = '/sn/v1/regions-ext';
+  private requestRegionExtUrl = this.endpointUrl + this.regionExt;
+
+  constructor(private http: HttpClient) {
+  }
+
+  getRegistries(titleType: string = null): Observable<Registry[]> {
+
+    let params = new HttpParams();
+    if (titleType) {
+      params = params.set('titleType', titleType);
+    }
+
+    return this.http
+      .get<Registry[]>(this.requestUrl, { params })
+      .pipe(
+        map(response => response.map(r => new Registry(r))),
+        catchError(this.handleError)
+      );
+  }
+
+  getRegistry(id: string): Observable<Registry> {
+    return this.http
+      .get<Registry>(`${this.requestUrl}/${id}`)
+      .pipe(
+        map(response => new Registry(response)),
+        catchError(this.handleError)
+      );
+  }
+
+  getRegistryByCode(code: string): Observable<Registry> {
+    return this.http
+      .get<Registry>(`${this.requestUrl}/code/${code}`)
+      .pipe(
+        map(response => new Registry(response)),
+        catchError(this.handleError)
+      );
+  }
+
+  updateRegistry(registry: Registry): Observable<Registry> {
+    return this.http
+      .put<Registry>(`${this.requestUrl}/${registry.id}`, registry)
+      .pipe(
+        map(response => new Registry(response)),
+        catchError(this.handleError)
+      );
+  }
+
+  createRegistry(registry: Registry): Observable<Registry> {
+    return this.http
+      .post<Registry>(this.requestUrl, registry)
+      .pipe(
+        map(response => new Registry(response)),
+        catchError(this.handleError)
+      );
+  }
+
+  deleteRegion(registry: Registry): Observable<Registry> {
+    return this.http
+      .delete<Registry>(`this.requestUrl/${registry.id}`)
+      .pipe(
+        map(response => new Registry(response)),
+        catchError(this.handleError)
+      );
+  }
+
+  getRegionExts(id: String): Observable<RegionExt[]> {
+     return this.http
+       .get<RegionExt[]>(`${this.requestRegionExtUrl}?regionId=${id}`)
+       .pipe(
+         map(
+           response => response.map(r => new RegionExt(r))
+         ),
+         catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: any) {
+    console.error('An error occurred', error);
+    return observableThrowError(error);
+  }
+}

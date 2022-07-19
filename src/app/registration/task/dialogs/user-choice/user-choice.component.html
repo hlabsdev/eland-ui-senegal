@@ -1,0 +1,9 @@
+<div class="container-fluid px-0">
+  <div class="col-12" *ngIf="dialogOptions.identifier">
+    <p>{{'TASK.MULTIPLE_CHOICES.'+dialogOptions.identifier+'.MESSAGE' | translate}}</p>
+  </div>
+
+  <p-dropdown appendTo="body" styleClass="form-control w-100" name="codeListType" [options]="users" [filter]="true" filterBy="label"
+              [(ngModel)]="dialogOptions.value"></p-dropdown>
+
+</div>

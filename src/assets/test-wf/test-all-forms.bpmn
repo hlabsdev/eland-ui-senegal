@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1eums8q" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:collaboration id="Collaboration_01tcs51">
+    <bpmn:participant id="Participant_0yhohd1" name="Test all forms" processRef="TEST_ALL_FORMS" />
+  </bpmn:collaboration>
+  <bpmn:process id="TEST_ALL_FORMS" name="Test all forms" isExecutable="true">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_1whyk6i" name="Front Desk">
+        <bpmn:flowNodeRef>StartEvent_0pg8qwq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_02s9v3p</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_160uqz6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0esvlcj</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_0pg8qwq">
+      <bpmn:outgoing>SequenceFlow_109sf97</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_109sf97" sourceRef="StartEvent_0pg8qwq" targetRef="Task_02s9v3p" />
+    <bpmn:sequenceFlow id="SequenceFlow_08c2sty" sourceRef="UserTask_160uqz6" targetRef="EndEvent_0esvlcj" />
+    <bpmn:sequenceFlow id="SequenceFlow_15cnmem" sourceRef="Task_02s9v3p" targetRef="UserTask_160uqz6" />
+    <bpmn:userTask id="Task_02s9v3p" name="All Forms" camunda:formKey="APP-APPLICANT,APP-BA-SOURCES,APP-BA-UNIT,APP-BA-UNIT-CONTEXT,APP-BA-UNIT-PICKER,APP-BORDEREAU-CONTEXT,APP-PARTIES,APP-RRRS,APP-SOURCES,APP-SPATIAL-UNITS,APP-BA-UNIT-SET-BATCH-TRANSACTIONS" camunda:candidateGroups="FRONT_DESK_OFFICER,DIRECTEUR_REGIONAL">
+      <bpmn:incoming>SequenceFlow_109sf97</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15cnmem</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_160uqz6" name="All Checklists" camunda:formKey="APP-CHECKLIST.application,APP-CHECKLIST.avisdebornage,APP-CHECKLIST.initial,APP-CHECKLIST.journal,APP-CHECKLIST.legal,APP-CHECKLIST.mairie,APP-CHECKLIST.greffier,APP-CHECKLIST.preparation,APP-CHECKLIST.prepbulletin,APP-CHECKLIST.prepdatebornage,APP-CHECKLIST.prepimprimebulletin,APP-CHECKLIST.publicationjournal,APP-CHECKLIST.pvbornage,APP-CHECKLIST.signature,APP-CHECKLIST.signaturebulletin,APP-CHECKLIST.signaturedatebornage,APP-CHECKLIST.signatureimprimebulletin,APP-CHECKLIST.title" camunda:candidateGroups="FRONT_DESK_OFFICER,DIRECTEUR_REGIONAL">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="isValidationRequired">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_15cnmem</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_08c2sty</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_0esvlcj">
+      <bpmn:incoming>SequenceFlow_08c2sty</bpmn:incoming>
+      <bpmn:terminateEventDefinition />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_01tcs51">
+      <bpmndi:BPMNShape id="Participant_0yhohd1_di" bpmnElement="Participant_0yhohd1">
+        <dc:Bounds x="16" y="29" width="504" height="186" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1whyk6i_di" bpmnElement="Lane_1whyk6i">
+        <dc:Bounds x="46" y="29" width="474" height="186" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0pg8qwq_di" bpmnElement="StartEvent_0pg8qwq">
+        <dc:Bounds x="94" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="74" y="170" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_109sf97_di" bpmnElement="SequenceFlow_109sf97">
+        <di:waypoint x="130" y="117" />
+        <di:waypoint x="156" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="116" y="181" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_13uitn7_di" bpmnElement="Task_02s9v3p">
+        <dc:Bounds x="156" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_08sb55t_di" bpmnElement="EndEvent_0esvlcj">
+        <dc:Bounds x="405" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="389" y="168" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_160uqz6_di" bpmnElement="UserTask_160uqz6">
+        <dc:Bounds x="280" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_08c2sty_di" bpmnElement="SequenceFlow_08c2sty">
+        <di:waypoint x="380" y="117" />
+        <di:waypoint x="405" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_15cnmem_di" bpmnElement="SequenceFlow_15cnmem">
+        <di:waypoint x="256" y="117" />
+        <di:waypoint x="280" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,20 @@
+<div class="col-6 bl-lbl">
+  {{'id' | translate}}
+</div>
+<div class="col-6 lbl-data">
+  <input type="text" class="form-control" [name]="cci.uid" [id]="cci.uid" [(ngModel)]="cci.uid" disabled *ngIf="cci" />
+</div>
+<div class="col-6 bl-lbl">
+  {{'titleName' | translate}}
+</div>
+<div class="col-6 lbl-data">
+  <input type="text" class="form-control" [name]="cci.baUnit.titleName" [id]="cci.baUnit.titleName"
+    [(ngModel)]="cci.baUnit.titleName" disabled *ngIf="cci && cci.baUnit" />
+</div>
+<div class="col-6 bl-lbl">
+  {{'parcel' | translate}}
+</div>
+<div class="col-6 lbl-data">
+  <input type="text" class="form-control" [name]="cci.parcel.parcelNumber" [id]="cci.parcel.parcelNumber"
+    [(ngModel)]="cci.parcel.parcelNumber" disabled *ngIf="cci && cci.baUnit" />
+</div>

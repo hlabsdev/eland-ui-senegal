@@ -1,0 +1,18 @@
+<div class="row no-gutters mt-0">
+  <div class="col-{{ dropdownWidth }} pr-2" *ngIf="enableDropdown">
+    <p-dropdown styleClass="form-control" [options]="dropdownOptions" (onChange)="table.reset(); searchText=null"
+      name="searchCols" [(ngModel)]="selectedDropdown"></p-dropdown>
+  </div>
+
+  <div class="col-{{ searchFieldWidth }} pl-2">
+    <div class="input-group">
+      <input type="text" name="search" class="form-control" pInputText [(ngModel)]="searchText" size="50"
+        placeholder="{{'COMMON.LABELS.SEARCH' | translate}}" (input)="searchFilter($event.target.value)">
+      <div class="input-group-append">
+        <span class="input-group-text">
+          <i class="pi pi-search"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

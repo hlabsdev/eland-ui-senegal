@@ -1,0 +1,21 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="baUnits" 
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item>
+        <td *ngIf="col.field === 'registryRecord.titleId'">{{ item.titleName }}</td>
+        <td *ngIf="col.field === 'registryRecord.volume'">{{ item.registryRecord.volume }}</td>
+        <td *ngIf="col.field === 'registryRecord.folio'">{{ item.registryRecord.folio }}</td>
+        <td *ngIf="col.field === 'type.description'">{{('CODELIST.VALUES.' + item.type.value | translate)}}</td>
+        <td *ngIf="col.field === 'owner'">{{ item.owner }}</td>
+      </ng-template>
+      <ng-template #actions let-item="item">
+        <p-button *ngIf="showOnlyRegistered" type="button" class="view-button me-2" (click)="editBAUnit(item)" icon="fa fa-search"></p-button>
+        <p-button *ngIf="!showOnlyRegistered" type="button" class="edit-button ms-2" (click)="editBAUnit(item)" icon="icon icon-edit-eland"></p-button>
+      </ng-template>
+    </eland-table>
+</div>

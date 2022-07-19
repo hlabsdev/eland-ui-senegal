@@ -1,0 +1,688 @@
+<form #partyForm="ngForm" (ngSubmit)="save(party, partyForm)" [ngClass]="{'was-validated': partyForm.submitted}"
+  novalidate>
+  <div class="container-fluid px-0">
+
+    <div class="row no-gutters p-3 mb-2">
+      <!-- title -->
+      <div class="col-6">
+        <h1 class="my-auto">{{ (party.pid ? 'PARTY.TITLE_EDIT' : 'PARTY.TITLE_ADD') | translate }} :</h1>
+      </div>
+
+      <div class="col-6">
+        <div class="pull-right">
+          <p-button type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+            class="cancel-button me-2" (click)="cancel()">
+          </p-button>
+          <p-button type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o"
+            class="save-button" [hidden]="readOnly">
+          </p-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- error message -->
+    <div class="row no-gutters">
+      <div class="col-12">
+        <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+      </div>
+    </div>
+
+    <!-- form core -->
+    <app-links [formVariables]="formVariables" [showLinks]="!party.pid"></app-links>
+    <div>
+      <div class="col-12" *ngIf="!party.pid">
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.SIGTAS_PARTY_TYPE' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="partyUserType" [(ngModel)]="partyUserType"
+              [options]="taxPayerTypes" (onChange)="resetParty()" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div *ngIf="partyUserType" class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.TIN' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <input type="text" class="form-control" pInputText placeholder="{{'PARTY.TIN' | translate}}"
+              name="partyUserSin" [(ngModel)]="partyUserSin" [pattern]="validationService.alphanumericRegEx.source"
+              required>
+          </div>
+          <label for="name" class="col-4 col-form-label">&nbsp;
+          </label>
+          <div class="col-8 mb-2">
+            <button pButton type="button" label="{{'COMMON.ACTIONS.SEARCH' | translate}}" icon="pi pi-search"
+              class="view-button ui-button-warn" (click)="searchSigtasParty()">
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="party.partyType && (party.partyType.value ==='PARTY_NATURAL_PERSON' || party.partyType.value ==='PARTY_NON_NATURAL_PERSON' )">
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.PARTY_TYPE' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.partyType"
+              [(ngModel)]="party.partyType" [options]="partyTypes" [disabled]="partyFieldReadOnly" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.ROLE_TYPE' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.partyRoleType"
+              [(ngModel)]="party.partyRoleType" [options]="partyRoleTypes" [disabled]="party.registrationDate" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.INSCRIPTION_DATE' | translate}} <span
+              class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <p-calendar [maxDate]="disableFutureDates" appendTo="body" [(ngModel)]="party.inscriptionDate"
+              name="party.inscriptionDate" [disabled]="party.pid" inputStyleClass="form-control" [required]="true"
+              [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+              [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+            </p-calendar>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.RADIATION_DATE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <p-calendar [maxDate]="disableFutureDates" appendTo="body" [(ngModel)]="party.radiationDate"
+              name="party.radiationDate" [disabled]="true" inputStyleClass="form-control"
+              [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+              [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+            </p-calendar>
+          </div>
+        </div>
+      </div>
+
+      <div class="row no-gutters form-group px-3"
+        *ngIf="!(party.partyType && party.partyType.value ==='PARTY_NATURAL_PERSON')">
+        <label for="name" class="col-4 col-form-label">{{'PARTY.TIN' | translate}}<span
+            class="text-info">*</span></label>
+        <div class="col-8 mb-2">
+          <input pInputText name="party.extPID" class="form-control" [(ngModel)]="party.extPID"
+            [readonly]="partyFieldReadOnly" required>
+        </div>
+      </div>
+
+      <!-- Natural person -->
+      <div *ngIf="party.partyType && party.partyType.value ==='PARTY_NATURAL_PERSON'">
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.ELECTRONIC_ADDRESS' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.electronicAddress" class="form-control" [(ngModel)]="party.electronicAddress"
+              [pattern]="validationService.emailRegEx.source" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.TIN' | translate}}<span
+              class="text-info">*</span></label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.extPID" class="form-control" [(ngModel)]="party.extPID"
+              [readonly]="partyFieldReadOnly" required>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.CIVILITY' | translate}}</label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.civility"
+              [disabled]="partyFieldReadOnly" [(ngModel)]="party.civility" [options]="civilities">
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'FULL_NAME.FIRST_NAME' | translate}}<span
+              class="text-info">*</span></label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.fullName.firstName" class="form-control"
+              [(ngModel)]="party.fullName.firstName" [readonly]="partyFieldReadOnly" required>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'FULL_NAME.OTHER_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.fullName.otherName" class="form-control"
+              [(ngModel)]="party.fullName.otherName" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'FULL_NAME.LAST_NAME' | translate}}<span
+              class="text-info">*</span></label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.fullName.lastName" class="form-control" [(ngModel)]="party.fullName.lastName"
+              [readonly]="partyFieldReadOnly" required>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.BIRTH_PLACE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.birthPlace" class="form-control" [(ngModel)]="party.birthPlace"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.DATE_OF_BIRTH' | translate}}</label>
+          <div class="col-8 mb-2">
+            <p-calendar [maxDate]="disableFutureDates" appendTo="body" [(ngModel)]="party.dateOfBirth"
+              name="party.dateOfBirth" [disabled]="partyFieldReadOnly" inputStyleClass="form-control"
+              [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+              [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+            </p-calendar>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.DATE_OF_DEATH' | translate}}</label>
+          <div class="col-8 mb-2">
+            <p-calendar [maxDate]="disableFutureDates" appendTo="body" [(ngModel)]="party.dateOfDeath"
+              name="party.dateOfDeath" [disabled]="partyFieldReadOnly" inputStyleClass="form-control"
+              [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+              [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+            </p-calendar>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.GENDER' | translate}}<span
+              class="text-info">*</span></label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.gender" (onChange)="getGenderType()"
+              [disabled]="partyFieldReadOnly" [(ngModel)]="party.gender" [options]="genders" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.NATIONALITY' | translate}}</label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.nationality"
+              [disabled]="partyFieldReadOnly" [(ngModel)]="party.nationality" [options]="nationalities">
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.MOBILE_NUMBER' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.mobileNumber" class="form-control" [(ngModel)]="party.mobileNumber"
+              [pattern]="validationService.phoneRegEx.source" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.PHONE_NUMBER' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.phoneNumber" class="form-control" [(ngModel)]="party.phoneNumber"
+              [pattern]="validationService.phoneRegEx.source" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div *ngIf="genderIsFemale" class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.MAIDEN_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.maidenName" class="form-control" [(ngModel)]="party.maidenName"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.FATHER_FIRST_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.fatherFirstName" class="form-control" [(ngModel)]="party.fatherFirstName"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.FATHER_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.fatherName" class="form-control" [(ngModel)]="party.fatherName"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.MOTHER_FIRST_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.motherFirstName" class="form-control" [(ngModel)]="party.motherFirstName"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.MOTHER_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.motherName" class="form-control" [(ngModel)]="party.motherName"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'NATURAL_PERSON.OCCUPATION' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.occupation" class="form-control" [(ngModel)]="party.occupation"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <!-- Identifiant Principal -->
+        <div *ngIf="party.primaryIdentityDocument">
+          <div class="row no-gutters form-group px-3">
+            <h3><label class="col-12 col-form-label pl-0">{{'TYPE_ID.TYPE_ID_TITLE' | translate}}</label>
+            </h3>
+            <div class="col-8 mb-2">&nbsp;
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.TYPE_DOCUMENT' | translate}}
+              <span class="text-info">*</span>
+            </label>
+            <div class="col-8 mb-2">
+              <p-dropdown styleClass="form-control w-100 col-form-label"
+                name="party.primaryIdentityDocument.typeDocument" [disabled]="partyFieldReadOnly"
+                [(ngModel)]="party.primaryIdentityDocument.typeDocument" [options]="documentTypes" required>
+              </p-dropdown>
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.DOCUMENT_NUMBER' | translate}}
+              <span class="text-info">*</span>
+            </label>
+            <div class="col-8 mb-2">
+              <input pInputText name="party.primaryIdentityDocument.documentNumber" class="form-control"
+                [(ngModel)]="party.primaryIdentityDocument.documentNumber" [readonly]="partyFieldReadOnly" required>
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.ISSUE_DATE' | translate}}</label>
+            <div class="col-8 mb-2">
+              <p-calendar [maxDate]="disableFutureDates" appendTo="body"
+                [(ngModel)]="party.primaryIdentityDocument.issueDate" name="party.primaryIdentityDocument.issueDate"
+                [disabled]="partyFieldReadOnly" inputStyleClass="form-control" [dateFormat]="locale.dateFormat"
+                [showTime]="false" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true"
+                [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+              </p-calendar>
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.EXPIRATION_DATE' | translate}}</label>
+            <div class="col-8 mb-2">
+              <p-calendar [maxDate]="disableFutureDates" appendTo="body"
+                [(ngModel)]="party.primaryIdentityDocument.expirationDate"
+                name="party.primaryIdentityDocument.expirationDate" [disabled]="partyFieldReadOnly"
+                inputStyleClass="form-control" [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale"
+                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100"
+                [showTime]="false">
+              </p-calendar>
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.ISSUE_PLACE' | translate}}</label>
+            <div class="col-8 mb-2">
+              <input pInputText name="party.primaryIdentityDocument.issuePlace" class="form-control"
+                [(ngModel)]="party.primaryIdentityDocument.issuePlace" [readonly]="partyFieldReadOnly">
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.EMPRESS_AUTHORITY' | translate}}</label>
+            <div class="col-8 mb-2">
+              <input pInputText name="party.primaryIdentityDocument.empressAuthority" class="form-control"
+                [(ngModel)]="party.primaryIdentityDocument.empressAuthority" [readonly]="partyFieldReadOnly">
+            </div>
+          </div>
+        </div>
+
+        <!-- Identifiant Secondaire -->
+        <div *ngIf="party.secondaryIdentityDocument">
+          <div class="row no-gutters form-group px-3"></div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.TYPE_DOCUMENT' | translate}}</label>
+            <div class="col-8 mb-2">
+              <p-dropdown styleClass="form-control w-100 col-form-label"
+                name="party.secondaryIdentityDocument.typeDocument" [disabled]="partyFieldReadOnly"
+                [(ngModel)]="party.secondaryIdentityDocument.typeDocument" [options]="documentTypes">
+              </p-dropdown>
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.DOCUMENT_NUMBER' | translate}}</label>
+            <div class="col-8 mb-2">
+              <input pInputText name="party.secondaryIdentityDocument.documentNumber" class="form-control"
+                [(ngModel)]="party.secondaryIdentityDocument.documentNumber" [readonly]="partyFieldReadOnly">
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.ISSUE_DATE' | translate}}</label>
+            <div class="col-8 mb-2">
+              <p-calendar [maxDate]="disableFutureDates" appendTo="body"
+                [(ngModel)]="party.secondaryIdentityDocument.issueDate" name="party.secondaryIdentityDocument.issueDate"
+                [disabled]="partyFieldReadOnly" inputStyleClass="form-control" [dateFormat]="locale.dateFormat"
+                [showTime]="false" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true"
+                [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+              </p-calendar>
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.EXPIRATION_DATE' | translate}}</label>
+            <div class="col-8 mb-2">
+              <p-calendar [maxDate]="disableFutureDates" appendTo="body"
+                [(ngModel)]="party.secondaryIdentityDocument.expirationDate"
+                name="party.secondaryIdentityDocument.expirationDate" [disabled]="partyFieldReadOnly"
+                inputStyleClass="form-control" [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale"
+                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100"
+                [showTime]="false">
+              </p-calendar>
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.ISSUE_PLACE' | translate}}</label>
+            <div class="col-8 mb-2">
+              <input pInputText name="party.secondaryIdentityDocument.issuePlace" class="form-control"
+                [(ngModel)]="party.secondaryIdentityDocument.issuePlace" [readonly]="partyFieldReadOnly">
+            </div>
+          </div>
+
+          <div class="row no-gutters form-group px-3">
+            <label for="name" class="col-4 col-form-label">{{'TYPE_ID.EMPRESS_AUTHORITY' | translate}}</label>
+            <div class="col-8 mb-2">
+              <input pInputText name="party.secondaryIdentityDocument.empressAuthority" class="form-control"
+                [(ngModel)]="party.secondaryIdentityDocument.empressAuthority" [readonly]="partyFieldReadOnly">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Non Natural person -->
+      <div *ngIf="party.partyType && party.partyType.value ==='PARTY_NON_NATURAL_PERSON'">
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'PARTY.NIF' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.nif" class="form-control" [(ngModel)]="party.nif"
+              [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_PERSON.RCCM' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.commerceCreditRegistryNumber" class="form-control"
+              [(ngModel)]="party.commerceCreditRegistryNumber" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_PERSON.NAME' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.name" class="form-control" [(ngModel)]="party.name"
+              [readonly]="partyFieldReadOnly" required>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_PERSON.ESTABLISHMENT_DATE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <p-calendar [maxDate]="disableFutureDates" appendTo="body" [(ngModel)]="party.establishmentDate"
+              name="party.establishmentDate" [disabled]="partyFieldReadOnly" inputStyleClass="form-control"
+              [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+              [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+            </p-calendar>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_PERSON.TERMINATION_DATE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <p-calendar [maxDate]="disableFutureDates" appendTo="body" [(ngModel)]="party.terminationDate"
+              name="party.terminationDate" [disabled]="partyFieldReadOnly" inputStyleClass="form-control"
+              [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+              [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="false">
+            </p-calendar>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_PERSON.LEGAL_PERSON_TYPE' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.legalPersonType"
+              [disabled]="partyFieldReadOnly" [(ngModel)]="party.legalPersonType" [options]="legalPersonTypes" required>
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact person -->
+      <div *ngIf="party.partyType && party.partyType.value ==='PARTY_NON_NATURAL_PERSON'">
+
+        <div class="row no-gutters form-group px-3">
+          <h3><label class="col-12 col-form-label pl-0">{{'LEGAL_PERSON.REPRESENTATIVE_PERSON' | translate}}</label>
+          </h3>
+          <div class="col-8 mb-2">&nbsp;
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'REPRESENTATIVE_PERSON.INDIVIDUAL_NAME' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.contactPerson.individualName" class="form-control"
+              [(ngModel)]="party.contactPerson.individualName" [readonly]="partyFieldReadOnly" required>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name"
+            class="col-4 col-form-label">{{'REPRESENTATIVE_PERSON.ORGANIZATION_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.contactPerson.organizationName" class="form-control"
+              [(ngModel)]="party.contactPerson.organizationName" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'REPRESENTATIVE_PERSON.POSITION_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.contactPerson.positionName" class="form-control"
+              [(ngModel)]="party.contactPerson.positionName" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'REPRESENTATIVE_PERSON.ROLE' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.contactPerson.role"
+              [disabled]="partyFieldReadOnly" [(ngModel)]="party.contactPerson.role"
+              [options]="legalPersonRepresentativesRoles" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'CONTACT_INFO.CONTACT_INSTRUCTIONS' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.contactPerson.contactInfo.contactInstructions" class="form-control"
+              [(ngModel)]="party.contactPerson.contactInfo.contactInstructions" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'CONTACT_INFO.HOURS_OF_SERVICE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.contactPerson.contactInfo.hoursOfService" class="form-control"
+              [(ngModel)]="party.contactPerson.contactInfo.hoursOfService" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'CONTACT_INFO.ONLINE_RESOURCE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.contactPerson.contactInfo.onlineResource" class="form-control"
+              [(ngModel)]="party.contactPerson.contactInfo.onlineResource" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'CONTACT_INFO.PHONE' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.contactPerson.contactInfo.phone" class="form-control"
+              [pattern]="validationService.phoneRegEx.source" [(ngModel)]="party.contactPerson.contactInfo.phone"
+              [readonly]="partyFieldReadOnly" required>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Legal Representative  -->
+      <div
+        *ngIf="party.partyType && (party.partyType.value ==='PARTY_NATURAL_PERSON' || party.partyType.value ==='PARTY_NON_NATURAL_PERSON' )">
+
+        <div class="row no-gutters form-group px-3">
+          <h3><label
+              class="col-12 col-form-label pl-0">{{'LEGAL_REPRESENTATIVE.LEGAL_REPRESENTATIVE' | translate}}</label>
+          </h3>
+          <div class="col-8 mb-2">&nbsp;
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_REPRESENTATIVE.NAME' | translate}}
+          </label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.legalRepresentative.name" class="form-control"
+              [(ngModel)]="party.legalRepresentative.name" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_REPRESENTATIVE.PHONE_NUMBER' | translate}}
+          </label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.legalRepresentative.phone" class="form-control"
+              [(ngModel)]="party.legalRepresentative.phone" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'LEGAL_REPRESENTATIVE.TYPE_DE_REPRESENTANT' | translate}}
+          </label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.legalRepresentative.repTypeCode"
+              [disabled]="partyFieldReadOnly" [(ngModel)]="party.legalRepresentative.repTypeCode"
+              [options]="legalRepresentativesTypes">
+            </p-dropdown>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Address  -->
+      <div
+        *ngIf="party.partyType && (party.partyType.value ==='PARTY_NATURAL_PERSON' || party.partyType.value ==='PARTY_NON_NATURAL_PERSON')">
+
+        <div class="row no-gutters form-group px-3">
+          <h3><label
+              class="col-12 col-form-label pl-0">{{'INTERNATIONAL_ADDRESS.INTERNATIONAL_ADDRESS_TITLE' | translate}}</label>
+          </h3>
+          <div class="col-8 mb-2">&nbsp;
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'INTERNATIONAL_ADDRESS.COUNTRY' | translate}}
+            <span class="text-info">*</span>
+          </label>
+          <div class="col-8 mb-2">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="party.internationalAddress.country"
+              [disabled]="partyFieldReadOnly" [(ngModel)]="party.internationalAddress.country" [options]="countries">
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'INTERNATIONAL_ADDRESS.REGION' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.internationalAddress.region" class="form-control"
+              [(ngModel)]="party.internationalAddress.region" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'INTERNATIONAL_ADDRESS.CITY' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.internationalAddress.city" class="form-control"
+              [(ngModel)]="party.internationalAddress.city" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'INTERNATIONAL_ADDRESS.VILLAGE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.internationalAddress.village" class="form-control"
+              [(ngModel)]="party.internationalAddress.village" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'INTERNATIONAL_ADDRESS.STREET_NUMBER' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.internationalAddress.streetNumber" class="form-control"
+              [(ngModel)]="party.internationalAddress.streetNumber" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters form-group px-3">
+          <label for="name" class="col-4 col-form-label">{{'INTERNATIONAL_ADDRESS.DOOR_NUMBER' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="party.internationalAddress.doorNumber" class="form-control"
+              [(ngModel)]="party.internationalAddress.doorNumber" [readonly]="partyFieldReadOnly">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</form>

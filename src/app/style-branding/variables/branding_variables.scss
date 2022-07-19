@@ -1,0 +1,99 @@
+@import "../functions/set_brand_color_hsla.scss";
+@import "../mixins/branding-variables-mapping/chromatic.mapping.prefixing.scss";
+
+// Maps of variables | defaults
+
+$elandColdBlue: (
+  h: 213,
+  s: 100%,
+  l: 40%,
+  a: 100%,
+);
+
+$elandButtonCpm1: (
+  h: 213,
+  s: 100%,
+  l: 40%,
+  a: 100%,
+);
+
+$elandButtonCpm2: (
+  h: 34,
+  s: 96%,
+  l: 53%,
+  a: 100%,
+);
+
+$elandButtonCpm3: (
+  h: 210,
+  s: 12%,
+  l: 38%,
+  a: 100%,
+);
+
+:export {
+  @include chromatic-mapping($elandColdBlue, "elandColdBlue");
+  @include chromatic-mapping($elandButtonCpm1, "elandButtonCpm1");
+  @include chromatic-mapping($elandButtonCpm2, "elandButtonCpm2");
+  @include chromatic-mapping($elandButtonCpm3, "elandButtonCpm3");
+}
+
+// root initial css chromatic variables
+:root {
+  // eland-grey-light
+  --eland-grey-light_h: 0;
+  --eland-grey-light_s: 3%;
+  --eland-grey-light_l: 79%;
+  --eland-grey-light_a: 100%;
+  // eland-grey-ultralight
+  --eland-grey-ultralight_h: 220;
+  --eland-grey-ultralight_s: 27%;
+  --eland-grey-ultralight_l: 96%;
+  --eland-grey-ultralight_a: 100%;
+  // eland-neutral-grey
+  --eland-neutral-grey_h: 210;
+  --eland-neutral-grey_s: 12%;
+  --eland-neutral-grey_l: 38%;
+  --eland-neutral-grey_a: 100%;
+  // eland-black
+  --eland-black_h: 240;
+  --eland-black_s: 2%;
+  --eland-black_l: 22%;
+  --eland-black_a: 100%;
+  // eland-cold-blue
+  --eland-cold-blue_h: 213;
+  --eland-cold-blue_s: 100%;
+  --eland-cold-blue_l: 40%;
+  --eland-cold-blue_a: 100%;
+  // eland-button-cpm1
+  --eland-button-cpm1_h: 213;
+  --eland-button-cpm1_s: 100%;
+  --eland-button-cpm1_l: 40%;
+  --eland-button-cpm1_a: 100%;
+  // eland-button-cpm2
+  --eland-button-cpm2_h: 34;
+  --eland-button-cpm2_s: 96%;
+  --eland-button-cpm2_l: 53%;
+  --eland-button-cpm2_a: 100%;
+  // eland-button-cpm3
+  --eland-button-cpm3_h: 210;
+  --eland-button-cpm3_s: 12%;
+  --eland-button-cpm3_l: 38%;
+  --eland-button-cpm3_a: 100%;
+  // eland-hot-red
+  --eland-hot-red_h: 4;
+  --eland-hot-red_s: 95%;
+  --eland-hot-red_l: 47%;
+  --eland-hot-red_a: 100%;
+  // eland-cold-green
+  --eland-cold-green_h: 183;
+  --eland-cold-green_s: 100%;
+  --eland-cold-green_l: 40%;
+  --eland-cold-green_a: 100%;
+}
+
+// typographic variables
+$default-font-size: 14px;
+
+// layout variables
+$header-height: 65px;

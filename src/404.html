@@ -1,0 +1,87 @@
+<!doctype html>
+
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <title id="title">Page Non trouvée</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="assets/layout/css/layout-eland-cold-blue.css" rel="stylesheet"> 
+  <style>
+    * {
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    html {
+      color: #888;
+      display: table;
+      font-family: 'Muli', sans-serif;
+      height: 100%;
+      text-align: center;
+      width: 100%;
+    }
+
+    body {
+      display: table-cell;
+      vertical-align: middle;
+      margin: 2em auto;
+    }
+
+    h1 {
+      color: #555;
+      font-size: 2em;
+      font-weight: bolder;
+    }
+
+    p {
+      margin: 0 auto;
+      width: 350px;
+      font-size: 18px;
+      padding-top: 15px;
+      padding-bottom: 30px;
+    }
+
+    .button {
+      background-color: #005bcc;
+      color:white;
+      padding:10px;
+      border:0;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    @media only screen and (max-width: 280px) {
+      body,
+      p {
+        width: 95%;
+      }
+      h1 {
+        font-size: 1.5em;
+        margin: 0 0 0.3em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <img src="assets/layout/images/404.png" width="400" alt="404">
+  <h1 id="page">Page Non trouvée</h1>
+  <p id="info">La page que vous recherchez a peut-être été supprimée ou est temporairement indisponible</p>
+
+  <a class="button" href="/" id="return">Retourner à l'accueil</a>
+
+  <script type="text/javascript">
+  var userLang = navigator.language || navigator.userLanguage; 
+  if(userLang == 'en'){
+    document.getElementById("title").innerHTML = 'Page not found';
+    document.getElementById("page").innerHTML = 'Page not found';
+    document.getElementById("info").innerHTML = 'The page you are looking for may have been deleted or is temporarily unavailable.';
+    document.getElementById("return").innerHTML = 'Return to home';
+  }
+  </script>
+</body>
+
+</html>

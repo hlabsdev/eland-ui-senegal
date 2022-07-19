@@ -1,0 +1,370 @@
+<ngx-ui-loader></ngx-ui-loader>
+
+<form #baUnitform="ngForm" *ngIf="baUnit" (ngSubmit)="save(baUnit, baUnitform)"
+  [ngClass]="{'was-validated': baUnitform.submitted}" novalidate>
+  <div class="container-fluid px-0">
+    <div class="row no-gutters px-3">
+      <div class="col-6 d-flex">
+        <h1 *ngIf="!baUnit.isRegistered() && !baUnit?.uid">{{'BA_UNIT.ID' | translate}}</h1>
+        <h1 *ngIf="!baUnit.isRegistered() && baUnit?.uid">{{'BA_UNIT.ID' | translate}} {{baUnit.getTitle()}}</h1>
+        <h1 *ngIf="baUnit.isRegistered()" class="my-auto">{{'BA_UNIT.ID' | translate}} {{baUnit.getTitle()}}</h1>
+      </div>
+    </div>
+    <core-alert *ngIf="baUnit.hasCaveats()" [local]="true" [autoClear]="false" [message]="caveatWarningMessage">
+    </core-alert>
+
+    <div class="row inner-row no-gutters">
+      <div class="col-12">
+        <p-tabView [activeIndex]="baUnitUrl || baUnit.isRegistered() ? null : activeIndex"
+          (onChange)="handleChange($event)">
+          <!-- unite administrative(Titre foncier) tab start -->
+          <p-tabPanel *ngIf="!displayingHistory" header="{{'BA_UNIT.TITLE_LIST' | translate}}" #childComponent>
+            <div class="row no-gutter">
+              <!--Form description start-->
+              <div style="width: 35%">
+                <h2>{{'BA_UNIT.TITLE_LIST' | translate}}</h2>
+                <p></p>
+              </div>
+              <!--Form description end-->
+
+              <!--Form content start-->
+              <div style="width: 65%">
+                <div class="col-6 no-gutters px-3 mb-3">
+                  <label for="responsibleOffice" class="col-form-label">{{'BA_UNIT.RESPONSIBLE_OFFICE' | translate}} <span
+                          class="text-info">*</span></label>
+                    <p-dropdown appendTo="body" [disabled]='formVariables.isReadOnly || (baUnit?.type && baUnit?.uid)'
+                                styleClass="form-control w-100 col-form-label" [options]="responsibleOfficesForCurrentUser"
+                                name="responsibleOffice" id="responsibleOffice" required (onChange)="setupData()"
+                                [(ngModel)]="baUnit.responsibleOffice"></p-dropdown>
+
+                </div>
+
+                <div class="col-6 no-gutters px-3 mb-3">
+                  <label for="type" class="col-form-label">{{'BA_UNIT.TYPE' | translate}} <span
+                          class="text-info">*</span></label>
+                    <p-dropdown appendTo="body"
+                                [disabled]='formVariables.isReadOnly || (baUnit?.type && baUnit?.uid || !baUnit?.responsibleOffice?.code )'
+                                styleClass="form-control w-100 col-form-label" [options]="baUnitTypes" name="type" id="type" required
+                                (onChange)="setupData()" [(ngModel)]="baUnit.type"></p-dropdown>
+                </div>
+
+                <div class="col-6 no-gutters px-3 mb-3">
+                  <label for="titleReference" class="col-form-label">{{'BA_UNIT.TITLE_REFERENCE' | translate}} <span
+                          class="text-info" *ngIf="isReferenceTitle">*</span>
+                  </label>
+                  <input [disabled]="formVariables.isReadOnly || (baUnit.uid  && !formVariables.isFastTrackProcess)"
+                         type="text" class="form-control" name="titleReference" id="titleReference"
+                         placeholder="{{'BA_UNIT.TITLE_REFERENCE' | translate}}" [required]="isReferenceTitle"
+                         [(ngModel)]="baUnit.titleReference" #name="ngModel">
+                </div>
+
+                <div class="col-6 no-gutters px-3 mb-3">
+                  <label for="currentSurface" class="col-form-label">{{'BA_UNIT.CURRENT_SURFACE' | translate}}</label>
+                  <input [disabled]="true" type="string" class="form-control" name="currentSurface" id="currentSurface"
+                         placeholder="{{'BA_UNIT.CURRENT_SURFACE' | translate}}" [(ngModel)]="currentSurface" #name="ngModel">
+                </div>
+
+                <div class="col-4 no-gutters px-3 mb-3">
+                      <label for="baUnitTitle" class="col-form-label">{{'BA_UNIT.REGISTRY.TITLE_ID' | translate}}</label>
+                      <div class="" id="baUnitTitle"><strong>{{baUnit.getTitle()}}</strong></div>
+                  </div>
+
+                <div class="col-8 no-gutters px-3 mb-3">
+                  <label for="registriesDropdown" class="col-form-label">{{'BA_UNIT.REGISTRY.TITLE' | translate}}
+                    <span class="text-info">*</span></label>
+                    <p-dropdown appendTo="body"
+                                [disabled]="formVariables.isReadOnly || (baUnit.uid && (baUnit?.registryRecord?.titleId || !baUnit?.responsibleOffice?.code)) || !baUnit?.type"
+                                styleClass="form-control w-100 col-form-label" [options]="registriesItems" name="registryDropdown"
+                                id="registryDropdown" (onChange)="getSuggestedRegistryNumber()" [required]="true"
+                                [(ngModel)]="baUnit.registryRecord.registry">
+                    </p-dropdown>
+                </div>
+
+                <div *ngIf="false" class="col-4 no-gutters px-3 mb-3">
+                  <label for="hasOldRegistry"
+                         class="col-form-label">{{'BA_UNIT.REGISTRY.HAVE_OLD_REGISTER' | translate}}</label>
+                  <div *ngIf="baUnit" class="col-8 pull-left">
+                    <p-checkbox [disabled]="formVariables.isReadOnly" [(ngModel)]="baUnit.registryRecord.hasOldRegistry"
+                                binary="true" #hasOldRegistry name="hasOldRegistry" id="hasOldRegistry"></p-checkbox>
+                  </div>
+                </div>
+
+                <div *ngIf="baUnit?.registryRecord?.hasOldRegistry" class="col-8 no-gutters px-3 mb-3">
+                  <label for="oldDistrictDropdown"
+                         class="col-form-label">{{'BA_UNIT.REGISTRY.OLD_REGISTRY' | translate}}</label>
+                  <p-dropdown appendTo="body" [disabled]="formVariables.isReadOnly" styleClass="form-control w-100 col-form-label"
+                              [options]="baUnitRegistries" name="oldRegistryDropdown" id="oldDRegistryDropdown"
+                              [required]="formVariables.baUnitFormFieldsRequired" [(ngModel)]="baUnit.registryRecord.oldDistrict">
+                  </p-dropdown>
+                </div>
+
+                <div class="col-4 no-gutters px-3 mb-3">
+                  <label for="volume" class="col-form-label">{{'BA_UNIT.REGISTRY.VOLUME' | translate}} <span
+                          class="text-info" *ngIf="formVariables.baUnitFormFieldsRequired">*</span></label>
+                    <input pKeyFilter="pint"
+                           [disabled]="formVariables.isReadOnly || (baUnit.uid && baUnit?.registryRecord?.titleId)" type="number"
+                           class="form-control" name="volume" id="volume" placeholder="{{'BA_UNIT.REGISTRY.VOLUME' | translate}}"
+                           [required]="formVariables.baUnitFormFieldsRequired" [(ngModel)]="baUnit.registryRecord.volume"
+                           #name="ngModel">
+                </div>
+
+                <div class="col-4 no-gutters px-3 mb-3">
+                  <label for="folio" class="col-form-label">{{'BA_UNIT.REGISTRY.FOLIO' | translate}} <span
+                          class="text-info" *ngIf="formVariables.baUnitFormFieldsRequired">*</span></label>
+                    <input pKeyFilter="pint"
+                           [disabled]="formVariables.isReadOnly || (baUnit.uid && baUnit?.registryRecord?.titleId)" type="number"
+                           class="form-control" name="folio" id="folio" placeholder="{{'BA_UNIT.REGISTRY.FOLIO' | translate}}"
+                           [required]="formVariables.baUnitFormFieldsRequired" [(ngModel)]="baUnit.registryRecord.folio"
+                           #name="ngModel">
+                </div>
+
+                <div class="col-4 no-gutters px-3 mb-3">
+                  <label for="titleId" class="col-form-label">{{'BA_UNIT.REGISTRY.ID' | translate}} <span
+                          class="text-info" *ngIf="formVariables.baUnitFormFieldsRequired">*</span></label>
+                    <input pInputText (change)="validateTitleNumber()"
+                           [disabled]="formVariables.isReadOnly || (baUnit.uid && baUnit?.registryRecord?.titleId)"
+                           [pKeyFilter]="titleRegExp" maxlength="6" class="form-control" name="titleId" id="titleId"
+                           placeholder="{{'BA_UNIT.REGISTRY.ID' | translate}}"
+                           [required]="formVariables.baUnitFormFieldsRequired" [(ngModel)]="baUnit.registryRecord.titleId"
+                           #name="ngModel">
+                </div>
+
+                <div *ngIf="baUnit?.registry?.hasOldRegistry" class="col-4 no-gutters px-3 mb-3">
+                  <label for="oldVolume" class="col-form-label">{{'BA_UNIT.REGISTRY.OLD_VOLUME' | translate}}</label>
+                    <input pKeyFilter="pint" [disabled]="formVariables.isReadOnly" type="number" class="form-control"
+                           name="oldVolume" id="oldVolume" placeholder="{{'BA_UNIT.REGISTRY.OLD_VOLUME' | translate}}"
+                           [(ngModel)]="baUnit.registryRecord.oldVolume" #name="ngModel">
+                </div>
+
+                <div *ngIf="baUnit?.registry?.hasOldRegistry" class="col-4 no-gutters px-3 mb-3">
+                  <label for="oldFolio" class="col-form-label">{{'BA_UNIT.REGISTRY.OLD_FOLIO' | translate}}</label>
+                    <input pKeyFilter="pint" [disabled]="formVariables.isReadOnly" type="number" class="form-control"
+                           name="oldFolio" id="oldFolio" placeholder="{{'BA_UNIT.REGISTRY.OLD_FOLIO' | translate}}"
+                           [(ngModel)]="baUnit.registryRecord.oldFolio" #name="ngModel">
+                </div>
+
+                <div *ngIf="baUnit?.registry?.hasOldRegistry" class="col-4 no-gutters px-3 mb-3">
+                  <label for="oldTitleId" class="col-form-label">{{'BA_UNIT.REGISTRY.OLD_ID' | translate}}</label>
+                    <input [disabled]="formVariables.isReadOnly" (change)="validateTitleNumber()" [pKeyFilter]="titleRegExp"
+                           type="text" class="form-control" name="oldTitleId" id="oldTitleId" maxlength="6"
+                           placeholder="{{'BA_UNIT.REGISTRY.OLD_ID' | translate}}" [(ngModel)]="baUnit.registryRecord.oldTitleId"
+                           #name="ngModel">
+                </div>
+
+                <div class="col-12 no-gutters px-3 mb-3">
+                  <label for="creationMode" class="col-form-label">{{'BA_UNIT.CREATION_MODE' | translate}} <span
+                          class="text-info" *ngIf="formVariables.baUnitFormFieldsRequired">*</span>
+                  </label>
+                    <p-dropdown appendTo="body" styleClass="form-control w-100 col-form-label" name="creationMode" id="creationMode"
+                                [disabled]="formVariables.isReadOnly || (baUnit.uid && baUnit.creationMode && !formVariables.isFastTrackProcess)"
+                                [(ngModel)]="baUnit.creationMode" [options]="creationModes"
+                                [required]="formVariables.baUnitFormFieldsRequired">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-6 no-gutters px-3 mb-3">
+                  <label for="creationDate" class="col-form-label">{{'BA_UNIT.CREATION_DATE' | translate}} <span
+                          class="text-info" *ngIf="formVariables.baUnitFormFieldsRequired">*</span>
+                  </label>
+                    <p-calendar [maxDate]="disableFutureDates" appendTo="body" [(ngModel)]="baUnit.creationDate"
+                                name="creationDate" id="creationDate"
+                                [disabled]="formVariables.isReadOnly || (baUnit.uid && baUnit.creationDate && !formVariables.isFastTrackProcess)"
+                                inputStyleClass="form-control" [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale"
+                                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100"
+                                [required]="formVariables.baUnitFormFieldsRequired">
+                    </p-calendar>
+                </div>
+
+                <div class="col-6 no-gutters px-3 mb-3">
+                  <label for="issueDate" class="col-form-label">{{'BA_UNIT.ISSUE_DATE' | translate}} <span
+                          class="text-info" *ngIf="formVariables.baUnitFormFieldsRequired">*</span>
+                  </label>
+                    <p-calendar appendTo="body" [(ngModel)]="baUnit.issueDate" name="issueDate" id="issueDate"
+                                [disabled]="formVariables.isReadOnly || (baUnit.uid && baUnit.issueDate && !formVariables.isFastTrackProcess)"
+                                (onSelect)="isIssueDateValid($event)" [maxDate]="disableFutureDates" inputStyleClass="form-control"
+                                [dateFormat]="locale.dateFormat" [showTime]="false" [locale]="locale" [monthNavigator]="true"
+                                [yearNavigator]="true" [yearRange]="disableFutureYears" styleClass="w-100"
+                                [required]="formVariables.baUnitFormFieldsRequired">
+                    </p-calendar>
+                </div>
+
+                <div class="col-4 no-gutters px-3 mb-3">
+                  <label for="copiesNumber" class="col-form-label">{{'BA_UNIT.COPIES_NUMBER' | translate}} <span
+                          class="text-info" *ngIf="formVariables.baUnitFormFieldsRequired">*</span>
+                  </label>
+                    <input min="0" [disabled]="formVariables.isReadOnly" pKeyFilter="pint" type="number"
+                           class="form-control" name="copiesNumber" id="copiesNumber"
+                           placeholder="{{'BA_UNIT.COPIES_NUMBER' | translate}}" [(ngModel)]="baUnit.copiesNumber"
+                           [required]="formVariables.baUnitFormFieldsRequired" #name="ngModel">
+                </div>
+
+                <div class="col-4 no-gutters px-3 mb-3">
+                  <label for="duplicatesNumber"
+                         class="col-form-label">{{'BA_UNIT.DUPLICATES_NUMBER' | translate}}</label>
+                    <input min="0" [disabled]="formVariables.isReadOnly" pKeyFilter="pint" type="number"
+                           class="form-control" name="duplicatesNumber" id="duplicatesNumber"
+                           placeholder="{{'BA_UNIT.DUPLICATES_NUMBER' | translate}}" [(ngModel)]="baUnit.duplicatesNumber"
+                           #name="ngModel">
+                </div>
+
+                <div class="col-4 no-gutters px-3 mb-3">
+                  <label for="nextSlipNumber"
+                         class="col-form-label">{{'BA_UNIT.NEXT_SLIP_NUMBER' | translate}}</label>
+                    <input [disabled]="true" pKeyFilter="pint" type="number" class="form-control" name="nextSlipNumber"
+                           id="nextSlipNumber" placeholder="{{'BA_UNIT.NEXT_SLIP_NUMBER' | translate}}"
+                           [(ngModel)]="nextSlipNumber" #name="ngModel">
+                </div>
+
+              </div>
+              <!--Form content end-->
+            </div>
+          </p-tabPanel>
+          <!-- unite administrative(Titre foncier) tab end -->
+
+          <!-- unites spatiales(Parcelle) tab start -->
+          <p-tabPanel *ngIf="baUnit.uid" header="{{'BA_UNIT.SPATIAL_UNITS' | translate}}" #childComponent>
+            <ng-template #lazySpatialUnits *ngIf="baUnit.uid"></ng-template>
+          </p-tabPanel>
+          <!-- unites spatiales(Parcelle) tab end -->
+
+          <!-- droits tab start -->
+          <p-tabPanel *ngIf="baUnit.uid" header="{{'RRR.TITLE' | translate}}" #childComponent>
+            <ng-template #lazyRRRs *ngIf="baUnit.uid"></ng-template>
+          </p-tabPanel>
+          <!-- droits tab end -->
+
+          <!-- parties prenantes tab start -->
+          <p-tabPanel *ngIf="baUnit.uid" header="{{'BA_UNIT.PARTIES' | translate}}" #childComponent>
+            <ng-template #lazyParties *ngIf="baUnit.uid"></ng-template>
+          </p-tabPanel>
+          <!-- parties prenantes tab end -->
+
+          <!-- titre foncier n° tab start -->
+          <p-tabPanel *ngIf="baUnit.isRegistered() && baUnitUrl" header="{{'SOURCES.TITLE_LIST' | translate}}"
+            class="ba-unit-title">
+            <ng-template #lazySources *ngIf="baUnit.isRegistered()"></ng-template>
+          </p-tabPanel>
+          <!-- titre foncier n° tab end -->
+
+          <!-- transaction history tab start -->
+          <p-tabPanel *ngIf="baUnitUrl && !displayingHistory" header="{{'HEADER.TRANSACTION_HISTORY' | translate}}">
+            <ng-template #lazyTransactionHistory *ngIf="baUnitUrl && !displayingHistory"></ng-template>
+          </p-tabPanel>
+          <!-- transaction history tab end -->
+
+          <!-- gis integration (Visualisation parcelle) tab start -->
+          <!--TODO add lazyload support-->
+          <p-tabPanel header="{{'BA_UNIT.PARCEL_VISUALISATION' | translate}}">
+            <app-gis [isSpatialUnit]=false></app-gis>
+          </p-tabPanel>
+          <!-- gis integration (Visualisation parcelle) tab end -->
+
+        </p-tabView>
+      </div>
+
+      <app-dialog appendTo="body" [(display)]="displayRoleChangesDialog" modal="modal">
+        <!-- header -->
+        <div class="row no-gutters p-3 mb-2">
+          <!-- title -->
+          <div class="col-6">
+            <h1 *ngIf="roleChanges && !roleChanges.length" class="my-auto">{{'MESSAGES.ROLES_UP_TO_DATE' | translate}}
+            </h1>
+            <h1 *ngIf="roleChanges && roleChanges.length" class="my-auto">{{'MESSAGES.CONFIRM_ROLE_UPDATE' | translate}}
+            </h1>
+          </div>
+
+          <div class="col-6">
+            <div class="pull-right">
+              <p-button type="button" label=" {{'COMMON.ACTIONS.BACK' | translate}}" icon="fa fa-undo"
+                class="complete-button me-3" (click)="displayRoleChangesDialog=false"></p-button>
+              <p-button *ngIf="roleChanges && roleChanges.length" type="button"
+                label="{{'COMMON.ACTIONS.CONFIRM' | translate}}" icon="fa fa-floppy-o" class="complete-button"
+                [disabled]="hasRoleChangeErrors" (click)="!hasRoleChangeErrors && updateRoleChanges()"></p-button>
+            </div>
+          </div>
+        </div>
+        <!-- Error message -->
+        <div *ngIf="hasRoleChangeErrors" class="card text-white bg-danger m-2">
+          <div class="card-body">
+            <p class="card-text">{{'MESSAGES.ROLE_UPDATE_ERRORS' | translate}}</p>
+          </div>
+        </div>
+        <!-- Sucess message -->
+        <div *ngIf="roleChanges && !roleChanges.length" class="card m-2">
+          <div class="card-body">
+            <p class="card-text">{{'MESSAGES.NO_ROLE_CHANGES' | translate}}</p>
+          </div>
+        </div>
+        <!-- Role changes -->
+        <div *ngFor=" let roleChange of roleChanges">
+          <div class="card m-2 p-0">
+            <div class="card-header">
+              {{roleChange?.party?.getName()}}
+            </div>
+            <div class="card-body">
+              <h6 class="card-title font-weight-bold">{{'ROLE_CHANGES.ROLE_TRANSITIONS' | translate}}</h6>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    {{'CODELIST.VALUES.' + roleChange?.startRole | translate}}
+                  </div>
+                  <div class="col">
+                    <span style="color: #36ae2c">
+                      <i class="fa fa-arrow-right"></i>
+                    </span>
+                  </div>
+                  <div class="col">
+                    {{'CODELIST.VALUES.' + roleChange?.finalRole | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <h6 class="card-title mt-4 font-weight-bold">{{'ROLE_CHANGES.VALIDATION_RESULTS' | translate}}</h6>
+              <div class="container">
+                <!-- Errors, warnings -->
+                <div class="row" *ngFor="let validationResult of roleChange.validationResults">
+                  <div class="col-2">
+                    <span *ngIf="validationResult.result === 'error'"
+                      class="badge badge-danger">{{'ROLE_CHANGES.RESULT_ERROR' | translate}}</span>
+                    <span *ngIf="validationResult.result === 'warning'"
+                      class="badge badge-warning">{{'ROLE_CHANGES.RESULT_WARNING' | translate}}</span>
+                  </div>
+                  <div class="col-10">
+                    {{'ROLE_CHANGES.' + validationResult?.message | translate}}
+                  </div>
+                </div>
+                <!-- Success  -->
+                <div *ngIf="roleChange.validationResults.length === 0" class="row">
+                  <div class="col-2">
+                    <span class="badge badge-success">{{'ROLE_CHANGES.RESULT_PASSED' | translate}}</span>
+                  </div>
+                  <div class="col-10">
+                    {{'ROLE_CHANGES.ALL_VALIDATIONS_PASSED'| translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </app-dialog>
+    </div>
+
+    <hr>
+    <!--ACTIONS START-->
+    <div class="row no-gutters px-3">
+      <div class="col-12">
+        <div class="pull-right">
+          <button pButton type="button" label="{{'COMMON.ACTIONS.CANCEL' | translate}}" [hidden]="displayingHistory"
+                  (click)="cancel()" icon="fa fa-undo" style="background: rgba(128,128,128,0.3); border: transparent;" class="cancel-button me-2"></button>
+          <button pButton type="submit" [hidden]='formVariables.isReadOnly || baUnitUrl'
+                  label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o" class="save-button"></button>
+          <button pButton type="button"
+                  [hidden]='formVariables.isReadOnly || baUnitUrl || !baUnit.uid || !formVariables.showRoleChangeButton'
+                  label="{{'ROLE_CHANGES.UPDATE_ROLES' | translate}}" (click)="getRoleChanges()" icon="fa fa-refresh"
+                  class="complete-button me-2"></button>
+        </div>
+      </div>
+    </div>
+    <!--ACTIONS END-->
+  </div>
+</form>

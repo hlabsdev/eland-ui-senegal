@@ -1,0 +1,21 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'HEADER.PROPERTIES' | translate}}</h1>
+    </div>
+  </div>
+
+  <div class="row no-gutters mb-3 ms-3">
+    <div class="col-12 py-1">
+      <p-radioButton [label]="'CREATE_BAUNIT' | translate" value="val1" [(ngModel)]="selectedValue"></p-radioButton>
+    </div>
+    <div class="col-12 py-1">
+      <p-radioButton [label]="'CHOOSE_BAUNIT' | translate" name="groupname" value="val2" [(ngModel)]="selectedValue">
+      </p-radioButton>
+    </div>
+    <div class="py-1">
+      <p-button label="Select"></p-button>
+    </div>
+  </div>
+</div>

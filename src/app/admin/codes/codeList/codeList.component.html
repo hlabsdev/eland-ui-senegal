@@ -1,0 +1,49 @@
+
+<eland-dialog *ngIf="dialogConfig" [config]="dialogConfig" (next)="next($event)" (save)="saveBtn()">
+  <ng-template #content>
+    <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+    <ng-template #tab let-tab let-index="index">
+      <ng-container *ngIf="index === 0">
+        <form #form="ngForm" (ngSubmit)="save(codeList, form)" [ngClass]="{'was-validated': form.submitted}" novalidate>
+          <div class="container-fluid px-0">
+      
+            <div class="px-2 mb-2">
+              <label for="name" class="form-label">{{'CODELIST.TYPE' | translate}} <span class="text-info">*</span></label>
+                <p-dropdown appendTo="body" styleClass="w-100" name="codeListType" [options]="codeListTypes"
+                  [(ngModel)]="codeList.type" [disabled]="readOnlyType" required></p-dropdown>
+            </div>
+      
+            <div class="px-2 mb-2">
+              <label for="name" class="form-label">{{'CODELIST.VALUE' | translate}} <span
+                  class="text-info">*</span></label>
+                <input type="text" class="form-control" name="value" id="value" placeholder="{{'CODELIST.VALUE' | translate}}"
+                  [(ngModel)]="codeList.value" [pattern]="validationService.languageKeywordRegEx.source" required>
+            </div>
+      
+            <div class="px-2 mb-2">
+              <label for="description" class="form-label">{{'CODELIST.DESCRIPTION' | translate}}</label>
+                <textarea name="description" id="description" rows="5" cols="100" pInputTextarea class="form-control"
+                  autoResize="autoResize" [(ngModel)]="codeList.description"></textarea>
+            </div>
+      
+            <div class="px-2 mb-3">
+              <label for="sigtasId" class="form-label">{{'CODELIST.SIGTAS_ID' | translate}}</label>
+                <input type="number" class="form-control" name="sigtasId" id="sigtasId"
+                  placeholder="{{'CODELIST.SIGTAS_ID' | translate}}" [(ngModel)]="codeList.sigtasId"
+                  [pattern]="validationService.positiveDecimalRegEx.source">
+            </div>
+      
+            <div class="px-2 mb-2 field-checkbox">
+                <p-checkbox [(ngModel)]="codeList.isSystemAssign" name="isSystemAssign" binary="true"></p-checkbox>
+                <label for="isSystemAssign" class="ms-2">{{'CODELIST.IS_SYSTEM_ASSIGN' | translate}}</label>
+            </div>
+      
+          </div>
+        </form>
+      </ng-container>
+      <ng-container *ngIf="index === 1">
+        <ng-template #lazyTranslationPanel></ng-template>
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</eland-dialog>

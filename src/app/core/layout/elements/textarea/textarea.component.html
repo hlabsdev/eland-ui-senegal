@@ -1,0 +1,10 @@
+<div class="col-{{field.width??12}} form-group no-gutters px-3" *ngIf="!field.disabled" [formGroup]="group">
+  <label class="col-12 col-form-label">{{field.label | translate}} <span class="text-info"
+              *ngIf="field.isRequired()">*</span></label>
+  <div class="col-12">
+    <textarea pInputTextarea class="form-control" autocomplete="off" name="{{field.name}}" [placeholder]="field.label | translate"
+              id="{{field.name}}" type="text" [formControlName]="field.name"
+              [formGroupName]="field.name" [required]="field.isRequired()" [readonly]="field.readOnly"></textarea>
+  </div>
+</div>
+

@@ -1,0 +1,42 @@
+@import "../../../../style-branding/variables/branding_variables.scss";
+
+.steppers-container {
+  position: relative;
+  &::before {
+    content: "";
+    background-color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+    height: 1px;
+    width: 100%;
+    top: 49.5%;
+    left: 0;
+    display: block;
+    position: absolute;
+  }
+
+  .step {
+    .step-icon {
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 1px solid set_brand_color_hsla(eland-cold-blue, 40, 100);
+      background-color: set_brand_color_hsla(eland-cold-blue, 78, 100);
+
+      color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+      display: block;
+      font-weight: 600;
+
+      &.selected {
+        background-color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+        color: white;
+        &:hover {
+          background-color: set_brand_color_hsla(eland-cold-blue, 47, 100);
+          color: white;
+        }
+      }
+
+      &:hover {
+        background-color: set_brand_color_hsla(eland-cold-blue, 65, 100);
+        color: white;
+      }
+    }
+  }
+}

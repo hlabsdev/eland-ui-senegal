@@ -1,0 +1,8 @@
+// darken-lighten-transparentize function returning hsla values for the dynamic css variables
+@function set_brand_color_hsla($color_name, $percentage, $alfa) {
+  $color_h: var(--#{$color_name}_h);
+  $color_s: var(--#{$color_name}_s);
+  $color_l: var(--#{$color_name}_l);
+  $color_a: var(--#{$color_name}_a);
+  @return hsla($color_h, $color_s, #{$percentage}#{"%"}, #{$alfa}#{"%"});
+}

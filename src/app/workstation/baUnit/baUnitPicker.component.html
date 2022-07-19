@@ -1,0 +1,62 @@
+<div class="container-fluid px-0">
+  <!-- header -->
+  <div class="row no-gutters px-3">
+    <!-- title -->
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'BA_UNIT_PICKER.TITLE' | translate}}</h1>
+    </div>
+  </div>
+  <!--   selected ba unit -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <span class="font-weight-bold">{{'BA_UNIT_PICKER.SELECTED_BA_UNIT' | translate}}:
+        {{baUnit ? baUnit.getTitle(): ''}}</span>
+      <core-alert *ngIf="baUnit && baUnit.hasCaveats()" [local]="true" [autoClear]="false"
+        [message]="caveatWarningMessage"></core-alert>
+    </div>
+  </div>
+  <!-- search input field -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <div class="ui-inputgroup">
+        <input type="text" name="search" class="border-10-left  search-bar-input" pInputText [(ngModel)]="searchText"
+          size="50" placeholder="{{'COMMON.LABELS.SEARCH' | translate}}" (keyup.enter)="searchBaUnits()">
+        <button pButton type="button" icon="fa fa-search" class="border-10-right ui-button-warn view-button search-bar-button"
+          (click)="searchBaUnits()"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <p-table [value]="regBaUnits" [resizableColumns]="true" [columns]="cols" [rows]="rowSizes.SMALL" [paginator]="true"
+      [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadRegisteredBAUnits($event)" #dataTableBAUnitPicker>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pResizableColumn [style]="{'width':col.width}">
+            <div class="d-flex">
+              <span class="ms-3">{{ col.header | translate }}</span>
+            </div>
+          </th>
+          <th pResizableColumn style="width:10%"><span>{{'COMMON.ACTIONS.ACTION' | translate}}</span></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-baUnit let-columns="columns">
+        <tr>
+          <td>{{baUnit.titleName}}</td>
+          <td>{{baUnit.responsibleOffice.name}}</td>
+          <td>{{baUnit.owner}}</td>
+          <td>
+            <p-button type="button" [hidden]="formVariables.isReadOnly" class="add-button" icon="icon icon-edit-eland"
+              pTooltip="{{'COMMON.ACTIONS.ADD' | translate}}" tooltipPosition="top" life="4000" (click)="save(baUnit)">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

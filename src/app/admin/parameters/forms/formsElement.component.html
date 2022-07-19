@@ -1,0 +1,49 @@
+<div>
+  <div class="container-fluid px-0">
+
+    <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+    <div class="row no-gutters p-3 mb-2">
+      <!-- title -->
+      <div class="col-6">
+        <h1> {{(('COMMON.ACTIONS.' + (form ? 'EDIT' : 'ADD')) | translate)}}</h1>
+      </div>
+      <!-- buttons -->
+      <div class="col-6">
+        <div class="pull-right">
+          <p-button type="button" icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+            class="cancel-button me-3" (click)="cancel()"></p-button>
+          <p-button icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}" class="save-button"
+            (click)="save()"></p-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row no-gutters px-3">
+      <label class="col-4 col-form-label">{{'FORMS_GROUP_ELEMENT.NAME' | translate}}
+        <span class="text-info"></span></label>
+      <div class="col-8">
+        <input type="text" class="form-control" [(ngModel)]="form.name" required #name="ngModel"
+          (ngModelChange)="replaceSpace()">
+      </div>
+    </div>
+
+    <div class="row no-gutters px-3">
+      <label class="col-4 col-form-label">{{'FORMS_GROUP_ELEMENT.DESCRIPTION' | translate}}
+        <span class="text-info"></span></label>
+      <div class="col-8">
+        <input type="text" class="form-control" [(ngModel)]="form.description" required #name="ngModel">
+      </div>
+
+
+    </div>
+
+    <div class="row no-gutters px-3">
+      <label class="col-4 col-form-label">{{'FORMS_GROUP_ELEMENT.BODY' | translate}}
+        <span class="text-info"></span></label>
+      <div class="col-12">
+        <textarea [rows]="5" [cols]="84" pInputTextarea autoResize="autoResize" [(ngModel)]="form.bodyWrap"
+          #name="ngModel" (change)="prettify()"></textarea>
+      </div>
+    </div>
+  </div>
+</div>

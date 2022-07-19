@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <!-- route name and buttons -->
+  <div class="row no-gutters mb-0 pt-4 pb-2">
+    <div class="col-12 d-flex">
+      <h1 class="my-auto">{{'TRANSLATION.HEADER' | translate}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-xs-12 px-0 d-inline-block">
+      <ng-template #lazySideMenu></ng-template>
+    </div>
+    <div class="col">
+      <ng-template #lazyTranslationSection *ngIf="currentSections"></ng-template>
+    </div>
+  </div>
+</div>

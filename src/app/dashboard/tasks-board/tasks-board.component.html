@@ -1,0 +1,115 @@
+<div class="container-fluid mt-2 bg-white text-dark">
+  <div class="row">
+    <div class="col-6">
+      <p-panel toggleable=true>
+        <p-header>
+          <h1>{{'HEADER.ALL_TASKS' | translate}}</h1>
+        </p-header>
+        <p-table *ngIf="tasksCount" [value]="tasksCount" [scrollable]="true" scrollHeight="400px">
+          <ng-template pTemplate="header">
+            <tr>
+              <th> {{'COMMON.LABELS.COUNT' | translate}}</th>
+              <th>{{'COMMON.ACTIONS.DETAILS' | translate}}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-tasks>
+            <tr [ngClass]="{'active': tasks.name === defaultSelection}">
+              <td class="cursor-pointer"> <a
+                  (click)="getTasks({name: tasks.name, count:true, reset:true})">{{tasks.count}}</a></td>
+              <td>{{tasks.value | translate}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+    <div class="col-6">
+      <p-panel toggleable=true >
+        <p-header>
+          <h1>{{'HEADER.GROUP_TASKS' | translate}}</h1>
+        </p-header>
+        <p-table *ngIf="groupAndTasks" [value]="groupAndTasks" [scrollable]="true" scrollHeight="400px">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{'COMMON.LABELS.COUNT' | translate}}</th>
+              <th>{{'COMMON.ACTIONS.DETAILS' | translate}}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-groupAndTask>
+            <tr [ngClass]="{'active': groupSelection === groupAndTask.groupName && defaultSelection === 'byGroup'}">
+              <td>
+                <a class="cursor-pointer"
+                  (click)="groupSelection =groupAndTask.groupName; getTasks({candidateGroup: groupAndTask.groupName, name: 'byGroup', count:true, reset:true})">
+                  {{groupAndTask.taskCount}}
+                </a>
+              </td>
+              <td>
+                {{groupAndTask.groupName ? ('HEADER.WORKFLOW.GROUPS.' + groupAndTask.groupName  | translate ) : ('TASK.NO_GROUP'  | translate)}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+  </div>
+
+  <p-panel toggleable=true >
+    <p-header>
+      <h1>{{'TASK.LIST' | translate}}</h1>
+    </p-header>
+    <div class="row ">
+      <div class="col-6 mx-auto">
+        <div class="input-group">
+          <div class="input-group-prepend me-2">
+            <input pInputText [(ngModel)]="assigneeLike" class="form-control me-sm-1" type="search"
+              placeholder="{{'TASK.TASK_ASSIGNEE_LIKE' | translate}}">
+          </div>
+          <input pInputText [(ngModel)]="taskName" class="form-control me-sm-1" type="search"
+            placeholder="{{'TASK.NAME' | translate}}">
+          <button type="button" class="btn btn-outline-success"
+            (click)="getTasks({count:true, reset:true})">{{'COMMON.ACTIONS.SEARCH' | translate}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <p-table editMode="row" [value]="tasks" *ngIf="tasks.length > 0" [lazy]="true" [scrollable]="true"
+          scrollHeight="400px" [paginator]="true" [rows]="rowSizes.SMALL" [totalRecords]="totalRecords" #taskTable
+          dataKey="id" (onPage)="getTasks({filters:$event})">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{'TASK.NAME' | translate}}</th>
+              <th>{{'TASK.CREATED' | translate}}</th>
+              <th>{{'TRANSACTION_INSTANCE.ASSIGNEE' | translate}}</th>
+              <th style="width:8em"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-task let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="task">
+              <td>{{task.name}}</td>
+              <td>{{task.created}}</td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="task.assignee">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{task.assignee}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td style="text-align:center">
+                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                  class="ui-button-info" (click)="onRowEditInit(task)"></button>
+                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                  class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(task, ri)"></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-panel>
+</div>

@@ -1,0 +1,66 @@
+<eland-dialog *ngIf="dialogConfig" [config]="dialogConfig" (next)="next($event)" (previous)="previous($event)" (save)="save()">
+  <ng-template #content>
+    <ng-template #tab let-tab let-index="index">
+      <ng-container *ngIf="index === 0">
+        <div class="col-12 container-fluid px-0 flex-column">
+            <core-alert *ngIf="errors" [local]="true" [autoClear]="true" [message]="errors"></core-alert>
+            <div class="row no-gutters px-3 pt-2">
+              <label>{{'PARAMETERS.TERRITORY.COMMON.CODE' | translate}}
+                <span class="text-info">*</span></label>
+              <div>
+                <input [disabled]="disable" type="text" class="form-control" [(ngModel)]="item.code" required #name="ngModel">
+              </div>
+            </div>
+            <div class="row no-gutters px-3 pt-3">
+              <label>{{'PARAMETERS.TERRITORY.COMMON.NAME' | translate}}
+                <span class="text-info">*</span></label>
+              <div>
+                <input [disabled]="disable" type="text" class="form-control" [(ngModel)]="item.name" required #name="ngModel">
+              </div>
+            </div>
+            <div class="row no-gutters px-3 pt-3" *ngIf="selectTxt && subItemLabel && subItemModel && selectableCol && col">
+              <label>{{subItemLabel | translate}}
+                <span class="text-info"></span></label>
+              <div>
+                <p-dropdown [disabled]="disable" appendTo='body'  [options]="selectableCol" [(ngModel)]="item[subItemModel]" [filter]="true" autoWidth="false"
+                  [style]="{'width':'100%'}" *ngIf="!itemMultiple"></p-dropdown>
+                <p-multiSelect [options]="selectableCol" appendTo='body' [(ngModel)]="item[subItemModel]" [filter]="true" autoWidth="false"
+                  [style]="{'width':'100%'}" *ngIf="itemMultiple"></p-multiSelect>
+              </div>
+            </div>
+            <div class="row no-gutters px-3 pt-3"
+              *ngIf="selectTxt2 && subItemLabel2 && subItemModel2 && selectableCol2 && col2">
+              <label>{{subItemLabel2 | translate}}
+                <span class="text-info"></span></label>
+              <div>
+                <p-dropdown [disabled]="disable" appendTo='body'  [options]="selectableCol2" [(ngModel)]="item[subItemModel2]" [filter]="true" autoWidth="false"
+                  [style]="{'width':'100%'}" *ngIf="!item2Multiple"></p-dropdown>
+                <p-multiSelect [options]="selectableCol2" appendTo='body' [(ngModel)]="item[subItemModel2]" [filter]="true"
+                  autoWidth="false" [style]="{'width':'100%'}" *ngIf="item2Multiple"></p-multiSelect>
+              </div>
+            </div>
+            <div class="row no-gutters px-3 pt-3" *ngIf="showSigtasField">
+              <label>{{'PARAMETERS.TERRITORY.COMMON.SIGTAS_FIELD' | translate}}
+                <span class="text-info">*</span></label>
+              <div>
+                <input [disabled]="disable" type="text" class="form-control" [(ngModel)]="item.sigtasId" #name="ngModel" required>
+              </div>
+            </div>
+            <div class="row no-gutters px-3 pt-3">
+              <label>{{'PARAMETERS.TERRITORY.COMMON.DESCRIPTION' | translate}}
+                <span class="text-info"></span></label>
+              <div>
+                <textarea  [disabled]="disable" [rows]="3" [cols]="42" class="form-control" pInputTextarea autoResize="autoResize"
+                  [(ngModel)]="item.description" #name="ngModel"></textarea>
+              </div>
+            </div>
+          </div>
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</eland-dialog>
+
+
+
+
+

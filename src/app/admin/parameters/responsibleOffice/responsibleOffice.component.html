@@ -1,0 +1,20 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      (actions)="call($event)"
+      (addCallBack)="showElementDialogue()" 
+      [datas]="responsibleOffices" 
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item>
+        <td class="break-word" *ngIf="col.field === 'code'">{{ item.code }}</td>
+        <td class="break-word" *ngIf="col.field === 'name'">{{ item.name }}</td>
+        <td class="break-word" *ngIf="col.field === 'taxCenterId'">{{ item.taxCenterId | matchSelectItem:taxCenters }}</td>
+        <td class="break-word" *ngIf="col.field === 'registryCodes'">{{ item.registryNames }}</td>
+      </ng-template>
+    </eland-table>
+</div>
+<!-- dialog -->
+<ng-template #lazyCurrentResponsibleOffice *ngIf="currentResponsibleOffice"></ng-template>

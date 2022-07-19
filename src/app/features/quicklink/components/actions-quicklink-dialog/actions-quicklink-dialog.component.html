@@ -1,0 +1,33 @@
+<div class="quicklinkOP-inner">
+
+  <div class="container-fluid px-0">
+
+    <div class="row no-gutters ">
+      <p-dropdown [options]="groupOptions" [(ngModel)]="selectedQuicklink"
+        placeholder="{{'QUICKLINKS.DROPDOWN_PLACEHOLDER' | translate}}" [group]="true" filter="true"
+        filterBy="label,value.name" [style]="{'width':'180px'}" [showTransitionOptions]="'300ms'"
+        [hideTransitionOptions]="'300ms'" (onChange)="onChangeQuicklink(selectedQuicklink)">
+        <ng-template #groupTp let-quicklinkgroup pTemplate="group">
+          <span>{{quicklinkgroup.label}}</span>
+        </ng-template>
+        <ng-template #quicklinkTp let-quicklink pTemplate="item">
+          <div>{{quicklink.label}}</div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <!-- [disabled]="!quicklinkForm.valid" -->
+    <div class="actions-btns row no-gutters ">
+      <button (click)="set()">
+        Set
+      </button>
+      <button (click)="duplicate()">
+        Duplicate
+      </button>
+      <button (click)="delete()">
+        Delete
+      </button>
+    </div>
+  </div>
+
+</div>

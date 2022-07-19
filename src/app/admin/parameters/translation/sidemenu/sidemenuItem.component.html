@@ -1,0 +1,25 @@
+<div class="sectionItemContainer" [@inOutAnimation]>
+  <div class="sectionItemContent" [ngClass]="{'open': section?.open, 'parent': isParent}" (mouseenter)="mouseEnter()"
+    (mouseleave)="mouseLeave()">
+    <sog-light [active]="section?.open" [over]="mouseover" [level]="level" style="display: inline-block"></sog-light>
+    <div class="sectionItem2" *ngIf="mode.show">
+      <div (click)="select()" class="sectionItem2-text">{{section.name}}</div>
+      <div class="sectionItem2-buttons" (click)="isParent ? openClicked(): addClicked(section, level + 1)">
+        <div *ngIf="isParent; else notParent">
+          <i [ngClass]="{'open': section?.open}" class="pi pi-chevron-right arrowIcon me-1"></i>
+        </div>
+        <ng-template #notParent>
+          <i class="pi pi-plus arrowIcon me-1"></i>
+        </ng-template>
+      </div>
+    </div>
+    <div class="sectionItem2" *ngIf="mode.add" (click)="addClicked(parent, level)">
+      <div class="sectionItem2-text">{{ 'TRANSLATION.SECTION.ADD_SECTION_KEY' | translate }}</div>
+    </div>
+  </div>
+  <div *ngIf="mode.show && isParent && section.open" class="sectionItemChilds">
+    <app-sidemenu-item [mode]="{'add': true}" [level]="level+1" [parent]="section"></app-sidemenu-item>
+    <app-sidemenu-item [section]="subsection" *ngFor="let subsection of subSections" [level]="level+1"
+      [parent]="section"></app-sidemenu-item>
+  </div>
+</div>

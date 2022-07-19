@@ -1,0 +1,13 @@
+@import "branding_variables.scss";
+
+.light {
+  height: 36px;
+  width: 7px;
+  background-color: set_brand_color_hsla(eland-black, 80, 100);
+  &.active {
+    background-color: set_brand_color_hsla(eland-cold-blue, 45, 100);
+  }
+  &.over {
+    background-color: set_brand_color_hsla(eland-black, 70, 100);
+  }
+}

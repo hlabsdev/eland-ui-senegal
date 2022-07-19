@@ -1,0 +1,18 @@
+<div class="container-fluid px-0 bordered-left inner" >
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="loadCountries()" 
+      (addCallBack)="showCountryElementDialogue()"
+      (actions)="call($event)" 
+      [datas]="countries" 
+      [cols]="cols">
+    </eland-table>
+
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<ng-template #lazyCurrentCountry *ngIf="currentCountry"></ng-template>

@@ -1,0 +1,52 @@
+<div class="container-fluid px-0">
+
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'PREREGISTRATION_FORMALITY.TITLE' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end" *ngIf="!readOnly">
+      <p-button type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+        class="cancel-button me-2" [hidden]="readOnly" (click)="doCancel($event)"></p-button>
+      <p-button type="button" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o" class="save-button"
+        [hidden]="readOnly" (click)="doSave($event)"></p-button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-6 pr-2">
+      <div *ngFor="let section of column1">
+        <sog-panel class="pt-0" header="{{section.header | translate}}">
+          <div [class]="getFieldColumnClass(section.items.length, field)" *ngFor="let field of section.items">
+            <div *ngIf="field && field.type">
+              <div class="group-header">{{field.header | translate}}</div>
+              <div [class]="getFieldColumnClass(field.items.length, null)" *ngFor="let sField of field.items">
+                <dyn-panel-element *ngIf="sField && !sField.type" class="mb-2 mt-2" [field]="sField"
+                  [(data)]="data && data[sField.name]" [readOnly]="readOnly || sField.readOnly"></dyn-panel-element>
+              </div>
+            </div>
+            <dyn-panel-element *ngIf="field && !field.type" class="mb-2 mt-2" [field]="field"
+              [(data)]="data && data[field.name]" [readOnly]="readOnly || field.readOnly"></dyn-panel-element>
+          </div>
+        </sog-panel>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-6 pl-2">
+      <div *ngFor="let section of column2">
+        <sog-panel class="pt-0" header="{{section.header | translate}}">
+          <div [class]="getFieldColumnClass(section.items.length, field)" *ngFor="let field of section.items">
+            <div *ngIf="field && field.type">
+              <div class="group-header">{{field.header | translate}}</div>
+              <div [class]="getFieldColumnClass(field.items.length, null)" *ngFor="let sField of field.items">
+                <dyn-panel-element *ngIf="sField && !sField.type" class="mb-2 mt-2" [field]="sField"
+                  [(data)]="data && data[sField.name]" [readOnly]="readOnly || sField.readOnly"></dyn-panel-element>
+              </div>
+            </div>
+            <dyn-panel-element *ngIf="field && !field.type" class="mb-2 mt-2" [field]="field"
+              [(data)]="data && data[field.name]" [readOnly]="readOnly || field.readOnly"></dyn-panel-element>
+          </div>
+        </sog-panel>
+      </div>
+    </div>
+  </div>
+</div>

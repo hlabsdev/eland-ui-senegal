@@ -1,0 +1,50 @@
+<!--<div class="row">-->
+<!--  <div class="main col">-->
+<!--    <sog-parcel-cards [parcels]="destinationParcels" [addBtn]="true" (add)="test()" (selectedItemChanged)="setSelectedItem($event)"></sog-parcel-cards>-->
+<!--  </div>-->
+<!--  <div class="selection col" *ngIf="ShowSelection">-->
+<!--    <div class="ui-inputgroup">-->
+<!--      <input type="text" pInputText placeholder="Keyword">-->
+<!--      <button pButton type="button" icon="fa fa-superpowers" class="ui-button-warn"></button>-->
+<!--    </div>-->
+<!--    {{selectedItem}}-->
+<!--  </div>-->
+<!--</div>-->
+<div>
+  <div class="container-fluid px-0">
+<!--    <core-alert *ngIf="true" [local]="true" [autoClear]="false" [message]="">-->
+<!--    </core-alert>-->
+
+    <div class="row no-gutters">
+
+      <button pButton type="button" class="ui-button-warn" (click)="createCCGSource()"  [disabled]="currentCCG?.isPartition() && source">Create CCG Source</button>
+      <button pButton type="button" class="ui-button-warn" (click)="createCCGDest()" [disabled]="currentCCG?.isFusion() && destination">Create CCG Destination</button>
+      <div class="col-12">
+        <p-tabView (onChange)="handleChange($event)"> <!--[activeIndex]="baUnitUrl || baUnit.isRegistered() ? null : activeIndex"
+                   (onChange)="handleChange($event)"-->
+          <p-tabPanel header="{{'CONSISTENCY-CHANGE.SOURCES-TITLE' | translate}}" #childComponent *ngIf="source">
+            <div *ngIf="currentCCG?.isFusion()">
+              <app-spacial-units-list [consistencyChangeItems]="currentCCS" [consistencyChangeTypeFilter]="filters.source"></app-spacial-units-list>
+            </div>
+            <div *ngIf="currentCCG?.isPartition()">
+              <ng-template #lazyCcItem *ngIf="currentCCG?.isPartition()"></ng-template>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="{{'CONSISTENCY-CHANGE.DESTINATION-TITLE' | translate}}" #childComponent *ngIf="destination">
+            <div *ngIf="currentCCG?.isPartition()">
+              <app-spacial-units-list [consistencyChangeItems]="currentCCS" [consistencyChangeTypeFilter]="filters.destination"></app-spacial-units-list>
+            </div>
+            <div *ngIf="currentCCG?.isFusion()">
+              <ng-template #lazyCcItemDestination *ngIf="currentCCG?.isFusion()"></ng-template>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-dialog appendTo="body" [(display)]="currentCC" modal="modal" #formsGroupElementDialog>
+  <app-consistency-change-dialog [currentCC]="currentCC" (saved)="ccSave($event)" [multiselect]="canMultiSelect"></app-consistency-change-dialog>
+</app-dialog>
+

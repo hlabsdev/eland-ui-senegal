@@ -1,0 +1,6 @@
+<div *ngIf="!currentCC?.baUnit">
+  <ng-template #lazyBaUnitPicker *ngIf="currentCC?.baUnit"></ng-template>
+</div>
+<div *ngIf="currentCC?.baUnit && !currentCC?.parcel">
+  <ng-template #lazySpatialUnitPicker *ngIf="currentCC?.baUnit && !currentCC?.parcel"></ng-template>
+</div>

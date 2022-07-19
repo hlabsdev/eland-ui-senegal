@@ -1,0 +1,68 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <p-table #rfp [columns]="cols"
+    [value]="preregistrationFormalies" [globalFilterFields]="['id', 'date', 'applicant', 'owner']" dataKey="id" [paginator]="true" [rows]="rows"
+    [totalRecords]="totalRecords" responsiveLayout="scroll" [expandedRowKeys]="expandedRows"
+    styleClass="p-datatable-striped" [resizableColumns]="true" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()" >
+    <ng-template pTemplate="caption">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-5 text-start d-flex">
+          <h1 class="table-title">{{ 'HEADER.REGISTRE_FORMALITY' | translate}}</h1>
+          <i class="pi pi-info-circle" pTooltip="{{ 'HEADER.REGISTRE_FORMALITY' | translate}}" tooltipPosition="top"></i>
+        </div>
+        <div class="col-12 col-md-7 text-end">
+          <div class="d-inline fix-position">
+            <button class="btn btn-secondary ms-2" (click)="reload()">
+              <i class="pi pi-refresh"></i>
+            </button>
+          </div>
+  
+          <span class="p-input-icon-left ms-2 search-bar">
+            <i class="pi pi-search"></i>
+            <input class="form-control" pInputText type="text" (input)="rfp.filterGlobal($event.target.value, 'contains')" placeholder="{{'COMMON.ACTIONS.SEARCH' | translate}}" />
+          </span>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 3em"></th>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            <span class="ms-2">{{ col.header | translate }}</span>
+            <span class="p-ml-auto">
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
+            </span>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+      <tr>
+        <td>
+          <button (click)="loadWorkstation(rowData)" type="button" pButton pRipple [pRowToggler]="rowData" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+        </td>
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field === 'date'; else default">
+            <span> {{ rowData[col.field] | specificTimezone | localeDate:'longDate' }} </span>
+          </ng-container>
+          <ng-template #default>
+            <ng-container>
+              <span> {{ rowData[col.field] }}</span>
+            </ng-container>
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+      <tr>
+        <td [attr.colspan]="columns.length + 1">
+          <ng-template #lazyWorkstation></ng-template>
+          <!--app-workstation [preregistrationFormality]="rowData" [readOnly]="true" [form]="cForm"></app-workstation-->
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

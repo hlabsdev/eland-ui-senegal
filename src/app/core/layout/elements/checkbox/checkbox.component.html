@@ -1,0 +1,17 @@
+<div *ngIf="!field.disabled" class="form-group col-{{field.width??12}} no-gutters px-3" [formGroup]="group">
+  <label [for]="field.name" class="col-12 col-form-label">{{field.label | translate}}</label>
+
+  <div class="col-12">
+    <p-checkbox [formControlName]="field.name" [formGroupName]="field.name" name="field.name" binary="false"
+      [disabled]="field.readOnly">
+    </p-checkbox>
+    <!-- TODO: unify error accross forms. -->
+    <ng-container *ngFor="let validation of field.validations;">
+      <span
+        *ngIf="group.get(field.name)!== null && group.get(field.name).hasError(validation.name) && group.get(field.name).touched"
+        #err>
+        <i class="fa fa-exclamation text-danger me-2" aria-hidden="true"></i>
+      </span>
+    </ng-container>
+  </div>
+</div>

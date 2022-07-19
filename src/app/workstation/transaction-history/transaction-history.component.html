@@ -1,0 +1,66 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'HEADER.TRANSACTIONS' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='formVariables.isReadOnly' type="button" class="add-button" icon="icon icon-add-eland"
+        label="{{'COMMON.ACTIONS.ADD' | translate}}"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters px-3 mb-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [enableDropdown]=true></app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <p-table [columns]="cols" [value]="baUnitVersions" dataKey="version">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          <div class="d-flex">
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+            <span class="ms-2">{{col.header}}</span>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-baUnitVersion let-expanded="expanded" let-columns="columns">
+      <tr>
+        <td>
+          <a href="#" [pRowToggler]="baUnitVersion">
+            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+          </a>
+          {{ baUnitVersion?.complementaryInfo?.transactionInstance?.transaction?.name }}
+        </td>
+
+        <td> {{ baUnitVersion.beginLifespanVersion | specificTimezone | localeDate }} </td>
+        <td> {{ (baUnitVersion.registered ? baUnitVersion.registrationDate : null) | specificTimezone | localeDate }}
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-baUnitVersion let-columns="columns">
+      <tr>
+        <td [attr.colspan]="columns.length + 1">
+          <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+
+            <app-ba-unit-form [displayingHistory]="true" [baUnit]="baUnitVersion" [formVariables]="{isReadOnly: true}">
+            </app-ba-unit-form>
+
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+    </ng-template>
+  </p-table>
+</div>

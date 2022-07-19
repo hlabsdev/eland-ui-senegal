@@ -1,0 +1,66 @@
+<div class="container-fluid px-0">
+  <form #form="ngForm" [ngClass]="{'was-validated': form.submitted}" novalidate>
+    <!-- header -->
+    <div class="row no-gutters p-3 mb-2">
+      <!-- title -->
+      <div class="col-6 d-flex pl-0">
+        <h1 class="my-auto">{{ 'BA_UNIT_SET_BATCH_TRANSACTIONS.TITLE' | translate}}</h1>
+      </div>
+
+      <div class="col-6 pr-0">
+        <div class="pull-right">
+          <p-button type="button" label="{{'COMMON.ACTIONS.CANCEL' | translate}}" (click)="cancel()" icon="fa fa-undo"
+            class="cancel-button me-2"></p-button>
+          <p-button [hidden]="formVariables.isReadOnly" type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}"
+            (click)="save(form)" icon="fa fa-floppy-o" class="save-button"></p-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row no-gutters px-3 mb-3">
+      <label for="transactionType" class="col-4 col-form-label">{{'BA_UNIT_SET_BATCH_TRANSACTIONS.TRANSACTION_TO_START'
+          | translate}}
+        <span class="text-info">*</span></label>
+      <div class="col-8">
+        <p-dropdown [disabled]="formVariables.isReadOnly" styleClass="form-control w-100 col-form-label"
+          [options]="transactionTypes" name="transactionsDropdown" required [(ngModel)]="transaction"></p-dropdown>
+      </div>
+    </div>
+
+    <div class="form-group row no-gutters px-3 mb-3">
+      <label for="numberOfProcesses" class="col-4 col-form-label">{{'BA_UNIT_SET_BATCH_TRANSACTIONS.NUMBER_PROCESSES' |
+          translate}}
+        <span class="text-info">*</span></label>
+      <div class="col-8">
+        <input pKeyFilter="num" [disabled]="formVariables.isReadOnly" type="number" required class="form-control"
+          name="numberOfProcesses" id="numberOfProcesses"
+          placeholder="{{'BA_UNIT_SET_BATCH_TRANSACTIONS.NUMBER_PROCESSES' | translate}}"
+          [(ngModel)]="numberOfProcesses" #name="ngModel">
+      </div>
+    </div>
+
+    <div class="form-group row no-gutters px-3">
+      <label for="parentProperty" class="col-4 col-form-label">{{'BA_UNIT_SET_BATCH_TRANSACTIONS.PARENT_PROPERTY' |
+          translate}}
+        <span class="text-info">*</span>
+      </label>
+
+      <div class="col-8 d-flex">
+        <div class="input-group">
+          <input type="text" readonly="true" required class="form-control" name="baUnitId" id="baUnitId"
+            placeholder="{{'BA_UNIT_SET_BATCH_TRANSACTIONS.PARENT_PROPERTY' | translate}}" [(ngModel)]="baUnit.uid"
+            #name="ngModel">
+          <p-button type="button" [icon]="'fa fa-search'" class="input-group-append search-button"
+            (click)="showBAUnitDialog()"></p-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!-- pop-up -->
+<p-dialog appendTo="body" [(visible)]="showDialog" [modal]="true" [responsive]="true" styleClass="dialog-class"
+  [maximizable]="true" #baUnitPicker>
+  <ng-template #lazyBaUnitPicker *ngIf="showDialog"></ng-template>
+</p-dialog>

@@ -1,0 +1,20 @@
+<!-- currently we only show pdf and image files.
+TODO: try to make this work with other file types (doc docx) -->
+<div class="col file-viewer" *ngIf="displayObj && displayObj.file">
+  <div class="nav d-center">
+    <p-menubar [model]="fileMenu" [autoDisplay]="false">
+      <div class="me-2 ms-2 d-inline truncate">
+        <ng-content select="span"></ng-content>
+      </div>
+      <p-spinner *ngIf="displayObj.viewerProp.viewer === 'pdf'" placeholder="21312" size="1" [(ngModel)]="page"
+        inputStyleClass=" me-2"></p-spinner>
+    </p-menubar>
+  </div>
+
+  <pdf-viewer *ngIf="displayObj.viewerProp.viewer === 'pdf'" [autoresize]="true"
+    (after-load-complete)="renderPDF($event)" [rotation]="rotateValue" [original-size]="false" [show-all]="false"
+    [(page)]="page" [src]="displayObj.file" [zoom]="zoom" [render-text]="render_text"
+    style="display: block;max-width:600px"></pdf-viewer>
+  <img *ngIf="displayObj.viewerProp.viewer === 'image'" [src]="fileUrl" style="display: block;max-width:600px">
+
+</div>

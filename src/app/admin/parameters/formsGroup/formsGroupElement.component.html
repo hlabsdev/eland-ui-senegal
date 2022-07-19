@@ -1,0 +1,84 @@
+<div>
+  <div class="container-fluid px-0">
+
+    <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+    <div class="row no-gutters p-3 mb-2">
+      <!-- title -->
+      <div class="col-6">
+        <h1> {{(('COMMON.ACTIONS.' + (form ? 'EDIT' : 'ADD')) | translate)}}</h1>
+      </div>
+      <!-- buttons -->
+      <div class="col-6">
+        <div class="pull-right">
+          <p-button type="button" icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+            class="cancel-button me-3" (click)="cancel()"></p-button>
+          <p-button icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}" class="save-button"
+            (click)="save()"></p-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row no-gutters px-3">
+      <label class="col-4 col-form-label">{{'FORMS_GROUP_ELEMENT.NAME' | translate}}
+        <span class="text-info"></span></label>
+      <div class="col-8">
+        <input type="text" class="form-control" [(ngModel)]="form.name" #name="ngModel"
+          (ngModelChange)="replaceSpace()">
+      </div>
+    </div>
+
+    <div class="row no-gutters px-3">
+      <label class="col-4 col-form-label">{{'FORMS_GROUP_ELEMENT.DESCRIPTION' | translate}}
+        <span class="text-info"></span></label>
+      <div class="col-8">
+        <input type="text" class="form-control" [(ngModel)]="form.description" #name="ngModel">
+      </div>
+    </div>
+
+    <p-table [value]="form.childFormsArr" dataKey="id" [primeDragula]="'bag-forms'" [dragulaModel]="form.childFormsArr"
+      [dragulaOptions]="{ childContainerSelector: 'tbody', initAfterView: true }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th colspan="6">
+            {{'FORMS_GROUP_ELEMENT.NAME' | translate}}
+          </th>
+          <th colspan="2">
+            {{'FORMS_GROUP_ELEMENT.READ-ONLY' | translate}}
+          </th>
+          <th colspan="2">
+            {{'FORMS_GROUP_ELEMENT.REQUIRED' | translate}}
+          </th>
+          <th colspan="2">
+            {{'FORMS_GROUP_ELEMENT.LINKS' | translate}}
+          </th>
+          <th colspan="1">
+            <p-button type="button" class="add-button pull-right" icon="icon icon-add-eland" (click)="addLine()">
+            </p-button>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cForms>
+        <tr>
+          <td colspan="6" pReorderableRowHandle>
+            <p-dropdown [options]="formNames" [(ngModel)]="cForms.name" [filter]="true"></p-dropdown>
+          </td>
+          <td colspan="2">
+            <p-checkbox name="cForms.readOnly" [(ngModel)]="cForms.readOnly" binary="true"
+              (onChange)="checkChanged('readOnly', cForms)"> </p-checkbox>
+          </td>
+          <td colspan="2">
+            <p-checkbox name="cForms.required" [(ngModel)]="cForms.required" binary="true"
+              (onChange)="checkChanged('required', cForms)"></p-checkbox>
+          </td>
+          <td colspan="2">
+            <p-checkbox name="cForms.links" [(ngModel)]="cForms.links" binary="true"></p-checkbox>
+          </td>
+          <td colspan="1">
+            <p-button class="delete-button pull-right fsize10" type="button" icon="fa fa-trash"
+              (click)="removeLine(cForms)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

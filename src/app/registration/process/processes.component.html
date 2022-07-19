@@ -1,0 +1,56 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div *ngIf="!displayUploader"  class="container-fluid px-0">
+    <eland-table 
+    [tableConfig]="tableConfig" 
+    (reloadTable)="loadProcesses()" 
+    (selectRow)="onRowSelect($event)" 
+    (unselectRow)="onRowUnselect($event)" 
+    (selectedRow)="selectedRow($event)"
+    (addCallBack)="addProcess()" 
+    (actions)="call($event)" 
+    [datas]="processes" 
+    [cols]="cols">
+  </eland-table>
+
+</div>
+
+
+
+  <form #form="ngForm" *ngIf="displayUploader" (ngSubmit)="save(form)">
+    <div class="container-fluid px-0">
+      <div class="row no-gutters px-3">
+        <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="false" [message]="errorMessage"></core-alert>
+      </div>
+
+      <div class="row no-gutters px-3">
+        <label for="name" class="col-4 col-form-label">{{'DEPLOYMENT.NAME' | translate}}
+          <span class="text-info">*</span></label>
+        <div class="col-8">
+          <input type="text" class="form-control" name="name" id="name" [(ngModel)]="deployment.name" required
+            #name="ngModel" pInputText>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3">
+        <div class="col-12">
+          <p-fileUpload name="files[]" chooseLabel="{{'COMMON.ACTIONS.UPLOAD' | translate}}" customUpload="true"
+            auto="true" multiple="multiple" (uploadHandler)="addFiles($event)" accept=".bpmn,.cmmn,.dmn"
+            invalidFileSizeMessageSummary="{0}" invalidFileSizeMessageDetail="{{'MESSAGES.MAX_FILE_ERROR' | translate}}"
+            maxFileSize="1000000" ui-fileupload-buttonbar="btn btn-warning text-white" required></p-fileUpload>
+          <span class="text-info">*</span>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3">
+        <div class="col-12">
+          <div class="ms-auto">
+            <p-button type="button" (click)="resetDeployment()" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+              icon="fa fa-undo" class="cancel-button me-2"></p-button>
+            <p-button type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-check"
+              class="save-button"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>

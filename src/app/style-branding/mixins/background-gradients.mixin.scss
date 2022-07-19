@@ -1,0 +1,50 @@
+// Background gradient Mixin
+@mixin background-gradient() {
+  background-color: set_brand_color_hsla(eland-cold-blue, 40, 100);
+  background-image: -webkit-linear-gradient(
+    90deg,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 0%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 25%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 65%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 79%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 85%,
+    set_brand_color_hsla(eland-black, 22, 100) 100%
+  );
+  background-image: -moz-linear-gradient(
+    90deg,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 0%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 25%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 65%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 79%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 85%,
+    set_brand_color_hsla(eland-black, 22, 100) 100%
+  );
+  background-image: -ms-linear-gradient(
+    90deg,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 0%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 25%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 65%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 79%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 85%,
+    set_brand_color_hsla(eland-black, 22, 100) 100%
+  );
+  background-image: -o-linear-gradient(
+    90deg,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 0%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 25%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 65%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 79%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 85%,
+    set_brand_color_hsla(eland-black, 22, 100) 100%
+  );
+
+  background-image: linear-gradient(
+    90deg,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 0%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 25%,
+    set_brand_color_hsla(eland-cold-blue, 40, 100) 65%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 79%,
+    set_brand_color_hsla(eland-neutral-grey, 38, 100) 85%,
+    set_brand_color_hsla(eland-black, 22, 100) 100%
+  );
+}

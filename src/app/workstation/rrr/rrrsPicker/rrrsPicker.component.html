@@ -1,0 +1,36 @@
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="regRRRs" 
+      (addCallBack)="showRRRDialogue()"
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item>
+        <td *ngIf="col.field === 'rightTypeDescription'">{{item.rightTypeDescription}}</td>
+        <td *ngIf="col.field === 'spatialUnitType'">{{item.spatialUnitNumber}}</td>
+        <td *ngIf="col.field === 'idParties'">
+          <ul class="list-unstyled">
+            <li *ngFor="let partyId of item.idParties">{{partyId}}</li>
+          </ul>
+        </td>
+        <td *ngIf="col.field === 'nameParties'">
+          <ul class="list-unstyled">
+            <li *ngFor="let partyName of item.nameParties">{{partyName}}</li>
+          </ul>
+        </td>
+        <td *ngIf="col.field === 'rolParties'">
+          <ul class="list-unstyled">
+            <li *ngFor="let rolParty of item.rolParties">{{rolParty}}</li>
+          </ul>
+        </td>
+        <td *ngIf="col.field === 'inscriptionDate'">{{item.inscriptionDate}}</td>
+        <td *ngIf="col.field === 'inscriptionSlip'" class="text-right">{{item.inscriptionSlip}}</td>
+        <td *ngIf="col.field === 'modDate'">{{item.modDate}}</td>
+      </ng-template>
+  </eland-table>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="rrr" modal="modal" #rrrDialog>
+  <ng-template #lazyRrr *ngIf="rrr"></ng-template>
+</app-dialog>

@@ -1,0 +1,9 @@
+@mixin chromatic-prefixing($key, $value, $prefix) {
+  #{$prefix}_#{$key}: $value;
+}
+
+@mixin chromatic-mapping($map, $prefix) {
+  @each $key, $value in $map {
+    @include chromatic-prefixing($key, $value, $prefix);
+  }
+}

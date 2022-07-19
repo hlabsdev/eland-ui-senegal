@@ -1,0 +1,26 @@
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      [datas]="responsibleParties" 
+      (addCallBack)="showResponsiblePartyDialogue()"
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item let-custom="custom">
+        <td *ngIf="col.field === 'id'">{{item.id}}</td>
+        <td *ngIf="col.field === 'individualName'">{{item.individualName}}</td>
+        <td *ngIf="col.field === 'organizationName'">{{item.organizationName}}</td>
+        <td *ngIf="col.field === 'role'">{{'CODELIST.VALUES.'+item.role.value | translate}}</td>
+      </ng-template>
+      <ng-template #actions let-item="item" let-custom="custom">
+        <p-button type="button" [icon]="custom.formVariables.isReadOnly ? 'fa fa-search' : 'icon icon-edit-eland'" 
+          class="edit-button me-2" (click)="showResponsiblePartyDialogue(item)"></p-button>
+        <p-button type="button" [hidden]='custom.formVariables.isReadOnly'
+          (click)="removeResponsibleParty(item)" class="delete-button" icon="fa fa-times"></p-button>
+      </ng-template>
+    </eland-table>
+</div>
+
+<!-- dialog -->
+<p-dialog appendTo="body" [modal]="true" [responsive]="true" [(visible)]="responsibleParty" [maximizable]="true"
+  styleClass="dialog-class">
+  <ng-template #lazyResponsibleParty *ngIf="responsibleParty"></ng-template>
+</p-dialog>

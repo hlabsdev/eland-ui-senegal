@@ -1,0 +1,30 @@
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="parties" 
+      (addCallBack)="showPartyDialogue()"
+      [cols]="cols">
+      <ng-template #actions let-item="item" let-custom="custom">
+        <p-button *ngIf="(custom.baUnit && !custom.picker) && (custom.hideRemovePartyButton || item.registrationDate)" type="button"
+          icon="fa fa-search" class="view-button me-2" pTooltip="{{'COMMON.ACTIONS.VIEW' | translate}}"
+          tooltipPosition="top" life="4000" (click)="showPartyDialogue(item)"></p-button>
+        <p-button *ngIf="(custom.baUnit && !custom.picker) && !(custom.hideRemovePartyButton || item.registrationDate)" type="button"
+          icon="icon icon-edit-eland" class="edit-button me-2" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}"
+          tooltipPosition="top" life="4000" (click)="showPartyDialogue(item)"></p-button>
+        <p-button *ngIf="custom.baUnit && !custom.picker" type="button"
+          [hidden]="custom.hideRemovePartyButton || item.registrationDate" (click)="removeparty(item)"
+          class="delete-button" icon="fa fa-times" pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}"
+          tooltipPosition="top" life="4000"></p-button>
+        <p-button *ngIf="custom.picker" type="button" [hidden]="custom.hideRemovePartyButton || item.registrationDate"
+          (click)="partyPickerDeleteParty(item)" class="delete-button" icon="fa fa-times"
+          pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000"></p-button>
+      </ng-template>
+  </eland-table>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="party" modal="modal" #dd autoHeight="true">
+  <ng-template #lazyParty *ngIf="party && !picker"></ng-template>
+  <ng-template #lazyPartyPicker *ngIf="picker"></ng-template>
+</app-dialog>

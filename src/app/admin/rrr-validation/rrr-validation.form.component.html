@@ -1,0 +1,17 @@
+        <dynamic-form #dynForm
+        [fields]="config"
+        [hideActions]="true"
+        [hideTitle]="true"
+        [readOnly]="readOnly"
+        [errorMessage]="errorMessage"
+        [title]="title"
+        [fieldValues]="fieldValues"
+        [saveToLadm]="true"
+        (submit)="submit($event)"
+        (cancelButtonClicked)="cancel()"
+        ></dynamic-form>
+        
+  <!--    <app-blocker-rrrs-->
+  <!--      [rrrValidation]="rrrValidation"-->
+  <!--      [readOnly]="readOnly"-->
+  <!--    ></app-blocker-rrrs>-->

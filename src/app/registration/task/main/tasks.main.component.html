@@ -1,0 +1,27 @@
+<section class="inside-page tasks-list-page">
+  <core-alert></core-alert>
+
+  <div class="fluid-container h-100 topaaa">
+    <div class="row no-gutters h-100">
+      <div  class="task-menu" [ngClass]="{'task-menu-minimize': sidebarFormat === 'small', 'task-menu-default': sidebarFormat === 'large', 'task-menu-expand': sidebarFormat === 'large'}">
+        <div class="row no-gutters"></div>
+
+        <p-scrollPanel [ngClass]="{'task-menu-minimize': sidebarFormat === 'small'}"
+          [style]="{width: '100%', height: '100%'}">
+          <ng-template #lazyTasks></ng-template>
+        </p-scrollPanel>
+      </div>
+
+      <div class="task-editor p-0" style="width: 100%;"
+        [ngClass]="{'task-editor-minimize': sidebarFormat === 'small', 'task-editor-default': sidebarFormat === 'medium', 'task-editor-expand ': sidebarFormat === 'large'}">
+        <p-scrollPanel *ngIf="taskId" [style]="{width: '100%'}"
+          [ngClass]="{'task-editor-minimize': sidebarFormat === 'small'}">
+          <ng-template #lazyTasksDetail></ng-template>
+        </p-scrollPanel>
+        <div *ngIf="!taskId" class="no-tasks-message">
+          <p>{{'SIDEBAR.NO_TASK_OPENED' | translate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

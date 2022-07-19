@@ -1,0 +1,31 @@
+<p-dialog appendTo="body" [style]="{ width: '600px' }" header="{{'TRANSLATION.SECTION.ADD_SECTION_KEY' | translate}}"
+  [visible]="visible" [modal]="true" [responsive]="true" [maximizable]="true" (onHide)="hide()" (close)="cancel()">
+  <div>
+    <div class="container-fluid px-0">
+
+      <core-alert *ngIf="errors" [local]="true" [autoClear]="true" [message]="errors"></core-alert>
+
+      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'TRANSLATION.SECTION.KEY' | translate}}
+          <div class="dialog-info">{{'TRANSLATION.SECTION.KEY_INFO' | translate}}</div>
+        </label>
+        <div class="col-8">
+          <input type="text" class="form-control" [(ngModel)]="section.name" required #name="ngModel" (ngModelChange)="replaceSpaceAndAutoMaj()">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row no-gutters px-3 py-3">
+      <div class="col-12">
+        <div class="pull-right">
+          <p-button type="button" icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+            class="cancel-button me-3" (click)="cancel()"></p-button>
+          <p-button icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}" class="save-button"
+            (click)="save()"></p-button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</p-dialog>

@@ -1,0 +1,38 @@
+<div>
+  <div class="container-fluid px-0">
+
+    <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+    <div class="row no-gutters p-3 mb-2">
+      <!-- title -->
+      <div class="col-12">
+        <h2 class="my-auto">{{ 'RRR_VALIDATION.PARTY_ROLE.NEW' | translate}}</h2>
+      </div>
+      <!-- buttons -->
+    </div>
+
+    <div class="row form-group no-gutters px-3">
+      <label for="partyRole" class="col-12 col-form-label">{{'RRR_VALIDATION.PARTY_ROLE.ROLE_NAME' | translate}}
+        <span class="text-info">*</span></label>
+      <div class="col-12">
+        <p-dropdown name="partyRole" id="partyRole" styleClass="form-control w-100"
+          [(ngModel)]="rrrValidationPartyRole.role" [options]="partyRoles" required></p-dropdown>
+      </div>
+    </div>
+
+    <div class="row form-group no-gutters px-3">
+      <label for="partyRoleRequired" class="col-12 col-form-label">{{'RRR_VALIDATION.PARTY_ROLE.REQUIRED' | translate}}
+        <span class="text-info">*</span></label>
+      <div class="col-12">
+        <p-checkbox name="partyRoleRequired" id="partyRoleRequired" required
+          [(ngModel)]="rrrValidationPartyRole.required" binary="true"></p-checkbox>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="pull-right">
+        <p-button icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.ADD' | translate}}" class="save-button"
+          (click)="save(rrrValidationPartyRole)"></p-button>
+      </div>
+    </div>
+
+  </div>
+</div>

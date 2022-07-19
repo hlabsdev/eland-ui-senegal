@@ -1,0 +1,102 @@
+<!--<div class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.DISTRICT' | translate}} <span-->
+<!--    class="text-info">*</span></label>-->
+<!--  <div class="col-8">-->
+<!--    <p-dropdown [disabled]='formVariables.isReadOnly || baUnit.uid'-->
+<!--                styleClass="form-control w-100 col-form-label" [options]="baUnitDistricts" name="districtDropdown"-->
+<!--                required [(ngModel)]="baUnit.registry.district">-->
+<!--    </p-dropdown>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.VOLUME' | translate}} <span-->
+<!--    class="text-info">*</span></label>-->
+<!--  <div class="col-8">-->
+<!--    <input pKeyFilter="num" [disabled]='formVariables.isReadOnly' type="number" class="form-control"-->
+<!--           name="volume" id="volume" placeholder="{{'BA_UNIT.REGISTRY.VOLUME' | translate}}" required-->
+<!--           [(ngModel)]="baUnit.registry.volume" #name="ngModel">-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.FOLIO' | translate}} <span-->
+<!--    class="text-info">*</span></label>-->
+<!--  <div class="col-8">-->
+<!--    <input pKeyFilter="num" [disabled]='formVariables.isReadOnly' type="number" class="form-control"-->
+<!--           name="folio" id="folio" placeholder="{{'BA_UNIT.REGISTRY.FOLIO' | translate}}" required-->
+<!--           [(ngModel)]="baUnit.registry.folio" #name="ngModel">-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.ID' | translate}} <span-->
+<!--    class="text-info">*</span></label>-->
+<!--  <div class="col-8">-->
+<!--    <input pInputText (change)="validateTitleNumber()" [disabled]='formVariables.isReadOnly || baUnit.uid'-->
+<!--           [pKeyFilter]="titleRegExp" maxlength="6" class="form-control" name="titleId" id="titleId"-->
+<!--           placeholder="{{'BA_UNIT.REGISTRY.ID' | translate}}" required [(ngModel)]="baUnit.registry.titleId"-->
+<!--           #name="ngModel">-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.TITLE_ID' | translate}}</label>-->
+<!--  <div class="col-8">{{baUnit.getTitle()}}</div>-->
+<!--</div>-->
+
+<!--<div class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name"-->
+<!--         class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.HAVE_OLD_REGISTER' | translate}}</label>-->
+<!--  <div *ngIf="baUnit" class="col-8 pull-left">-->
+<!--    <p-checkbox [disabled]='formVariables.isReadOnly ' [(ngModel)]="baUnit.registry.hasOldRegistry"-->
+<!--                binary="true" #hasOldRegistry name="hasOldRegistry" id="hasOldRegistry"></p-checkbox>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div *ngIf="baUnit?.registry?.hasOldRegistry" class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.OLD_DISTRICT' | translate}}</label>-->
+<!--  <div class="col-8">-->
+<!--    <p-dropdown [disabled]='formVariables.isReadOnly' styleClass="form-control w-100 col-form-label"-->
+<!--                [options]="baUnitDistricts" name="oldDistrictDropdown" required-->
+<!--                [(ngModel)]="baUnit.registry.oldDistrict"></p-dropdown>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div *ngIf="baUnit?.registry?.hasOldRegistry" class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.OLD_VOLUME' | translate}}</label>-->
+<!--  <div class="col-8">-->
+<!--    <input pKeyFilter="num" [disabled]='formVariables.isReadOnly' type="number" class="form-control"-->
+<!--           name="oldVolume" id="oldVolume" placeholder="{{'BA_UNIT.REGISTRY.OLD_VOLUME' | translate}}"-->
+<!--           [(ngModel)]="baUnit.registry.oldVolume" #name="ngModel">-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div *ngIf="baUnit?.registry?.hasOldRegistry" class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.OLD_FOLIO' | translate}}</label>-->
+<!--  <div class="col-8">-->
+<!--    <input pKeyFilter="num" [disabled]='formVariables.isReadOnly' type="number" class="form-control"-->
+<!--           name="oldFolio" id="oldFolio" placeholder="{{'BA_UNIT.REGISTRY.OLD_FOLIO' | translate}}"-->
+<!--           [(ngModel)]="baUnit.registry.oldFolio" #name="ngModel">-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div *ngIf="baUnit?.registry?.hasOldRegistry" class="row no-gutters px-3 mb-3">-->
+<!--  <label for="name" class="col-4 col-form-label">{{'BA_UNIT.REGISTRY.OLD_ID' | translate}}</label>-->
+<!--  <div class="col-8">-->
+<!--    <input [disabled]='formVariables.isReadOnly' [pKeyFilter]="titleRegExp"-->
+<!--           type="text" class="form-control" name="oldTitleId" id="oldTitleId" maxlength="6"-->
+<!--           placeholder="{{'BA_UNIT.REGISTRY.OLD_ID' | translate}}" [(ngModel)]="baUnit.registry.oldTitleId"-->
+<!--           #name="ngModel">-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="row no-gutters px-3 mb-3">-->
+<!--  <label for="baUnitType" class="col-4 col-form-label">{{'BA_UNIT.TYPE' | translate}} <span-->
+<!--    class="text-info">*</span></label>-->
+<!--  <div class="col-8">-->
+<!--    <p-dropdown [disabled]='formVariables.isReadOnly || (baUnit?.type && baUnit?.uid)'-->
+<!--                styleClass="form-control w-100 col-form-label" [options]="baUnitTypes" name="languageDropdown"-->
+<!--                required [(ngModel)]="baUnit.type"></p-dropdown>-->
+<!--  </div>-->
+<!--</div>-->

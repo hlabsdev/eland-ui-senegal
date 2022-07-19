@@ -1,0 +1,290 @@
+[
+  {
+    "type": "application",
+    "items": [
+      {
+        "required": false,
+        "value": "Application Document",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "ID photocopy",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label"
+  },
+  {
+    "type": "avisdebornage",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "initial",
+    "items": [
+      {
+        "required": false,
+        "value": "Application Document",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "ID photocopy",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist label"
+  },
+  {
+    "type": "journal",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "legal",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "mairie",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "greffier",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "preparation",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "prepbulletin",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "prepdatebornage",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "prepimprimebulletin",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "publicationjournal",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "pvbornage",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "signature",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "signaturebulletin",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "signaturedatebornage",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "signatureimprimebulletin",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  },
+  {
+    "type": "title",
+    "items": [
+      {
+        "required": false,
+        "value": "Notary notice",
+        "description": "test desc"
+      },
+      {
+        "required": true,
+        "value": "Survey plans",
+        "description": "test desc"
+      }
+    ],
+    "label": "Checklist Label2"
+  }
+]

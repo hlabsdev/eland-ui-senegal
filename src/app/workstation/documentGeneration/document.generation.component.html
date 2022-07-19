@@ -1,0 +1,27 @@
+<form #form="ngForm" [ngClass]="{'was-validated': form.submitted}" novalidate>
+  <div class="row no-gutters p-3 mb-2">
+    <div class="col-6">
+      <h1 class="my-auto">{{'DOCUMENT_GENERATION.TITLE' | translate}} :</h1>
+    </div>
+
+    <div class="col-6">
+      <div class="pull-right">
+        <p-button type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+          class="cancel-button me-2" (click)="cancel()"></p-button>
+        <p-button type="button" label=" {{'COMMON.ACTIONS.REGENERATE' | translate}}" icon="fa fa-recycle"
+          class="complete-button me-2" (click)="regenerate()"></p-button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="document" class=" form-group row no-gutters px-3">
+    <div class=" col-12">
+      <label class="col-12 col-form-label">{{'GENERIC_EDITOR.BODY' | translate}} <span
+          class="text-info">*</span></label>
+    </div>
+    <div class="col-12">
+      <angular-editor name="body" id="body" [(ngModel)]="document.body" [config]="editorConfig" required>
+      </angular-editor>
+    </div>
+  </div>
+</form>

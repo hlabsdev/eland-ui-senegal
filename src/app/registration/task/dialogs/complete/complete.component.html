@@ -1,0 +1,15 @@
+<div class="container-fluid px-0">
+  <div class="row no-gutters px-3 pt-3 mb-3">
+    <div class="col-12">
+      <p>{{'MESSAGES.CONFIRM_TASK_COMPLETION' | translate}}</p>
+    </div>
+  </div>
+  <div *ngIf="dialogOptions.value.isValidationRequired" class="row no-gutters px-3 pb-3">
+    <div class="col-4">
+      <span>{{'TASK.IS_VALID' | translate}} ?</span>
+    </div>
+    <div class="col-8">
+      <p-checkbox [(ngModel)]="dialogOptions.value.valid" name="valid" binary="true"></p-checkbox>
+    </div>
+  </div>
+</div>

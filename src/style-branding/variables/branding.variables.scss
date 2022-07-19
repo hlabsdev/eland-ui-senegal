@@ -1,0 +1,18 @@
+@import "../functions/random-brand-color.scss";
+
+// Branding variables
+$eland-neutral-grey: #56626e;
+$eland-black: #363638;
+$eland-cold-blue: #005cca;
+$eland-cold-blue-light: #a4caf8;
+$eland-button-cpm1: #005cca;
+$eland-button-cpm2: #fa9613;
+$eland-button-cpm3: #56626e;
+$eland-cold-green: #00c1ca;
+$eland-hot-red: #ec1506;
+$eland-white: #ffffff;
+$eland-grey-light: #ccc9c9;
+$eland-grey-ultralight: #f1f3f7;
+$default-font-size: 14px;
+$header-height: 50px;
+$random-brand-color: random_brand_color($eland-cold-green, $eland-button-cpm2, $eland-hot-red);

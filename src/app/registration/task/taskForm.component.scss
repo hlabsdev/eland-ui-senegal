@@ -1,0 +1,51 @@
+.fade {
+    opacity: 0;
+    transition: opacity .15s linear;
+}
+.modal-backdrop.show {
+    opacity: .5;
+}
+.modal-backdrop.fade {
+    opacity: 0;
+}
+.fade.show {
+    opacity: 1;
+}
+
+// background for my modal with opacity 0.5. Attached to my modal div. Refer to HTML code above.
+.my-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    width: 0;
+    }
+.modal-dialog{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    max-width: 1000px;
+    max-height: 800px;
+    resize: both;
+}
+.modal-content{
+    max-width: 1000px;
+    max-height: 800px;
+    resize: both;
+    overflow: auto;
+}
+.modal-header{
+    max-height: 20%;
+}
+.modal-body{
+    max-width: 1000px;
+    max-height: 800px;
+    resize: both;
+}
+.modal-footer{
+    max-height: 20%;
+}
+.close{
+    background: none ;
+    border: none;
+    width: 40px;
+    height: 40px;
+}

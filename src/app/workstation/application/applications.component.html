@@ -1,0 +1,34 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="applications" 
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item>
+        <td *ngIf="col.field === 'applicationNumber'">{{ item.applicationNumber }}</td>
+        <td *ngIf="col.field === 'referenceNumber'">{{ item.referenceNumber }}</td>
+        <td *ngIf="col.field === 'applicant.displayName'">{{ item.applicant.displayName }}</td>
+        <td *ngIf="col.field === 'applicationDate'">{{ item.applicationDate | date:'shortDate' }}</td>
+        <td *ngIf="col.field === 'applicationPurpose'">{{ item.applicationPurpose }}</td>
+        <td *ngIf="col.field === 'status'">{{ 'APPLICATION.STATUS.'+item?.status | translate }}</td>
+        <td *ngIf="col.field === 'applicantType'">
+        {{ (item.applicant.type === 1? 'CODELIST.VALUES.APPLICANT_NATURAL_PERSON' : 'CODELIST.VALUES.APPLICANT_NON_NATURAL_PERSON') | translate }}
+        </td>
+      </ng-template>
+      <ng-template #actions let-item="item">
+        <p-button type="button" class="view-button  me-2" (click)="showApplicantDialogue(item)" icon="fa fa-search"></p-button>
+      </ng-template>
+    </eland-table>
+</div>
+
+<eland-dialog *ngIf="dialogConfig" [config]="dialogConfig">
+  <ng-template #content>
+    <ng-template #tab let-tab let-index="index">
+      <ng-container *ngIf="index === 0">
+        <ng-template #lazyApplication *ngIf="application && application.id"></ng-template>
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</eland-dialog>

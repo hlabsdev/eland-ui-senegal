@@ -1,0 +1,62 @@
+<div class="container-fluid px-0">
+  <!-- header -->
+  <div class="row no-gutters px-3">
+    <!-- title -->
+    <div class="col-12 d-flex">
+      <h1 class="my-auto h1-picker">{{ header | translate}}</h1>
+    </div>
+  </div>
+  <!-- search input field -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableSpatialUnitPicker"
+        [enableDropdown]=!onlyBuildings>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <p-table [value]="spatialUnits" [resizableColumns]="true" [columns]="cols" [rows]="rowSizes.SMALL"
+      [paginator]="true" #dataTableSpatialUnitPicker>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pResizableColumn [style]="{'width':col.width}" [pSortableColumn]="col.field">
+            <div class="d-flex">
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              <span class="ms-1">{{ col.header | translate }}</span>
+            </div>
+          </th>
+          <th pResizableColumn style="width:7.5%"><span>{{'COMMON.ACTIONS.ACTION' | translate}}</span></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-spatialUnit let-columns="columns">
+        <tr>
+          <td>{{spatialUnit.id}}</td>
+          <td>{{spatialUnit.type}}</td>
+          <td *ngIf="!onlyBuildings">{{spatialUnit.parcelType}}</td>
+          <td *ngIf="!onlyBuildings">{{spatialUnit.parentParcel}}</td>
+          <td *ngIf="!onlyBuildings">{{spatialUnit.radiationDate | date:'shortDate'}}</td>
+          <td *ngIf="!onlyBuildings">{{spatialUnit.destinationTitle}}</td>
+          <td *ngIf="!onlyBuildings">{{spatialUnit.inscriptionDate | date:'shortDate'}}</td>
+          <td *ngIf="!onlyBuildings">{{spatialUnit.sourceTitle}}</td>
+          <td>{{spatialUnit.modDate | date:'shortDate'}}</td>
+          <td>
+            <p-button type="button" [hidden]="formVariables.isReadOnly" class="add-button" icon="icon icon-edit-eland"
+              pTooltip="{{'COMMON.ACTIONS.ADD' | translate}}" tooltipPosition="top" life="4000"
+              (click)="save(spatialUnit)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+      </ng-template>
+    </p-table>
+
+
+    <p-button type="button" [hidden]="formVariables.isReadOnly" class="add-button" icon="icon icon-edit-eland"
+      pTooltip="{{'COMMON.ACTIONS.ADD' | translate}}" tooltipPosition="top" life="4000"
+      (click)="save(selectedSpatialUnits)" *ngIf="multiSelect"></p-button>
+  </div>
+</div>

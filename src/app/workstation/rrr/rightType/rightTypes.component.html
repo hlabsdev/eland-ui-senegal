@@ -1,0 +1,11 @@
+<ngx-ui-loader></ngx-ui-loader>
+
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="rightTypes" 
+      (addCallBack)="addRightType()"
+      [cols]="cols">
+  </eland-table>
+</div>

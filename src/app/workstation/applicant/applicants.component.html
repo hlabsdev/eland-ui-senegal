@@ -1,0 +1,14 @@
+<ngx-ui-loader *ngIf="applicantsUrl"></ngx-ui-loader>
+
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="applicants" 
+      [cols]="cols">
+      <ng-template #actions let-item="item" let-custom="custom">
+        <p-button *ngIf="!custom.applicantsUrl" type="button" class="edit-button ms-2" (click)="editApplicant(item)" icon="icon icon-edit-eland"></p-button>
+        <p-button *ngIf="custom.applicantsUrl" type="button" class="view-button ms-2" (click)="editApplicant(item)" icon="fa fa-search"></p-button>
+      </ng-template>
+    </eland-table>
+</div>

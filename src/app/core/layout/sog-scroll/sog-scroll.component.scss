@@ -1,0 +1,16 @@
+@import '../../../style-branding/variables/branding_variables.scss';
+
+.sog-scroll-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+}
+
+.sog-scroll-container::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f5f5f5;
+}
+
+.sog-scroll-container::-webkit-scrollbar-thumb {
+    background-color: set_brand_color_hsla(eland-cold-blue, 80, 100);
+}

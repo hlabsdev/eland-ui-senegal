@@ -1,0 +1,140 @@
+<!-- ************************************************** TASK FORMS MAIN CONTENT START ********************************************************** -->
+<div class="row no-gutters">
+    <div class="col-12">
+        <p-splitter *ngIf="task" [panelSizes]="[25,75]" [minSizes]="[25,75]" styleClass="p-mb-5" layout="vertical" gutterSize="0">
+            <!-- header start -->
+            <ng-template pTemplate>
+                <div class="row d-flex pt-1 mx-0 tache-header" style="width: 100%;" *ngIf="task">
+                    <!-- Current Application number start -->
+                    <div class="my-auto" style="width: 24%;">
+                        <h2 class="mb-0 px-2">{{task.name}}</h2>
+                        <p *ngIf="transactionData.transaction.name" class="text-muted">
+                            {{'TRANSACTION_INSTANCE.TRANSACTION_NAME' | translate}} :
+                            {{ this.transactionData.transaction?.name }}
+                        </p>
+                    </div>
+                    <!-- Current Application number end -->
+
+                    <!-- top-left buttons start -->
+                    <div style="width: 31%;">
+                        <div>
+                            <button pButton pRipple type="button" style="background: white;"
+                                class="p-button-text me-2 border-10" (click)="openChat()"
+                                icon="pi pi-comment" iconPos="left"
+                                label="{{'COMMON.ACTIONS.CHAT' | translate}}">
+                            </button>
+                            <button pButton pRipple type="button" style="background: white;"
+                                class="p-button-text me-2 border-10" (click)="openMap()"
+                                icon="pi pi-map" iconPos="left"
+                                label="{{'COMMON.ACTIONS.MAP' | translate}}">
+                            </button>
+                            <button pButton pRipple type="button" style="background: white;"
+                                class="p-button-text me-2 border-10" (click)="openWorkflow()"
+                                icon="fa fa-code-fork" iconPos="left"
+                                label=" {{'COMMON.ACTIONS.WORKFLOW' | translate}}">
+                            </button>
+                        </div>
+                    </div>
+                    <!-- top-left buttons end -->
+
+                    <!-- top-right buttons start -->
+                    <div style="width: 45%;">
+                        <div class="pull-right">
+                            <button pButton pRipple type="button" class="p-button-text border-10 me-2"
+                                    style="background: rgba(128,128,128,0.3)"
+                                    (click)="changeTaskView('medium')"
+                                    label="{{'COMMON.ACTIONS.CANCEL' | translate}}">
+                            </button>
+                            <button pButton pRipple type="button" class="me-2 border-10"
+                                    style="color:#000;"
+                                    label="{{'COMMON.ACTIONS.DELEGATE' | translate}}"></button>
+
+                            <button pButton pRipple type="button"
+                                    [disabled]="isFirstForm" (click)="navigateOnFormsByIndex(-1)"
+                                    label="{{'COMMON.ACTIONS.BACK' | translate}}"
+                                    class="p-button-warning me-2 border-10" icon="pi pi-angle-left" iconPos="left"></button>
+                            <button pButton pRipple *ngIf="!isLastForm"
+                                    [disabled]="isLastForm" type="button" (click)="navigateOnFormsByIndex(1)"
+                                    label="{{'COMMON.ACTIONS.NEXT' | translate}}"
+                                    class="p-button-warning me-2 border-10" icon="pi pi-angle-right" iconPos="right"></button>
+                            <button pButton pRipple *ngIf="isLastForm"
+                                    type="button" (click)="showDisplayDialog()"
+                                    label="{{'COMMON.ACTIONS.COMPLETE' | translate}} "
+                                    class="p-button-warning me-2 border-10" icon="pi pi-check" iconPos="right"></button>
+
+                        </div>
+                    </div>
+                    <!-- top-right buttons end -->
+                </div>
+            </ng-template>
+            <!-- header end -->
+
+            <!-- Form body start -->
+            <ng-template pTemplate>
+                <div class="row mx-0" style="width: 100%;">
+                    <div class="tache-header" style="width: 25%;">
+                        <app-list-form [forms]="forms" [formVariables]="formVariables" [task]="task" [legacy]="legacy"
+                                       (canceled)="cancel()" (saved)="save($event)"
+                                       (clickedEvent)="clickEvent($event)"></app-list-form>
+                    </div>
+                    <div style="width: 75%;">
+                        <!-- Current step(Or form) title start -->
+                        <div class="row no-gutters tache-header pt-1">
+                        </div>
+                        <div class="mt-2">
+                            <h2>{{task.name}}</h2>
+                            <p *ngIf="transactionData.transaction.name" class="text-muted">
+                                {{'TRANSACTION_INSTANCE.TRANSACTION_NAME' | translate}} :
+                                {{ this.transactionData.transaction?.name }}
+                            </p>
+                            <hr class="mt-2">
+                        </div>
+                        <!-- Current step(Or form) title end -->
+                        <app-form (canceled)="cancel()" (saved)="save($event)" (clickedEvent)="clickEvent($event)"></app-form>
+                    </div>
+                </div>
+
+            </ng-template>
+            <!-- Form body end -->
+
+        </p-splitter>
+    </div>
+</div>
+<!-- ************************************************** TASK FORMS MAIN CONTENT END ********************************************************** -->
+
+
+<!-- ************************************************** DIFFERENT DIALOGS ON THE TASK FORMS START ********************************************************** -->
+<!--<app-task-dialogs [(taskComments)]="taskComments" (completed)="complete(task, $event)" [variables]="variables"
+(commentSave)="saveTaskComment($event)"></app-task-dialogs>-->
+
+<!--DISCUSSION MODAL START-->
+<eland-discussion [task]="task" [displayModal]="displayModal" [taskComments]="taskComments"
+                  (hide)="displayModal = false"></eland-discussion>
+<!--DISCUSSION MODAL END-->
+
+<!--MAP MODAL START-->
+<app-dialog [display]="displayMap" header="{{'COMMON.ACTIONS.MAP' | translate}}" (displayChange)="closeMap()">
+    <app-gis></app-gis>
+</app-dialog>
+<!--MAP MODAL END-->
+
+<!--WORKFLOW PREVIEW MODAL START-->
+<div class="modal fade my-modal" tabindex="-1" role="dialog" #workflowModal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{'COMMON.ACTIONS.WORKFLOW' | translate}}</h5>
+                <button type="button" (click)="closeWorkflow()" class="close" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <core-wf-viewer *ngIf="processXml" [processXml]="processXml.bpmn20Xml"
+                                [currentTask]="task.taskDefinitionKey"></core-wf-viewer>
+                <div *ngIf="!processXml">{{'MESSAGES.DIAGRAM_UNAVAILABLE' | translate}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--WORKFLOW PREVIEW MODAL END-->
+<!-- ************************************************** DIFFERENT DIALOGS ON THE TASK FORMS START ********************************************************** -->

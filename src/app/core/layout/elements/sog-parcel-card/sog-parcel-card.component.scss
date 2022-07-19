@@ -1,0 +1,76 @@
+.parcel-card {
+  margin: 20px 20px 20px 20px;
+  width: 180px;
+  height: 250px;
+  border-radius: 5px;
+  background-color: #fff;
+  display: inline-block;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+
+  .content {
+    font-size: 14px;
+    .line {
+      padding: 8px 8px 8px 8px;
+    }
+    .title-bar {
+      border-radius: 5px 5px 0px 0px;
+      padding: 5px 5px 5px 5px;
+      background-color: #498fd1;
+      .title {
+        width: 100px;
+        display: inline-block;
+      }
+      .buttons {
+        width: 42px;
+        float: right;
+        right: 0px;
+        display: inline-block;
+        i {
+          padding: 2px 4px 2px 4px;
+          cursor: pointer;
+        }
+        .btn-delete {
+
+          &:hover {
+            color: darkred;
+            text-shadow: 0 0  4px red;
+          }
+        }
+        .btn-edit {
+          &:hover {
+            color: darkgreen;
+            text-shadow:
+              0 0 8px green;
+          }
+        }
+      }
+    }
+  }
+
+  &.parcel-add-card {
+    line-height: 250px;
+    font-size: 70px;
+    text-align: center;
+    cursor: pointer;
+
+    &:active {
+      -webkit-box-shadow: 3px 0 0 1px rgba(0, 0, 0, 0.2), 1px 0 0 1px rgba(0, 0, 0, 0.14), 1px -1px 0 2px rgba(0, 0, 0, 0.12);
+      -moz-box-shadow: 3px 0 0 1px rgba(0, 0, 0, 0.2), 1px 0 0 1px rgba(0, 0, 0, 0.14), 1px -1px 0 2px rgba(0, 0, 0, 0.12);
+      box-shadow: 3px 0 0 1px  rgba(0, 0, 0, 0.2), 1px 0 0 1px rgba(0, 0, 0, 0.14), 1px -1px 0 2px rgba(0, 0, 0, 0.12);
+
+      .parcel-add-card-icon {
+        color: black;
+      }
+    }
+  }
+
+  &:hover {
+    .parcel-add-card-icon {
+      color: #0b8793;
+    }
+  }
+}
+
+

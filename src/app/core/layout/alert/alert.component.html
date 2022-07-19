@@ -1,0 +1,16 @@
+<section [@alertState]="alertStateName">
+  <div *ngIf="message && message.type"
+    [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error', 'alert-warning': message.type === 'warning', 'my-0' : compact }">
+    <i [ngClass]="{ 'pi-check-circle': message.type === 'success', 'pi-exclamation-triangle': message.type === 'error' || message.type === 'warning' }"
+      class="pi me-2" aria-hidden="true"></i>
+    {{message.text | translate:message.params}}
+    <audio *ngIf="message.type === 'success'" #audioalert webkit-playsinline="true" playsinline="true" autoplay muted>
+      <source src="../../../../assets/layout/sounds/eland-alert-positive-soft.mp3" type="audio/mpeg">
+    </audio>
+    <audio *ngIf="message.type === 'error' || message.type === 'warning'" #audioalert webkit-playsinline="true"
+      playsinline="true" autoplay muted>
+      <source src="../../../../assets/layout/sounds/eland-alert-negative-soft.mp3" type="audio/mpeg">
+    </audio>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="clear()"></button>
+  </div>
+</section>

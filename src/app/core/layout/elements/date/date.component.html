@@ -1,0 +1,12 @@
+<div class="form-group col-{{field.width??12}} no-gutters px-3" *ngIf="!field.disabled" [formGroup]="group">
+  <label [for]="field.name" class="col-12 col-form-label">{{field.label | translate}} <span class=" text-info"
+      *ngIf="field.isRequired()">*</span></label>
+
+  <div class="col-12">
+    <p-calendar [maxDate]="disableFutureDates" appendTo="body" [formControlName]="field.name" name="field.name" [id]="field.name"
+      [disabled]="field.readOnly" inputStyleClass="form-control" [dateFormat]="locale.dateFormat"
+      [showTime]="field.showTime" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true"
+      [yearRange]="disableFutureYears" styleClass="w-100" [showTime]="field.showTime" [required]="field.isRequired()">
+    </p-calendar>
+  </div>
+</div>

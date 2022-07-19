@@ -1,0 +1,24 @@
+
+<div class="row no-gutters">
+  <div class="task-form-top">
+    <p-listbox styleClass="form-list mt-0 tache-list" [options]="_forms" [ngModel]="selectedForm" (onClick)="selectForm($event)">
+      <ng-template let-form let-i="index" pTemplate="item">
+        <div *ngIf="!form.subItem || form.subItem! === null|| form.subItem! === []" class="p-d-ct col-12" [ngClass]="{'list-item-error':form.requiredErr}">
+          <div class="col-1 circle"> {{i+1}} </div> <div class="col-11">{{form.label + (form.required ? ' *' : '')}}</div>
+        </div>
+
+        <!--For eventual subform designing start-->
+        <div *ngIf="form.subItem"class="p-d-flex" [ngClass]="{'list-item-error':form.requiredErr}"> <div class="circle"> {{i+1}} </div> <span>{{form.label + (form.required ? ' *' : '')}}</span>
+          <ul>
+            <li *ngFor="form.subItem"></li>
+            <li *ngFor="let subForm of form.subItem; let subI = index"><span>{{subForm.label + (form.required ? ' *' : '')}}</span></li>
+          </ul>
+        </div>
+        <!--For eventual subform designing end-->
+      </ng-template>
+    </p-listbox>
+    <div class="required px-5" style="margin-left:5px;">
+      {{'APP.REQUIRED' | translate}}
+    </div>
+  </div>
+</div>

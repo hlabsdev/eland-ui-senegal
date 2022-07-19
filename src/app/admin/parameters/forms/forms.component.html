@@ -1,0 +1,15 @@
+<div class="card border-0 pt-0">
+  <eland-table 
+    [tableConfig]="tableConfig" 
+    (reloadTable)="reload()" 
+    (actions)="call($event)"
+    (addCallBack)="showFormsElementDialogue()" 
+    [datas]="forms" 
+    [cols]="cols">
+  </eland-table>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="currentForm" modal="modal" #formsGroupElementDialog>
+  <ng-template #lazyCurrentFrom *ngIf="currentForm"></ng-template>
+</app-dialog>

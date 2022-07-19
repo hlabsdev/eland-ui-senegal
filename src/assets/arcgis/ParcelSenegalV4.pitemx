@@ -1,0 +1,10 @@
+{
+"name":"ParcelSenegalV4",
+"title":"ParcelSenegalV4",
+"type":"Map Service",
+"typeKeywords":["ArcGIS Server","Service","Map Service"],
+"description":"",
+"extent":[[228629.83070128923,229240.76929871133],[1630664.7619999994,1632044.8110000014]],
+
+"url":"https://dev-sgf-gis01.az.sogema.local/server/rest/services/ParcelSenegalV4/MapServer"
+}

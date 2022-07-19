@@ -1,0 +1,22 @@
+<div class="card card-w-title">
+  <div class="row">
+    <div class="col">
+      <h1>{{ 'HEADER.CONFIG' | translate }}</h1>
+    </div>
+    <div class="col-3">
+      <div class="pull-right">
+        <button pButton type="button" (click)="router.navigate(['home'])" label="{{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+          class="ui-button-warning me-1"></button>
+        <button pButton type="button" (click)="saveConfig(config, $event)" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o"
+          class="ui-button-success"></button>
+      </div>
+    </div>
+  </div>
+
+  <p-tabView #tabView>
+    <p-tabPanel header="{{'CONFIG.EXTERNAL_SERVICES.TITLE' | translate}}" class="card">
+      <!--<external-services-config #childComponent [config]="config"></external-services-config> -->
+    </p-tabPanel>
+  </p-tabView>
+
+</div>

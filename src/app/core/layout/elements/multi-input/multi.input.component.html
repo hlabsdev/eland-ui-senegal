@@ -1,0 +1,20 @@
+<div class="row col-{{field.width??12}} no-gutters form-group px-3" *ngIf="!field.disabled" [formGroup]="group">
+  <label class="col-12 col-form-label">{{field.label | translate}} <span class=" text-info"
+      *ngIf="field.isRequired()">*</span></label>
+
+  <div class="col-12">
+    <div [formArrayName]="field.name">
+      <div *ngFor="let item of inputFields.controls; let index=index" [formGroupName]="index">
+        <div class="input-group">
+          <input class="form-control mb-3" formControlName="value" />
+          <span class="input-group-btn">
+            <p-button type="button" label="{{'COMMON.ACTIONS.DELETE' | translate}}" icon="fa fa-times"
+              class="delete-button ms-3" (click)="deleteInputFields(index)" [hidden]="readOnly"></p-button>
+          </span>
+        </div>
+      </div>
+      <p-button type="button" (click)="addInputFields()" label=" {{'COMMON.ACTIONS.ADD' | translate}}"
+        icon="icon icon-add-eland" class="add-button" [hidden]="readOnly"></p-button>
+    </div>
+  </div>
+</div>

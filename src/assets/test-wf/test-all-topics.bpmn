@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0pvxo1t" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:collaboration id="Collaboration_0iocaoi">
+    <bpmn:participant id="Participant_0mgs58i" name="Test all topics" processRef="TEST_ALL_TOPICS" />
+  </bpmn:collaboration>
+  <bpmn:process id="TEST_ALL_TOPICS" name="Test all Topics" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0a220tu">
+      <bpmn:lane id="Lane_1m37e4l" name="Front Desk">
+        <bpmn:flowNodeRef>StartEvent_0pspi35</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0rop7ph</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_19k24q5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_11i1lml</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_032iyu4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1gqxaoq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1bz7uw4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1x398sl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0t80jyr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_1qg63ut</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_1nu4ch0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_00xsxxo</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_0pspi35">
+      <bpmn:outgoing>SequenceFlow_11h3ykf</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_0rop7ph" name="All Forms" camunda:formKey="APP-APPLICANT,APP-APPLICANT.READ_ONLY, APP-BA-SOURCES, APP-BA-SOURCES.READ_ONLY, APP-BA-UNIT,APP-BA-UNIT.READ_ONLY, APP-BA-UNIT-CONTEXT, APP-BA-UNIT-CONTEXT.READ_ONLY, APP-BA-UNIT-PICKER,APP-BA-UNIT-PICKER.READ_ONLY, APP-BORDEREAU-CONTEXT,APP-BORDEREAU-CONTEXT.READ_ONLY,APP-PARTIES, APP-PARTIES.READ_ONLY, APP-RRRS, APP-RRRS.READ_ONLY, APP-SOURCES.READ_ONLY,APP-SOURCES, APP-SPATIAL-UNITS, APP-SPATIAL-UNITS.READ_ONLY,APP-BA-UNIT-SET-BATCH-TRANSACTIONS,APP-BA-UNIT-SET-BATCH-TRANSACTIONS.READ_ONLY" camunda:candidateGroups="FRONT_DESK_OFFICER,DIRECTEUR_REGIONAL">
+      <bpmn:incoming>SequenceFlow_11h3ykf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0i42nxt</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0i42nxt" sourceRef="UserTask_0rop7ph" targetRef="UserTask_032iyu4" />
+    <bpmn:sequenceFlow id="SequenceFlow_11h3ykf" sourceRef="StartEvent_0pspi35" targetRef="UserTask_0rop7ph" />
+    <bpmn:userTask id="UserTask_19k24q5" name="Bordoreau" camunda:formKey="APP-BORDEREAU-CONTEXT" camunda:candidateGroups="FRONT_DESK_OFFICER,DIRECTEUR_REGIONAL">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="isValidationRequired">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_097tk6p</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1y0oqdc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="ServiceTask_11i1lml" name="Create slip" camunda:type="external" camunda:topic="createDocument">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="template">bordereau</camunda:inputParameter>
+          <camunda:inputParameter name="documentName">BordereauAnalitique</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_03nq7bv</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_04nxver</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1y0oqdc" sourceRef="UserTask_19k24q5" targetRef="ServiceTask_1qg63ut" />
+    <bpmn:sequenceFlow id="SequenceFlow_04nxver" sourceRef="ServiceTask_11i1lml" targetRef="ServiceTask_1nu4ch0" />
+    <bpmn:userTask id="UserTask_032iyu4" name="Create ba unit" camunda:formKey="APP-BA-UNIT" camunda:candidateGroups="FRONT_DESK_OFFICER,DIRECTEUR_REGIONAL">
+      <bpmn:incoming>SequenceFlow_0i42nxt</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_097tk6p</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_097tk6p" sourceRef="UserTask_032iyu4" targetRef="UserTask_19k24q5" />
+    <bpmn:sequenceFlow id="SequenceFlow_0szrmtb" sourceRef="UserTask_0t80jyr" targetRef="Task_1x398sl" />
+    <bpmn:sequenceFlow id="SequenceFlow_1x83ddo" sourceRef="Task_1x398sl" targetRef="Task_1bz7uw4" />
+    <bpmn:sequenceFlow id="SequenceFlow_0d9s9k0" sourceRef="Task_1bz7uw4" targetRef="EndEvent_1gqxaoq" />
+    <bpmn:endEvent id="EndEvent_1gqxaoq">
+      <bpmn:incoming>SequenceFlow_0d9s9k0</bpmn:incoming>
+      <bpmn:terminateEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_1bz7uw4" name="Create new transaction instances" camunda:type="external" camunda:topic="createTransactionInstances">
+      <bpmn:incoming>SequenceFlow_1x83ddo</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0d9s9k0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_1x398sl" name="Transactions en lot" camunda:formKey="APP-BA-UNIT-SET-BATCH-TRANSACTIONS" camunda:candidateGroups="FRONT_DESK_OFFICER,DIRECTEUR_REGIONAL">
+      <bpmn:incoming>SequenceFlow_0szrmtb</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1x83ddo</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_0t80jyr" name="Documents" camunda:formKey="APP-BA-SOURCES,APP-SOURCES" camunda:candidateGroups="FRONT_DESK_OFFICER,DIRECTEUR_REGIONAL">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="isValidationRequired">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0816mo1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0szrmtb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_03nq7bv" sourceRef="ServiceTask_1qg63ut" targetRef="ServiceTask_11i1lml" />
+    <bpmn:serviceTask id="ServiceTask_1qg63ut" name="Create Title" camunda:type="external" camunda:topic="createTitle">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="template">title</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1y0oqdc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_03nq7bv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ServiceTask_1nu4ch0" name="registre formalites prealable immatriculation" camunda:type="external" camunda:topic="createDocument">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="template">registre-formalites-prealable-immatriculation</camunda:inputParameter>
+          <camunda:inputParameter name="documentName">registre-formalites-prealable-immatriculation</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_04nxver</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0y4m28m</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0y4m28m" sourceRef="ServiceTask_1nu4ch0" targetRef="ServiceTask_00xsxxo" />
+    <bpmn:serviceTask id="ServiceTask_00xsxxo" name="Certificate Iinscription" camunda:type="external" camunda:topic="createDocument">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="template">certificate-inscription</camunda:inputParameter>
+          <camunda:inputParameter name="documentName">certificate-inscription</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0y4m28m</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0816mo1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0816mo1" sourceRef="ServiceTask_00xsxxo" targetRef="UserTask_0t80jyr" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0iocaoi">
+      <bpmndi:BPMNShape id="Participant_0mgs58i_di" bpmnElement="Participant_0mgs58i">
+        <dc:Bounds x="34" y="33" width="1571" height="169" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1m37e4l_di" bpmnElement="Lane_1m37e4l">
+        <dc:Bounds x="64" y="33" width="1541" height="169" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0pspi35_di" bpmnElement="StartEvent_0pspi35">
+        <dc:Bounds x="113" y="104" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0rop7ph_di" bpmnElement="UserTask_0rop7ph">
+        <dc:Bounds x="175" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_19k24q5_di" bpmnElement="UserTask_19k24q5">
+        <dc:Bounds x="430" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0t80jyr_di" bpmnElement="UserTask_0t80jyr">
+        <dc:Bounds x="1117" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0i42nxt_di" bpmnElement="SequenceFlow_0i42nxt">
+        <di:waypoint x="275" y="122" />
+        <di:waypoint x="297" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1y0oqdc_di" bpmnElement="SequenceFlow_1y0oqdc">
+        <di:waypoint x="530" y="122" />
+        <di:waypoint x="560" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_11h3ykf_di" bpmnElement="SequenceFlow_11h3ykf">
+        <di:waypoint x="149" y="122" />
+        <di:waypoint x="175" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1qg63ut_di" bpmnElement="ServiceTask_1qg63ut">
+        <dc:Bounds x="560" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_11i1lml_di" bpmnElement="ServiceTask_11i1lml">
+        <dc:Bounds x="683" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_04nxver_di" bpmnElement="SequenceFlow_04nxver">
+        <di:waypoint x="783" y="122" />
+        <di:waypoint x="838" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_032iyu4_di" bpmnElement="UserTask_032iyu4">
+        <dc:Bounds x="297" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_097tk6p_di" bpmnElement="SequenceFlow_097tk6p">
+        <di:waypoint x="397" y="122" />
+        <di:waypoint x="430" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0szrmtb_di" bpmnElement="SequenceFlow_0szrmtb">
+        <di:waypoint x="1217" y="122" />
+        <di:waypoint x="1264" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0rlx54c_di" bpmnElement="Task_1x398sl">
+        <dc:Bounds x="1264" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1x83ddo_di" bpmnElement="SequenceFlow_1x83ddo">
+        <di:waypoint x="1364" y="122" />
+        <di:waypoint x="1403" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_006ko9x_di" bpmnElement="Task_1bz7uw4">
+        <dc:Bounds x="1403" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0d9s9k0_di" bpmnElement="SequenceFlow_0d9s9k0">
+        <di:waypoint x="1503" y="122" />
+        <di:waypoint x="1536" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1dcb8hl_di" bpmnElement="EndEvent_1gqxaoq">
+        <dc:Bounds x="1536" y="104" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_03nq7bv_di" bpmnElement="SequenceFlow_03nq7bv">
+        <di:waypoint x="660" y="122" />
+        <di:waypoint x="683" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1nu4ch0_di" bpmnElement="ServiceTask_1nu4ch0">
+        <dc:Bounds x="838" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0y4m28m_di" bpmnElement="SequenceFlow_0y4m28m">
+        <di:waypoint x="938" y="122" />
+        <di:waypoint x="967" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_00xsxxo_di" bpmnElement="ServiceTask_00xsxxo">
+        <dc:Bounds x="967" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0816mo1_di" bpmnElement="SequenceFlow_0816mo1">
+        <di:waypoint x="1067" y="122" />
+        <di:waypoint x="1117" y="122" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

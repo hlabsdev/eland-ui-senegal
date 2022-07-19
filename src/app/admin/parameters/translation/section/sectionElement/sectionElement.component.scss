@@ -1,0 +1,13 @@
+.edit-fade {
+  transition: all;
+}
+.section-element-button {
+  .ui-button {
+    background: transparent !important;
+    border: none;
+
+    &:hover {
+      background: rgba(0, 0, 0, .3) !important;
+    }
+  }
+}

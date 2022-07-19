@@ -1,0 +1,61 @@
+<div>
+  <div class="form-group row no-gutters px-3">
+    <label for="code" class="col-4 col-form-label">{{'GROUP_PARTY.TYPE' | translate}} <span
+        class="text-info">*</span></label>
+    <div class="col-8">
+      <p-dropdown styleClass="form-control w-100" appendTo="body" name="type" [options]="groupTypeList"
+        [(ngModel)]="party.groupParty.type"
+        [disabled]="(groupParty && groupParty.groupPartyID && groupParty.type) || readOnly" required></p-dropdown>
+    </div>
+  </div>
+</div>
+<div class="form-group row no-gutters px-3">
+  <label for="Group List" *ngIf="showAllLabel" class="col-3 col-form-label">{{'PARTY.GROUP_MEMBERS' |
+    translate}}</label>
+  <div class="col">
+    <p-table [value]="party.groupParty.partyMembers">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{'PARTY_MEMBER.ID' | translate}}</th>
+          <th>{{'PARTY_MEMBER.NAME' | translate}}</th>
+          <th>{{'PARTY_MEMBER.ROLES' | translate}}</th>
+          <th>{{'PARTY_MEMBER.PARTY_TYPE' | translate}}</th>
+          <th>{{'PARTY_MEMBER.SHARE' | translate}}</th>
+          <th>
+            <p-button [hidden]="readOnly" type="button" icon="icon icon-add-eland" class="pull-right add-button"
+              (click)="addPartyMember()"></p-button>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-member>
+        <tr>
+          <td>{{member?.party?.pid}}</td>
+          <td>
+            <ng-container *ngIf="member.party.partyType.value === 'PARTY_NATURAL_PERSON'; else legalPersonOrGroup">
+              {{member.party.fullName.firstName}} {{member.party.fullName.lastName}}
+            </ng-container>
+            <ng-template #legalPersonOrGroup>{{party.name}} </ng-template> {{member?.party?.name}}
+          </td>
+          <td>{{('CODELIST.VALUES.' + member?.party?.partyRoleType?.value | translate)}}</td>
+          <td>{{('CODELIST.VALUES.' + member?.party?.partyType?.value | translate)}}</td>
+          <td>{{member?.share?.numerator +'/'+ member?.share?.denominator }}</td>
+          <td>
+            <p-button [hidden]="readOnly" type="button" icon="icon icon-edit-eland" class="add-button me-2"
+              (click)="addPartyMember(member)">
+            </p-button>
+            <p-button [hidden]="readOnly" type="button" class="delete-button" icon="fa fa-times"
+              title="{{'COMMON.ACTIONS.DELETE' | translate}}" (click)="removePartyMember(member)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog appendTo="body" [(visible)]="partyMemberDialog" *ngIf="partyMemberDialog" appendTo="body"
+  styleClass="dialog-class" [modal]="true" [maximizable]="true">
+  <ng-template #lazyPartyMember *ngIf="partyMemberDialog"></ng-template>
+</p-dialog>

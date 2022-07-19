@@ -1,0 +1,17 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      (actions)="call($event)"
+      (addCallBack)="addCodeList()" 
+      [datas]="codeLists" 
+      [cols]="cols">
+    </eland-table>
+</div>
+
+<!-- dialog -->
+<div *ngIf="receivedCodeList?.codeListID || receivedCodeList?.type">
+  <ng-template #lazyCodeList appendTo="body"></ng-template>
+</div>

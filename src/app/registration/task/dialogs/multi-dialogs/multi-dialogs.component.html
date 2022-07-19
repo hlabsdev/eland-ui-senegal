@@ -1,0 +1,35 @@
+<p-dialog appendTo="body"
+  header="{{( dialog ? 'TASK.COMMENT.NEW_COMMENT' : (dialogs && dialogs.length > 1 ? 'TASK.MULTIPLE_CHOICES.DEFAULT_COMPLETE.TITLE' : 'TASK.MULTIPLE_CHOICES.' + currentDialog.identifier + '.TITLE')) | translate}}"
+  *ngIf="visible" [(visible)]="visible" (onHide)="visible=false" [modal]="true" styleClass="dialog-w600">
+
+  <core-alert class="m-0" *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"
+    [compact]="true"></core-alert>
+
+  <div *ngIf="dialogs && dialogs.length > 1">
+    <sog-steppers [steps]="dialogItems" [(currentIndex)]="currentIndex" [readonly]="false"
+      (currentIndexChange)="indexChanged($event)"></sog-steppers>
+  </div>
+  <div class="p-2">
+    <div *ngFor="let cDialog of dialogs">
+      <ng-container dynMultiDialogs [dialogOptions]="cDialog" *ngIf="cDialog === currentDialog"></ng-container>
+    </div>
+    <div *ngIf="dialog">
+      <ng-container dynMultiDialogs [dialogOptions]="dialog" *ngIf="dialog === currentDialog"></ng-container>
+    </div>
+  </div>
+
+  <div class="row no-gutters px-3 pt-2 pb-4">
+    <div class="col-12">
+      <div class="pull-right">
+        <p-button type="button" (click)="visible=false" icon="fa fa-undo" class="cancel-button me-2"
+          label="{{'COMMON.ACTIONS.CANCEL' | translate}}"></p-button>
+        <p-button type="button" (click)="next()" icon="fa fa-check" class="save-button me-2"
+          label="{{'COMMON.ACTIONS.NEXT' | translate}}" *ngIf="gotNext"></p-button>
+        <p-button type="button" (click)="saveComment()" icon="fa fa-check" class="complete-button me-2"
+          label="{{'COMMON.ACTIONS.SAVE' | translate}}" *ngIf="!gotNext && saveMode"></p-button>
+        <p-button type="button" (click)="complete()" icon="fa fa-check" class="complete-button me-2"
+          label="{{'COMMON.ACTIONS.CONTINUE' | translate}}" *ngIf="!gotNext && !saveMode"></p-button>
+      </div>
+    </div>
+  </div>
+</p-dialog>

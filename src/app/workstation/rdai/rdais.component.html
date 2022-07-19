@@ -1,0 +1,77 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'RDAI.TITLE_FORM' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='this.rdaisUrl' type="button" class="add-button" (click)="addRdai()" icon="icon icon-add-eland"
+        label="{{'COMMON.ACTIONS.ADD' | translate}}"></p-button>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12" class="rdai">
+      <p-table [columns]="cols" [value]="rdais" [resizableColumns]="true" [paginator]="true" [rows]="rowSizes.SMALL"
+        [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadRdais($event)" [paginator]="true" #dataTableRdais>
+        <ng-template pTemplate="header">
+          <tr>
+            <th rowspan="2" pResizableColumn style="width:7%">{{'RDAI.DATE' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:9%">{{'RDAI.ORDER_NUMBER' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:12.5%">{{'RDAI.DESIGNATION_OF_RIGHT' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:10%">{{'RDAI.DOCUMENT_NUMBER' | translate}}</th>
+            <th colspan="2" pResizableColumn style="width:25%">{{'RDAI.NAME' | translate}}</th>
+            <th colspan="2" pResizableColumn style="width:27.5%">{{'RDAI.DESIGNATION_BOOK_OF_LAND' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:9%">{{'RDAI.OBSERVATION' | translate}}</th>
+          </tr>
+          <tr>
+            <th rowspan="1" pResizableColumn>{{'RDAI.ALIENATORS' | translate}}</th>
+            <th rowspan="1" pResizableColumn>{{'RDAI.BENEFICIARIES' | translate}}</th>
+            <th rowspan="1" pResizableColumn>{{'RDAI.LOCATION' | translate}}</th>
+            <th rowspan="1" pResizableColumn>{{'RDAI.TF_NO' | translate}}
+              <div class="input-group">
+                <input type="text" name="search" class="form-control" pInputText [(ngModel)]="searchText" size="25"
+                  placeholder="{{'COMMON.LABELS.SEARCH' | translate}}" (keyup.enter)="loadRdais()">
+                <button pButton type="button" icon="fa fa-search" class="ui-button-warn view-button search-bar-button"
+                  (click)="loadRdais()"></button>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rdai>
+          <tr>
+            <td>{{rdai.depositDate | date:'shortDate'}}</td>
+            <td>{{rdai.depositNumber}}</td>
+            <td>
+              <ul class="unordered-list">
+                <li>{{rdai.act.actType.description}}</li>
+                <li>{{rdai.act.actNumber}}</li>
+                <li>{{rdai.act.actDate | date:'shortDate'}}</li>
+                <li>{{rdai.act.signingAuthorityType.description}}</li>
+              </ul>
+            </td>
+            <td>{{rdai.depositQuantity}}</td>
+            <td>{{ rdai.baUnitSeller }}</td>
+            <td>{{ rdai.baUnitBuyer }}</td>
+            <td>{{ rdai.baUnitResponsibleOffice }}</td>
+            <td>{{rdai.baUnitTitleNumber}}</td>
+            <td>{{rdai.designation}}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+              <td colspan="12" class="text-center">{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+
+    </div>
+  </div>
+</div>

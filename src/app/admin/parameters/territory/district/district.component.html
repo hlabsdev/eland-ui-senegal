@@ -1,0 +1,18 @@
+<div class="container-fluid px-0 bordered-left inner" >
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="loadDistricts()" 
+      (addCallBack)="showDistrictElementDialogue()"
+      (actions)="call($event)" 
+      [datas]="districts" 
+      [cols]="cols">
+    </eland-table>
+
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<ng-template #lazyCurrentDistrict *ngIf="currentDistrict"></ng-template>

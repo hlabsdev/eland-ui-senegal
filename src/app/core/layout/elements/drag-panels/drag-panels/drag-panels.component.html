@@ -1,0 +1,21 @@
+<div class="p-2">
+  <div class="header m-0 p-0 rounded-top border">
+    <ng-container *ngTemplateOutlet="header || headerTemplate || headerDefault; context:  {$implicit: {item: dragPanelItem.item, title: headerTitle || ''}}"></ng-container>
+  </div>
+  <div class="drop-list-container m-0 p-0 border rounded-bottom">
+    <div cdkDropList [cdkDropListSortingDisabled]="disabledSorting" [cdkDropListData]="dragPanelItem.items"
+         (cdkDropListDropped)="drop.emit($event)" class="cdk-list m-3"  [cdkDropListEnterPredicate]="predicate ? predicate : defaultPredicate.bind(this)">
+      <div *ngFor="let item of dragPanelItem.items; let i = index" cdkDrag class="my-3 p-2 border rounded"
+           [cdkDragDisabled]="item.dragDisabled">
+        <ng-container *ngTemplateOutlet="body || bodyTemplate || bodyDefault; context: {$implicit: {item: item, collection: dragPanelItem.items, index: i}}"></ng-container>
+      </div>
+      <div class="row empty-placeholder mx-3 my-3 rounded text-center align-self-center" *ngIf="!dragPanelItem.items || dragPanelItem.items && dragPanelItem.items.length === 0">
+        <span class="my-auto mx-auto font-italic">Drop here</span></div>
+    </div>
+  </div>
+</div>
+
+<ng-template #headerDefault>
+  <div class="p-2 ">{{title | translate}}</div>
+</ng-template>
+<ng-template #bodyDefault let-item>template {{ item }} bodyDefault</ng-template>

@@ -1,0 +1,80 @@
+<section class="register-page">
+
+  <section class="elandslider-panel">
+    <swiper class="elandslider" fxFlex="auto" [config]="sliderConfig">
+      <div *ngFor="let slide of slides; let index = index" class="eland-slide">
+        <div class="bg-elanslider" [ngStyle]="{'background-image':'url(' + slide.visualMain + ')'}">
+        </div>
+      </div>
+    </swiper>
+  </section>
+
+  <!-- Register  -->
+  <section class="main">
+    <div class="login-form">
+      <a class="logo" routerLink="/">
+        <img title="{{'HEADER.APP_TITLE' | translate}}"
+          [attr.src]="'./assets/layout/images/eland-logo-type-mark-w.svg'">
+      </a>
+      <form>
+        <div class="row firstname pt-5 pb-4">
+          <div class="col-12">
+            <input type="text" name="firstname" placeholder="{{'REGISTER.FIRST_NAME' | translate}}" />
+          </div>
+        </div>
+        <div class="row lastname pb-4">
+          <div class="col-12">
+            <input type="text" name="lastname" placeholder="{{'REGISTER.LAST_NAME' | translate}}" />
+          </div>
+        </div>
+        <div class="row email pb-4">
+          <div class="col-12">
+            <input type="text" name="email" placeholder="{{'REGISTER.EMAIL' | translate}}" />
+          </div>
+        </div>
+        <div class="row username pb-4">
+          <div class="col-12">
+            <input type="text" name="username" placeholder="{{'REGISTER.USERNAME' | translate}}" />
+          </div>
+        </div>
+        <div class="row password pb-4">
+          <div class="col-12">
+            <input type="{{showPassword ? '' : 'password'}}" name="password"
+              placeholder="{{'REGISTER.PASSWORD' | translate}}" />
+            <i class="fa fa-eye" (click)="showPassword = true" *ngIf="!showPassword"></i>
+            <i class="fa fa-eye-slash" (click)="showPassword = false" *ngIf="showPassword"></i>
+          </div>
+        </div>
+        <div class="row confirm-password pb-5">
+          <div class="col-12">
+            <input type="{{showPassword ? '' : 'password'}}" name="password"
+              placeholder="{{'REGISTER.CONFIRM_PASSWORD' | translate}}" />
+          </div>
+        </div>
+
+        <div class="row button-login pb-4">
+          <div class="col-12">
+            <div class="button" (click)="submit()">
+              <p>{{'REGISTER.REGISTER' | translate}}</p>
+              <i class="icon icon-sign-in-eland"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="row to-login">
+          <div class="col-12">
+            <a routerLink="/login">
+              <p>
+                <i class="icon icon-chevron-left-eland"></i>
+                {{'REGISTER.TO_LOGIN' | translate}}
+              </p>
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="footer">
+  </section>
+</section>

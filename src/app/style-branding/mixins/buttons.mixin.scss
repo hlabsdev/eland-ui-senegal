@@ -1,0 +1,14 @@
+// generates the styles and ux for the buttons
+@mixin buttons($background-color, $text-color, $border) {
+  background-color: $background-color !important;
+  color: $text-color !important;
+  font-size: $default-font-size !important;
+  border: $border !important;
+  border-radius: 3px !important;
+  &:hover {
+    background-color: set_brand_color_hsla($background-color, 10, 100) !important;
+  }
+  &:active {
+    background-color: set_brand_color_hsla($background-color, 20, 100) !important;
+  }
+}

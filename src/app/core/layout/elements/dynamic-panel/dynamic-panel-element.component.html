@@ -1,0 +1,15 @@
+<div class="col-6 bl-lbl">
+  {{field.label | translate}}
+</div>
+<div class="col-6 lbl-data" *ngIf="readOnly">
+  {{ (data !== undefined && data !== null) ? (field.dataType === 'date' ?  (data | date:'longDate') : ((field.translate) ? (field.translateVar ? ('CODELIST.VALUES.' + field.translateVar + '.' + data.toString().toUpperCase() | translate ) : (('CODELIST.VALUES.' + data) | translate)) : (data))) : '-'}}
+</div>
+<div class="col-6 lbl-data" *ngIf="!readOnly && field.dataType === 'date'">
+  <p-calendar #timeSpec="ngModel" [dateFormat]="locale.dateFormat" [locale]="locale" [(ngModel)]="data"
+    [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2999" [name]="field.name" inputStyleClass="form-control"
+    styleClass="w-100"></p-calendar>
+</div>
+<div class="col-6 lbl-data" *ngIf="!readOnly && field.dataType !== 'date'">
+  <input [type]="field.dataType" class="form-control" [name]="field.name" [id]="field.name" placeholder="{{field.label | translate}}"
+    [(ngModel)]="data" />
+</div>

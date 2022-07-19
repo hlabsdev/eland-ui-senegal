@@ -1,0 +1,23 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="card border-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="publications" 
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item let-custom="custom">
+        <td *ngIf="col.field === 'titleNumber' && custom.sameEndPointRoute">{{ item.titleNumber }}</td>
+        <td *ngIf="col.field === 'applicationNumber' && custom.sameEndPointRoute">{{ item.applicationNumber }}</td>
+        <td *ngIf="col.field === 'target.description'">{{ item.target.description }}</td>
+        <td *ngIf="col.field === 'name.description'">{{ item.name.description }}</td>
+        <td *ngIf="col.field === 'number'">{{ item.number }}</td>
+        <td *ngIf="col.field === 'dateFormatted'">{{ item.date | date:'shortDate' }}</td>
+      </ng-template>
+    </eland-table>
+</div>
+
+<app-dialog appendTo="body" [(display)]="publication" modal="modal" #dd>
+    <ng-template #lazyPublication *ngIf="publication && !picker"></ng-template>
+</app-dialog>
+<core-alert *ngIf="this.errorMessage" [local]="true" [message]="errorMessage"></core-alert>

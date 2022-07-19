@@ -1,0 +1,164 @@
+<p-table 
+#eTable
+[columns]="cols" 
+[value]="datas" 
+[rows]="tableConfig.paginationRow"
+responsiveLayout="scroll"
+styleClass="p-datatable-striped"
+[paginator]="tableConfig.enablePagination"
+selectionMode="single"
+[loading]="tableConfig.loading"
+dataKey="id"
+[resizableColumns]="true"
+[(selection)]="selected"
+(onRowSelect)="onSelect($event)"
+(onRowUnselect)="onUnselect($event)"
+stateStorage="session"
+[stateKey]="tableConfig.key"
+[autoLayout]="true"
+[globalFilterFields]="tableConfig.searchBarField"
+[rowsPerPageOptions]="[10,25,50]"
+[expandedRowKeys]="expandedRows"
+(onRowExpand)="onRowExpand()"
+(onRowCollapse)="onRowCollapse()">
+<ng-template pTemplate="caption">
+  <ng-container *ngIf="!headerTemplateRef">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-12 col-md-4 text-start d-flex">
+        <h1 class="table-title">{{ tableConfig.title }}</h1>
+        <i class="pi pi-info-circle" *ngIf="tableConfig.titleTooltip" [pTooltip]="tableConfig.titleTooltip" tooltipPosition="top"></i>
+      </div>
+      <div class="col-12 col-md-8 text-end">
+        <div class="d-inline fix-position">
+          <button class="btn btn-secondary ms-2" (click)="reload()" *ngIf="tableConfig.enableReload">
+            <i class="pi pi-refresh"></i>
+          </button>
+          <div class="dropdown d-inline ms-2" *ngIf="tableConfig.enableExport">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="exportTable" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="pi pi-file"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="exportTable">
+              <li><a class="dropdown-item cursor" (click)="excel()"><i class="pi pi-file-excel"></i> MS EXCEL</a></li>
+              <li><a class="dropdown-item cursor" (click)="eTable.exportCSV()"><i class="pi pi-file"></i> CSV</a></li>
+              <li><a class="dropdown-item cursor" *ngIf="rowSelect" (click)="eTable.exportCSV({selectionOnly:true})"><i class="pi pi-filter"></i>SELECTION</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <span class="p-input-icon-left ms-2 search-bar" *ngIf="tableConfig.enableSearchBar">
+          <i class="pi pi-search"></i>
+          <input class="form-control" pInputText type="text" (input)="eTable.filterGlobal($event.target.value, 'contains')" placeholder="{{'COMMON.ACTIONS.SEARCH' | translate}}" />
+        </span>
+        <div *ngIf="tableConfig.addBtn" class="add-btn d-inline fix-position ms-2">
+          <button pButton class="btn btn-primary" (click)="add()" 
+              label="{{ tableConfig.addBtnTitle ?? 'COMMON.ACTIONS.ADD' | translate }}"
+              icon="pi pi-plus">
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container 
+    *ngIf="headerTemplateRef"
+    [ngTemplateOutlet]="headerTemplateRef">
+  </ng-container>
+</ng-template>
+<ng-template pTemplate="header" let-columns>
+    <tr>
+        <th style="width: 3rem" *ngIf="tableConfig.expandable"></th>
+        <th style="width: 3rem" *ngIf="!tableConfig.rowSelect && tableConfig.selectByRadio"></th>
+        <th style="width: 3rem" *ngIf="!tableConfig.rowSelect && tableConfig.selectByCheckBox">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn [ngStyle]="{'width': col.width ?? 'inherit'}">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            <span class="ms-2">{{ col.header | translate }}</span>
+            <span class="p-ml-auto">
+              <p-sortIcon [field]="col.field" *ngIf="col.sortable"></p-sortIcon>
+              <p-columnFilter type="text" [field]="col.field" *ngIf="col.filterable" display="menu"></p-columnFilter>
+            </span>
+          </div>
+        </th>
+        <th class="text-end me-2" style="width: 3rem" pResizableColumn *ngIf="tableConfig.displayAction">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+    </tr>
+</ng-template>
+
+<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded">
+    <tr [pSelectableRow]="rowData">
+        <td *ngIf="tableConfig.expandable">
+          <button type="button" pButton pRipple [pRowToggler]="rowData" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+        </td>
+        <td *ngIf="!tableConfig.rowSelect && tableConfig.selectByRadio">
+          <p-tableRadioButton [value]="rowData"></p-tableRadioButton>
+        </td>
+        <td *ngIf="!tableConfig.rowSelect && tableConfig.selectByCheckBox">
+          <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+        </td>
+        <ng-container *ngFor="let col of columns ; index as i">
+            <ng-template #defaultCol>
+              <td class="break-word">
+                  <ng-container *ngIf="col.type === 'text'">{{col?.subField ? rowData[col?.field][col?.subField] : rowData[col?.field]}}</ng-container>
+                  <ng-container *ngIf="col.type === 'date'">{{col?.subField ? rowData[col?.field][col?.subField] : rowData[col?.field] | specificTimezone | localeDate:'longDate'}}</ng-container>
+              </td>
+            </ng-template>
+          <ng-container
+              [ngTemplateOutlet]="bodyRef || defaultCol"
+              [ngTemplateOutletContext]="{ $implicit: rowData, col: col, custom: tableConfig.customData, index: i}"
+          >
+          </ng-container>
+        </ng-container>
+        <td class="text-end me-2" *ngIf="tableConfig.displayAction">
+          <ng-container *ngFor="let action of tableConfig.actions ; index as i">
+            <ng-template #defaultTemplate let-action>
+              <p-button *ngIf="action.type === 'download'" type="button" class="download-button ms-2" (click)="actionCallback(action, rowData)" icon="icon icon-download-eland"></p-button>
+              
+              <p-button *ngIf="action.type === 'start'" type="button" class="start-button ms-2" (click)="actionCallback(action, rowData)" icon="icon icon-start-eland"></p-button>
+              
+              <p-button *ngIf="action.type === 'view'" type="button" class="view-button ms-2" (click)="actionCallback(action, rowData)" icon="icon icon-info-eland"></p-button>
+              
+              <p-button *ngIf="action.type === 'edit'" type="button" class="edit-button ms-2" (click)="actionCallback(action, rowData)" icon="icon icon-edit-eland"></p-button>
+
+              <p-button *ngIf="action.type === 'delete'" type="button" class="delete-button ms-2" (click)="actionCallback(action, rowData)" icon="fa fa-times"></p-button>
+            </ng-template>
+
+            <ng-container
+              [ngTemplateOutlet]="actionsRef || defaultTemplate"
+              [ngTemplateOutletContext]="{ $implicit: action, item: rowData, custom: tableConfig.customData, index: i}"
+            >
+            </ng-container>
+
+          </ng-container>
+
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+  <tr>
+    <td [attr.colspan]="columns.length + 1">
+        <ng-container
+        [ngTemplateOutlet]="rowexpansionRef"
+        [ngTemplateOutletContext]="{ $implicit: rowData, custom: tableConfig.customData}"
+        >
+      </ng-container>
+    </td>
+  </tr>
+</ng-template>
+
+<ng-template pTemplate="emptymessage">
+    <tr>
+        <td colspan="12" class="text-center">{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</td>
+    </tr>
+</ng-template>
+</p-table>
+
+<p-confirmDialog 
+  id="eland-confirmDialog"
+  header="{{'COMMON.ACTIONS.CONFIRM' | translate}}" 
+  icon="pi pi-exclamation-triangle" 
+  [style]="{width: '40vw'}" 
+  rejectButtonStyleClass="p-button-text p-button-plain confirm-dialog-cancel"
+  rejectLabel="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+  acceptButtonStyleClass="p-button-danger"
+  acceptLabel="{{'COMMON.ACTIONS.CONFIRM_REMOVE' | translate}}">
+</p-confirmDialog>

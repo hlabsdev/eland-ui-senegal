@@ -1,0 +1,17 @@
+<div class="card border-0 pt-0">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (addCallBack)="showBlockerRRRElementDialogue()"
+      [datas]="rrrValidation.blockerRRRs" 
+      [cols]="cols">
+      <ng-template #actions let-item="item" let-custom="custom">
+          <p-button type="button" class="edit-button ms-2" (click)="showBlockerRRRElementDialogue(item)" icon="icon icon-edit-eland"></p-button>
+          <p-button class="delete-button fsize10 px-1" type="button" icon="fa fa-trash" (click)="removeBlockerRRR(item)"></p-button>
+      </ng-template>
+    </eland-table>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="blockerRRR" modal="modal" #blockerRRRElementDialog>
+  <ng-template #lazyBlockerRrrElement *ngIf="blockerRRR"></ng-template>
+</app-dialog>

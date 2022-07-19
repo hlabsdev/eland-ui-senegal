@@ -1,0 +1,40 @@
+<div class="card border-0 pt-0" *ngIf="!formVariables.administrativeSourceType && !selectedDocument">
+  <eland-table 
+      [tableConfig]="tableConfig" 
+      (reloadTable)="reload()" 
+      [datas]="sourcesToShow" 
+      (addCallBack)="saveSource()"
+      [cols]="cols">
+      <ng-template #body let-col="col" let-item let-custom="custom">
+        <td *ngIf="col.field === 'mainType.description'">{{('CODELIST.VALUES.' + item?.mainType?.value | translate)}}</td>
+        <td *ngIf="col.field === 'sourceType'">{{('SOURCE.TYPES.' + item?.sourceType | translate)}}</td>
+        <td *ngIf="col.field === 'submissionDate'">{{item?.submissionDate | specificTimezone | localeDate}}</td>
+        <td *ngIf="col.field === 'extArchive.fileName'">{{item?.extArchive?.fileName}}</td>
+        <td *ngIf="col.field === 'transactionInstance.transaction.name' && custom.showBaUnitSourcesDetail">{{item?.transactionInstance?.transaction?.name}}</td>
+      </ng-template>
+      <ng-template #actions let-item="item" let-custom="custom">
+        <p-button [hidden]="custom.formVariables.isReadOnly || custom.sourcesUrl" type="button" class="edit-button me-2"
+          icon="icon icon-edit-eland" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}" tooltipPosition="top"
+          life="4000" (click)="saveSource(item)"></p-button>
+        <p-button type="button" class="download-button me-2" icon="fa fa-download"
+          pTooltip="{{'COMMON.ACTIONS.DOWNLOAD' | translate}}" tooltipPosition="top" life="4000"
+          (click)="downloadDocument(item)">
+        </p-button>
+        <p-button type="button" class="view-button me-2" icon="fa fa-search"
+          pTooltip="{{'COMMON.ACTIONS.VIEW' | translate}}" tooltipPosition="top" life="4000"
+          (click)="selectedDocument=null; viewSource(item)"></p-button>
+        <p-button type="button" class="sign-button" icon="fa fa-key"
+          [hidden]="custom.formVariables.isReadOnly || !custom.formVariables.allowElectronicSignature || !item.isElectronicSignatureNeeded"
+          pTooltip="{{'COMMON.ACTIONS.SIGN' | translate}}" tooltipPosition="top" life="4000"
+          (click)="selectedDocument=null; signPdfDocument(item)"></p-button>
+      </ng-template>
+  </eland-table>
+</div>
+
+<!-- dialog -->
+<app-source *ngIf="selectedDocument" [task]="task" [viewSource]="displaySource" [selectedDocument]='selectedDocument'
+  [sources]='sources' (saveButtonClicked)="onSaveDocument($event)" (cancelButtonClicked)="selectedDocument = null"
+  [formVariables]="formVariables"></app-source>
+
+<app-sub-type [task]="task" *ngIf="formVariables.administrativeSourceType" [formVariables]="formVariables"
+  (saveButtonClicked)="subTypeSaved()" (cancelButtonClicked)="handleCancelButton()"></app-sub-type>

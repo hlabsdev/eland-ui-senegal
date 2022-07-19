@@ -1,0 +1,20 @@
+<div class="card border-0 pt-0">
+  <eland-table 
+    [tableConfig]="tableConfig" 
+    (reloadTable)="reload()" 
+    (actions)="call($event)"
+    (addCallBack)="showDialog()" 
+    [datas]="languages" 
+    [cols]="cols">
+    <ng-template #body let-col="col" let-item>
+      <td *ngIf="col.field === 'name'">{{ item.name }}</td>
+      <td *ngIf="col.field === 'locale'">{{ item.locale.code }}</td>
+      <td *ngIf="col.field === 'isRTL'">
+        <p-chip label="Oui" *ngIf="item.isRTL" class="btn btn-primary"></p-chip>
+        <p-chip label="Non" *ngIf="!item.isRTL" class="btn btn-danger"></p-chip>
+      </td>
+    </ng-template>
+  </eland-table>
+</div>
+<!-- dialog -->
+<ng-template #lazyCurrentLanguage *ngIf="currentLanguage"></ng-template>

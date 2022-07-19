@@ -1,0 +1,5 @@
+<!-- TODO: Create a reusable | configurable dialog compomponent -->
+<p-dialog [style]="{'overflow':'hidden', 'position':'absolute'}" appendTo="body" styleClass="dialog-class" [header]="header" [(visible)]="display" [modal]="true" [responsive]="true" [maximizable]="true" (onHide)="close()"
+          [contentStyle]="cStyle">
+  <ng-content></ng-content>
+</p-dialog>

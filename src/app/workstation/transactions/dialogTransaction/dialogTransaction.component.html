@@ -1,0 +1,28 @@
+<p-dialog class="tansProcessDialog" [(visible)]="displayCreateTransaction" appendTo="body" (onHide)="closeTransaction()" [modal]="true"
+  [style]="{width: '80vw'}" [maximizable]="true">
+  <ng-template pTemplate="header">
+    <div> {{'TRANSACTION.TITLE_ADD' | translate}}</div>
+  </ng-template>
+  <ng-template pTemplate>
+    <app-transaction [transactionID]="transactionID" (processSelected)="isProcessSelected=true;" (stepEvent)="step=$event" (successCloseEvent)="displayCreateTransaction=false;step=1;"></app-transaction>
+  </ng-template>
+  <ng-template pTemplate="footer">
+     <!-- buttons -->
+   <div class="row" style="padding-top: 3%;">
+    <div class="col-2"> <span class="text-info"> * </span> {{'COMMON.LABELS.REQUIRED' | translate}}</div>
+    <div class="col-10 pr-0"> 
+      <div class="pull-right">
+        <p-button type="button" icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+          class="cancel-button me-2" (click)="closeTransaction()"></p-button>
+          <button pButton pRipple type="button" (click)="updateStep(-1)" [disabled]="!isProcessSelected || step==1" style="max-height: 35px; width: 125px;" label="{{'COMMON.ACTIONS.PREV' | translate}}"
+                        class="p-button-warning me-2" icon="pi pi-angle-left" iconPos="left" >  </button>
+          <button pButton pRipple type="button" (click)="updateStep(1)" [disabled]="!isProcessSelected || step==3" style="max-height: 35px; width: 125px;" type="button" label="{{'COMMON.ACTIONS.NEXT' | translate}}"
+                        class="p-button-warning me-2" icon="pi pi-angle-right" iconPos="right"> </button>
+        <p-button type="button" (click)="saveTransaction()" icon="fa fa-floppy-o"  [disabled]="!isProcessSelected" label="{{'TRANSACTION.TITLE_CREATE' | translate}}"
+          class="save-button"></p-button>
+      </div>
+    </div>
+   </div>
+</ng-template>
+ 
+</p-dialog>
